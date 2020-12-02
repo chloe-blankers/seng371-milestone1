@@ -1,7 +1,9 @@
 .DS_Store
+.idea
 logs
 project/project
 project/target
+public
 target
 tmp
 .history
