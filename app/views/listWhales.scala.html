@@ -48,7 +48,7 @@
 
         @helper.inputDate(form("date"))
 
-        @helper.inputRadioGroup(
+        @helper.select(
             form("species"),
             options = options("1" -> "Orca", "2" -> "Blue", "3" -> "Beluga", "4" -> "Mink", "5" -> "Fin")
         )
@@ -61,7 +61,6 @@
             form("gender"),
             options = options("1" -> "Male", "2" -> "Female", "3" -> "Unknown")
         )
-
 
         <button type="submit">Create Whale</button>
     }
