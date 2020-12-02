@@ -1,0 +1,63 @@
+@import play.mvc.Http.Request
+@(Whales: Seq[Whale], form: Form[WhaleData])(implicit request: Request, messages: play.i18n.Messages)
+
+@main("Whales") {
+    <html lang="en">
+    <head>
+        <title>Whales</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    </head>
+    <body>
+    <h1>Observations</h1>
+
+    @* Flash shows updates to a page *@
+    @request.flash.asScala().data.map { case (name, value) =>
+        <div class="@name">@value</div>
+    }
+
+    <table>
+        <thead>
+            <tr><th>Name</th><th>Date</th><th>Species</th><th>Size</th><th>Gridref</th><th>Gender</th></tr>
+        </thead>
+        <tbody>
+        @for(w <- Whales) {
+            <tr><td>@w.name</td><td>@w.date</td><td>@w.species</td><td>@w.size</td><td>@w.gridref</td><td>@w.gender</td></tr>
+        }
+        </tbody>
+    </table>
+
+    <hr/>
+
+    @* Global errors are not tied to any particular form field
+
+    @if(form.hasGlobalErrors) {
+        @form.globalErrors.asScala.map { error: play.data.validation.ValidationError =>
+            <div>
+                @error.key: @error.message
+            </div>
+        }
+    }
+    *@
+
+    @helper.form(routes.WhaleController.createWhale) {
+        @helper.CSRF.formField
+
+        @helper.inputText(form("name"))
+
+        @helper.inputText(form("date"))
+
+        @helper.inputText(form("species"))
+
+        @helper.inputText(form("size"))
+
+        @helper.inputText(form("gridref"))
+
+        @helper.inputText(form("gender"))
+
+        <button type="submit">Create Whale</button>
+    }
+    </body>
+    </html>
+
+}
