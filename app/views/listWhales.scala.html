@@ -50,7 +50,7 @@
 
         @helper.select(
             form("species"),
-            options = options("1" -> "Orca", "2" -> "Blue", "3" -> "Beluga", "4" -> "Mink", "5" -> "Fin")
+            options = options("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Mink" -> "Mink", "Fin" -> "Fin")
         )
 
         @helper.inputText(form("size"))
@@ -59,7 +59,7 @@
 
         @helper.inputRadioGroup(
             form("gender"),
-            options = options("1" -> "Male", "2" -> "Female", "3" -> "Unknown")
+            options = options("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown")
         )
 
         <button type="submit">Create Whale</button>
