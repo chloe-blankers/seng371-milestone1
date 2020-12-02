@@ -1,4 +1,5 @@
 @import play.mvc.Http.Request
+@import views.html.helper.options
 @(Whales: Seq[Whale], form: Form[WhaleData])(implicit request: Request, messages: play.i18n.Messages)
 
 @main("Whales") {
@@ -45,15 +46,22 @@
 
         @helper.inputText(form("name"))
 
-        @helper.inputText(form("date"))
+        @helper.inputDate(form("date"))
 
-        @helper.inputText(form("species"))
+        @helper.inputRadioGroup(
+            form("species"),
+            options = options("1" -> "Orca", "2" -> "Blue", "3" -> "Beluga", "4" -> "Mink", "5" -> "Fin")
+        )
 
         @helper.inputText(form("size"))
 
         @helper.inputText(form("gridref"))
 
-        @helper.inputText(form("gender"))
+        @helper.inputRadioGroup(
+            form("gender"),
+            options = options("1" -> "Male", "2" -> "Female", "3" -> "Unknown")
+        )
+
 
         <button type="submit">Create Whale</button>
     }
