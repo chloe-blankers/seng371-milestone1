@@ -6,6 +6,7 @@ import play.data.validation.Constraints;
  * An example of form processing.
  *
  * https://playframework.com/documentation/latest/JavaForms
+ * https://adrianhurt.github.io/play-bootstrap/
  */
 public class WhaleData {
 
