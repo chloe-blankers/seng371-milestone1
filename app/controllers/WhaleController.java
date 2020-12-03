@@ -33,9 +33,9 @@ public class WhaleController extends Controller {
         this.form = formFactory.form(WhaleData.class);
         this.messagesApi = messagesApi;
         this.Whales = com.google.common.collect.Lists.newArrayList(
-                new Whale("Doug", "2019-02-13", "Beluga", 204, 11, "Male"),
-                new Whale("Shelly", "2019-03-11", "Orca", 111, 225, "Female"),
-                new Whale("Ben", "2018-05-17", "Blue", 301, 894, "Male")
+                new Whale( "Beluga", 204, "Male"),
+                new Whale( "Orca", 111, "Female"),
+                new Whale( "Blue", 301, "Male")
         );
     }
 
@@ -60,7 +60,7 @@ public class WhaleController extends Controller {
             return badRequest(views.html.listWhales.render(asScala(Whales), boundForm, request, messagesApi.preferred(request)));
         } else {
             WhaleData data = boundForm.get();
-            Whales.add(new Whale(data.getName(), data.getDate(), data.getSpecies(), data.getSize(), data.getGridref(), data.getGender()));
+            Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
             return redirect(routes.WhaleController.listWhales()).flashing("info", "Whale added!");
         }
     }
