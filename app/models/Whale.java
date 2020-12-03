@@ -19,7 +19,7 @@ public class Whale {
 
 
 
-    public Whale( String species, int weight, String gender) {
+    public Whale(String species, int weight, String gender) {
         this.species = species;
         this.weight = weight;
         this.gender = gender;
