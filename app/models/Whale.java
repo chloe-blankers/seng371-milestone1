@@ -3,11 +3,9 @@ package models;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Presentation object used for displaying data in a template.
+ * An example of form processing.
  *
- * Note that it's a good practice to keep the presentation DTO,
- * which are used for reads, distinct from the form processing DTO,
- * which are used for writes.
+ * https://playframework.com/documentation/latest/JavaForms
  */
 public class Whale {
     public String species;
