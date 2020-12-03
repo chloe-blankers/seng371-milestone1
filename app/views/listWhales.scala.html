@@ -19,16 +19,14 @@
 
     <table>
         <thead>
-            <tr><th>Name</th><th>Date</th><th>Species</th><th>Size</th><th>Gridref</th><th>Gender</th></tr>
+            <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
         </thead>
         <tbody>
         @for(w <- Whales) {
-            <tr><td>@w.name</td><td>@w.date</td><td>@w.species</td><td>@w.size</td><td>@w.gridref</td><td>@w.gender</td></tr>
+            <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
         }
         </tbody>
     </table>
-
-    <hr/>
 
     @* Global errors are not tied to any particular form field
 
@@ -44,18 +42,12 @@
     @helper.form(routes.WhaleController.createWhale) {
         @helper.CSRF.formField
 
-        @helper.inputText(form("name"))
-
-        @helper.inputDate(form("date"))
-
         @helper.select(
             form("species"),
             options = options("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Mink" -> "Mink", "Fin" -> "Fin")
         )
 
-        @helper.inputText(form("size"))
-
-        @helper.inputText(form("gridref"))
+        @helper.inputText(form("weight (in kgs)"))
 
         @helper.inputRadioGroup(
             form("gender"),

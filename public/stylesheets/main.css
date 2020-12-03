@@ -9,19 +9,22 @@
 @-ms-viewport {
   width: device-width; }
 body {
-  -ms-overflow-style: scrollbar; }
+  -ms-overflow-style: scrollbar;
+}
 
 @media screen and (max-width: 480px) {
   html, body {
     min-width: 320px; } }
 html {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 *, *:before, *:after {
   box-sizing: inherit; }
 
 body {
-  background: #ffffff; }
+  background: #ffffff;
+}
   body.is-preload *, body.is-preload *:before, body.is-preload *:after {
     -moz-animation: none !important;
     -webkit-animation: none !important;
@@ -43,7 +46,7 @@ tfoot, thead, tr, th, td, article, aside,
 canvas, details, embed, figure, figcaption,
 footer, header, hgroup, menu, nav, output, ruby,
 section, summary, time, mark, audio, video {
-  margin: 0;
+  margin: 30px;
   padding: 0;
   border: 0;
   font-size: 100%;

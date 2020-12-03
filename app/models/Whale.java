@@ -1,5 +1,7 @@
 package models;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * Presentation object used for displaying data in a template.
  *
@@ -8,20 +10,19 @@ package models;
  * which are used for writes.
  */
 public class Whale {
-    public String name;
-    public String date;
     public String species;
-    public int size;
-    public int gridref;
+    public int weight;
     public String gender;
+    public long id;
+
+    private static final AtomicLong atomicLong = new AtomicLong(0L);
 
 
-    public Whale(String name, String date, String species, int size, int gridref, String gender) {
-        this.name = name;
-        this.date = date;
+
+    public Whale( String species, int weight, String gender) {
         this.species = species;
-        this.size = size;
-        this.gridref = gridref;
+        this.weight = weight;
         this.gender = gender;
+        this.id = atomicLong.getAndAdd(1);
     }
 }

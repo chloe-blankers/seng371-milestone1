@@ -12,57 +12,26 @@ import play.data.validation.Constraints;
 public class WhaleData {
 
     @Constraints.Required
-    private String name;
-
-    @Constraints.Required
-    private String date;
-
-    @Constraints.Required
     private String species;
 
     @Constraints.Min(0)
-    private int size;
-
-    @Constraints.Min(0)
-    private int gridref;
-
+    private int weight;
 
     @Constraints.Required
     private String gender;
 
+    @Constraints.Required
+    private long id;
+
     public WhaleData() {
     }
 
-    public String getName() {
-        return name;
+    public int getWeight() {
+        return weight;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getGridref() {
-        return gridref;
-    }
-
-    public void setGridref(int gridref) {
-        this.gridref = gridref;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
+    public void setWeight(int size) {
+        this.weight = size;
     }
 
     public String getSpecies() {
@@ -79,6 +48,10 @@ public class WhaleData {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public long getId() {
+        return id;
     }
 
 }
