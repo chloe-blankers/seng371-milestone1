@@ -42,23 +42,24 @@
     *@
 
     @helper.form(routes.WhaleController.createWhale) {
+    <div style="align-items: center;">All fields are required.</div>
         @helper.CSRF.formField
 
-        @helper.inputText(form("name"))
+        @helper.inputText(form("Name"))
 
-        @helper.inputDate(form("date"))
+        @helper.inputDate(form("Date"))
 
         @helper.select(
-            form("species"),
+            form("Species"),
             options = options("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Mink" -> "Mink", "Fin" -> "Fin")
         )
 
-        @helper.inputText(form("size"))
+        @helper.inputText(form("Size"))
 
-        @helper.inputText(form("gridref"))
+        @helper.inputText(form("Gridref"))
 
         @helper.inputRadioGroup(
-            form("gender"),
+            form("Gender"),
             options = options("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown")
         )
 
