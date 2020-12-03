@@ -10,9 +10,17 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
     </head>
     <body>
+    <div class="navigation">
+        <ul>
+            <li><a href="@routes.WhaleController.index()">Home</a></li>
+            <li><h><a href="@routes.WhaleController.listWhales">@routes.WhaleController.listWhales</a></li>
+            <li><a href="">Observations</a></li>
+            <li><a href="">Stats</a></li>
+        </ul>
+    </div>
     <h1>Observations</h1>
 
-    @* Flash shows updates to a page *@
+
     @request.flash.asScala().data.map { case (name, value) =>
         <div class="@name">@value</div>
     }
@@ -28,32 +36,14 @@
         </tbody>
     </table>
 
-    @* Global errors are not tied to any particular form field
-
-    @if(form.hasGlobalErrors) {
-        @form.globalErrors.asScala.map { error: play.data.validation.ValidationError =>
-            <div>
-                @error.key: @error.message
-            </div>
-        }
-    }
-    *@
-
-    @helper.form(routes.WhaleController.createWhale) {
+    @b4.vertical.form(routes.WhaleController.createWhale) { implicit vfc =>
         @helper.CSRF.formField
-
-        @helper.select(
-            form("species"),
-            options = options("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead")
-        )
-
-        @helper.inputText(form("weight"))
-
-        @helper.inputRadioGroup(
-            form("gender"),
-            options = options("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown")
-        )
-
+        <label>weight</label>
+        @b4.text( form("weight"))
+        <label>gender</label>
+        @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
+        <label>species</label>
+        @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
         <button type="submit">Create Whale</button>
     }
     </body>

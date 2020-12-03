@@ -5,6 +5,33 @@
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
+/* For Horizontal Top Menu Bars */
+.navigation {
+
+}
+.navigation ul {
+  border: 1px solid rgb(212, 20, 20);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.navigation li {
+  flex: 3;
+}
+.navigation .user {
+  flex: 1;
+}
+@media all and (max-width: 1000px) {
+  .navigation ul { flex-wrap: wrap; }
+  .navigation li { flex: 1 1 50%; }
+  .navigation .user { flex: 1 1 33.33%; }
+}
+@media all and (max-width: 480px) {
+  .navigation li { flex-basis: 100%; }
+  .navigation .user { flex-basis: 50%; }
+}
+
 /* Basic */
 @-ms-viewport {
   width: device-width; }
