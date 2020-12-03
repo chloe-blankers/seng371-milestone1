@@ -30,9 +30,7 @@
     <div class="box-label">
         <h3>Observations</h3>
     </div>
-    @request.flash.asScala().data.map { case (name, value) =>
-        <div class="@name">@value</div>
-    }
+
     <div id="table-holder">
         <table>
             <thead>
@@ -58,6 +56,9 @@
         <label>species</label>
         @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
         <button type="submit"></i>Create</button>
+    @request.flash.asScala().data.map { case (name, value) =>
+        <div class="@name">@value</div>
+    }
     }
     </body>
     </html>
