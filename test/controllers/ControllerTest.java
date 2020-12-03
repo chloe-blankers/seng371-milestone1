@@ -10,7 +10,6 @@ import org.junit.Test;
 import play.mvc.Result;
 import play.twirl.api.Content;
 
-
 public class ControllerTest {
 
   @Test
