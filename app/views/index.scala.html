@@ -8,14 +8,23 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
       </head>
       <body>
-        <div class="navigation">
-          <ul>
-            <li><a href="@routes.WhaleController.index()">Home</a></li>
-            <li><h><a href="@routes.WhaleController.listWhales">@routes.WhaleController.listWhales</a></li>
-            <li><a href="">Observations</a></li>
-            <li><a href="">Stats</a></li>
-          </ul>
+      <div class="navigation">
+        <div class="nav-element" >
+          <a class="navigation" href="@routes.WhaleController.index()"><i class="fa fa-home"></i> Home</a>
         </div>
+        <div class="nav-element" >
+          <a class="navigation" href="@routes.WhaleController.listWhales"><i class="fa fa-eye"></i> @routes.WhaleController.listWhales</a>
+        </div>
+        <div class="nav-element" >
+          <a class="navigation" href=""><i class="fa fa-search"></i> Observations</a>
+        </div>
+        <div class="nav-element" >
+          <a class="navigation" href=""> <i class="fa fa-bar-chart"></i> Stats</a>
+        </div>
+      </div>
+      <div class="nav-holder"></div>
+
+
       </body>
     </html>
   }
