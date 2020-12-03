@@ -97,9 +97,8 @@ form {
 }
 form > label {
     border: 0;
-    height: 2rem;
     width: 20rem;
-    margin-top: 0.2rem;
+    margin-top: 1rem;
     margin-bottom: 0.2rem;
 }
 div.form-group {
