@@ -11,30 +11,37 @@
     </head>
     <body>
     <div class="navigation">
-        <ul>
-            <li><a href="@routes.WhaleController.index()">Home</a></li>
-            <li><h><a href="@routes.WhaleController.listWhales">@routes.WhaleController.listWhales</a></li>
-            <li><a href="">Observations</a></li>
-            <li><a href="">Stats</a></li>
-        </ul>
+        <div class="nav-element" >
+            <a class="navigation" href="@routes.WhaleController.index()">Home</a>
+        </div>
+        <div class="nav-element" >
+            <a class="navigation" href="@routes.WhaleController.listWhales">@routes.WhaleController.listWhales</a>
+        </div>
+        <div class="nav-element" >
+            <a class="navigation" href="">Observations</a>
+        </div>
+        <div class="nav-element" >
+            <a class="navigation" href="">Stats</a>
+        </div>
     </div>
-    <h1>Observations</h1>
+    <div class="nav-holder"></div>
 
-
-    @request.flash.asScala().data.map { case (name, value) =>
+    <div id="table-holder">
+        <h1>Observations</h1>
+        @request.flash.asScala().data.map { case (name, value) =>
         <div class="@name">@value</div>
-    }
-
-    <table>
-        <thead>
-            <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
-        </thead>
-        <tbody>
-        @for(w <- Whales) {
-            <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
         }
-        </tbody>
-    </table>
+        <table>
+            <thead>
+                <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
+            </thead>
+            <tbody>
+            @for(w <- Whales) {
+                <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
 
     @b4.vertical.form(routes.WhaleController.createWhale) { implicit vfc =>
         @helper.CSRF.formField
