@@ -1,43 +1,27 @@
 package models;
 
+/**
+ * Presentation object used for displaying data in a template.
+ *
+ * Note that it's a good practice to keep the presentation DTO,
+ * which are used for reads, distinct from the form processing DTO,
+ * which are used for writes.
+ */
 public class Whale {
+    public String name;
+    public String date;
+    public String species;
+    public int size;
+    public int gridref;
+    public String gender;
 
-  public Long id;
 
-  public String species;
-  public int estimated_weight;
-  //TODO convert to enum
-  public String gender;
-
-  public int getEstimated_weight() {
-    return estimated_weight;
-  }
-
-  public void setEstimated_weight(int estimated_weight) {
-    this.estimated_weight = estimated_weight;
-  }
-
-  public String getGender() {
-    return gender;
-  }
-
-  public void setGender(String gender) {
-    this.gender = gender;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getSpecies() {
-    return species;
-  }
-
-  public void setSpecies(String species) {
-    this.species = species;
-  }
+    public Whale(String name, String date, String species, int size, int gridref, String gender) {
+        this.name = name;
+        this.date = date;
+        this.species = species;
+        this.size = size;
+        this.gridref = gridref;
+        this.gender = gender;
+    }
 }
