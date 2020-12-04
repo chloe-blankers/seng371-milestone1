@@ -333,9 +333,10 @@ div.whale-select-radio-button {
 }
 
 /* THINGS TO DO FOR MOBILE:
- * - For each width: 80%, change to 95% if on mobile.
- *
- *
+ * - For each width: 80%, change to 95% if on mobile (@media tags)
+ *      - This could maybe be a var(--ratio) thing with one media tag at the start.
+ * - Add width=device-width and no zoom meta tag.
+ * -
  *
  */
 
