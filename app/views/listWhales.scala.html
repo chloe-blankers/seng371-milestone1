@@ -49,15 +49,26 @@
     </div>
     @b4.vertical.form(routes.WhaleController.createWhale) { implicit vfc =>
         @helper.CSRF.formField
-        <label>weight</label>
-        @b4.text( form("weight"))
-        <label>gender</label>
-        @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
-        <label>species</label>
-        @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
-        <button type="submit"></i>Create</button>
+    <div class="form-filter">
+        <div class="filter-holder">
+            @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
+        </div>
+        <div class="filter-holder">
+            @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
+        </div>
+        <div class="filter-holder">
+            @b4.text( form("weight"))
+        </div>
+    </div>
+    <div class="whale-result-holder">
+        <div class="whale-result"> J-28</div>
+        <div class="whale-result"> J-12</div>
+        <div class="whale-result"> J-13</div>
+    </div>
+    <div>Note: The above form would ideally request new data on a change to the filters and not need a 'submit' button</div>
+    <button type="submit"></i>Create</button>
     @request.flash.asScala().data.map { case (name, value) =>
-        <div class="@name">@value</div>
+    <div class="@name">@value</div>
     }
     }
     </body>

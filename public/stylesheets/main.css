@@ -275,4 +275,52 @@ div.nav-holder {
     height: var(--navbar-height);
 }
 
+/* NEW OBSERVATION FILTER */
+div.form-filter {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+div.filter-holder {
+    margin: 1rem;
+}
+
+div.whale-result-holder {
+    width: 80%;
+    background: var(--background);
+    display: flex;
+    flex-direction: row;
+    justify-contents: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+
+}
+
+div.whale-result::before {
+    contents: '+';
+}
+div.whale-result{
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    font-weight: 600;
+}
+
+/* THINGS TO DO FOR MOBILE:
+ * - For each width: 80%, change to 95% if on mobile.
+ *
+ *
+ *
+ */
 
