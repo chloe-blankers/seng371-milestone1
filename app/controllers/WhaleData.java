@@ -15,6 +15,7 @@ public class WhaleData {
     private String species;
 
     @Constraints.Min(0)
+    @Constraints.Max(173000) //largest whale ever recorded
     private int weight;
 
     @Constraints.Required
