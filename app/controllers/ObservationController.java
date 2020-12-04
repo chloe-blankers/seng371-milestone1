@@ -18,7 +18,7 @@ import static play.libs.Scala.asScala;
 
 public class ObservationController extends Controller {
 
-    /*private final Form<ObservationData> form;
+    private final Form<ObservationData> form;
     private MessagesApi messagesApi;
     private final List<Observation> observations;
 
@@ -64,7 +64,7 @@ public class ObservationController extends Controller {
             observations.add(new Observation(data.getWhales(), data.get(), data.getGender()));
             return redirect(routes.ObservationController.listWhales()).flashing("info", "Whale added!");
         }
-    }*/
+    }
 
 }
 
