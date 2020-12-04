@@ -8,34 +8,45 @@
         <title>Whales</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
     <div class="navigation">
-        <ul>
-            <li><a href="@routes.WhaleController.index()">Home</a></li>
-            <li><h><a href="@routes.WhaleController.listWhales">@routes.WhaleController.listWhales</a></li>
-            <li><a href="">Observations</a></li>
-            <li><a href="">Stats</a></li>
-        </ul>
+        <div class="nav-element" >
+            <a class="navigation" href="@routes.WhaleController.index()"><i class="fa fa-home"></i> Home</a>
+        </div>
+        <div class="nav-element" >
+            <a class="navigation" href="@routes.WhaleController.listWhales"><i class="fa fa-eye"></i> @routes.WhaleController.listWhales</a>
+        </div>
+        <div class="nav-element" >
+            <a class="navigation" href=""><i class="fa fa-search"></i> Observations</a>
+        </div>
+        <div class="nav-element" >
+            <a class="navigation" href=""> <i class="fa fa-bar-chart"></i> Stats</a>
+        </div>
     </div>
-    <h1>Observations</h1>
+    <div class="nav-holder"></div>
 
+    <div class="box-label">
+        <h3>Observations</h3>
+    </div>
 
-    @request.flash.asScala().data.map { case (name, value) =>
-        <div class="@name">@value</div>
-    }
+    <div id="table-holder">
+        <table>
+            <thead>
+                <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
+            </thead>
+            <tbody>
+            @for(w <- Whales) {
+                <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
 
-    <table>
-        <thead>
-            <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
-        </thead>
-        <tbody>
-        @for(w <- Whales) {
-            <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
-        }
-        </tbody>
-    </table>
-
+    <div class="box-label">
+        <h3>Add New Whale</h3>
+    </div>
     @b4.vertical.form(routes.WhaleController.createWhale) { implicit vfc =>
         @helper.CSRF.formField
         <label>weight</label>
@@ -44,7 +55,10 @@
         @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
         <label>species</label>
         @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
-        <button type="submit">Create Whale</button>
+        <button type="submit"></i>Create</button>
+    @request.flash.asScala().data.map { case (name, value) =>
+        <div class="@name">@value</div>
+    }
     }
     </body>
     </html>

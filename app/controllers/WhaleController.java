@@ -18,6 +18,7 @@ import static play.libs.Scala.asScala;
  * An example of form processing.
  *
  * https://playframework.com/documentation/latest/JavaForms
+ * https://adrianhurt.github.io/play-bootstrap/
  */
 @Singleton
 public class WhaleController extends Controller {
