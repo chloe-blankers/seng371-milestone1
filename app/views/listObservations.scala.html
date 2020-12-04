@@ -8,22 +8,28 @@
             <title>Observations</title>
             <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
             <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         </head>
         <body>
             <div class="navigation">
-                <ul>
-                    <li><a href="@routes.WhaleController.index()">Home</a></li>
-                    <li><a class="navigation" href="@routes.ObservationController.listObservations"><i class="fa fa-eye"></i> @routes.ObservationController.listObservations</a></li>
-                    <li><a href="">Observations</a></li>
-                    <li><a href="">Stats</a></li>
-                </ul>
+                <div class="nav-element" >
+                    <a class="navigation" href="@routes.WhaleController.index()"><i class="fa fa-home"></i> Home</a>
+                </div>
+                <div class="nav-element" >
+                    <a class="navigation" href="@routes.WhaleController.listWhales"><i class="fa fa-eye"></i> @routes.WhaleController.listWhales</a>
+                </div>
+                <div class="nav-element" >
+                    <a class="navigation" href="@routes.ObservationController.listObservations"><i class="fa fa-search"></i>Observations</a>
+                </div>
+                <div class="nav-element" >
+                    <a class="navigation" href=""> <i class="fa fa-bar-chart"></i> Stats</a>
+                </div>
             </div>
-            <h1>Observations</h1>
+            <div class="nav-holder"></div>
 
-
-            @request.flash.asScala().data.map { case (name, value) =>
-            <div class="@name">@value</div>
-            }
+            <div class="box-label">
+                <h3>Observations</h3>
+            </div>
 
             <table>
                 <thead>
@@ -33,11 +39,6 @@
                 @for(o <- observations) {
 
                     <tr><td>@o.location</td><td>@o.time</td></tr>
-                    int i = 0;
-                    while(i < 3) {
-                            <tr><th>whale i</th></tr>
-                        i++;
-                    }
                 }
                 </tbody>
             </table>

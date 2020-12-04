@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ObservationData {
 
-    //@Constraints.Required;
+    @Constraints.Required
     private ArrayList<Whale> whales;
 
     //@Constraints.Required;
