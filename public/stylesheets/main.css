@@ -293,11 +293,11 @@ div.whale-result-holder {
     background: var(--background);
     display: flex;
     flex-direction: row;
-    justify-contents: flex-start;
+    justify-content: ;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     padding: 1rem;
 
 }
@@ -310,11 +310,26 @@ div.whale-result{
     padding-left: 1rem;
     padding-right: 1rem;
     padding-bottom: 0.5rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     background-color: var(--primary);
     color: var(--on-primary);
     font-weight: 600;
+}
+div.whale-select-radio-button {
+  content: "";
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: center;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: var(--background);
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
 }
 
 /* THINGS TO DO FOR MOBILE:
