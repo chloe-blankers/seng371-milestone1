@@ -5,7 +5,7 @@
 @main("observations") {
     <html lang="en">
         <head>
-            <title>Whales</title>
+            <title>Observations</title>
             <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
             <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         </head>
@@ -13,7 +13,7 @@
             <div class="navigation">
                 <ul>
                     <li><a href="@routes.WhaleController.index()">Home</a></li>
-                    <li><h><a href="@routes.WhaleController.listWhales">@routes.WhaleController.listWhales</a></li>
+                    <li><a class="navigation" href="@routes.ObservationController.listObservations"><i class="fa fa-eye"></i> @routes.ObservationController.listObservations</a></li>
                     <li><a href="">Observations</a></li>
                     <li><a href="">Stats</a></li>
                 </ul>
@@ -27,11 +27,17 @@
 
             <table>
                 <thead>
-                    <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
+                    <tr><th>Location</th><th>Date and Time</th></tr>
                 </thead>
                 <tbody>
-                @for(w <- Whales) {
-                    <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
+                @for(o <- observations) {
+
+                    <tr><td>@o.location</td><td>@o.time</td></tr>
+                    int i = 0;
+                    while(i < 3) {
+                            <tr><th>whale i</th></tr>
+                        i++;
+                    }
                 }
                 </tbody>
             </table>

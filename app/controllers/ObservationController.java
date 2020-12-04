@@ -51,8 +51,8 @@ public class ObservationController extends Controller {
         return ok(views.html.index.render());
     }
 
-    public Result listWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(observations), form, request, messagesApi.preferred(request)));
+    public Result listObservations(Http.Request request) {
+        return ok(views.html.listObservations.render(asScala(observations), form, request, messagesApi.preferred(request)));
     }
 
     public Result createObservation(Http.Request request) {
@@ -65,11 +65,11 @@ public class ObservationController extends Controller {
                 logger.error(err.toString());
             }
             logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listWhales.render(asScala(Whales), boundForm, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listObservations.render(asScala(observations), boundForm, request, messagesApi.preferred(request)));
         } else {
-            Observation data = boundForm.get();
-            observations.add(new Observation(data.getWhales(), data.get(), data.getGender()));
-            return redirect(routes.ObservationController.listWhales()).flashing("info", "Whale added!");
+            ObservationData data = boundForm.get();
+            observations.add(new Observation(data.getWhales(), data.getTime(), data.getLocation()));
+            return redirect(routes.ObservationController.listObservations()).flashing("info", "Whale added!");
         }
     }
 

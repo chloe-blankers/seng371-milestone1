@@ -9,5 +9,9 @@ GET     /                           controllers.WhaleController.index
 GET     /Whales                    controllers.WhaleController.listWhales(request: Request)
 POST    /Whales                    controllers.WhaleController.createWhale(request: Request)
 
+# Observations
+GET     /observations                    controllers.ObservationController.listObservations(request: Request)
+POST    /observations                    controllers.ObservationController.createObservation(request: Request)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
