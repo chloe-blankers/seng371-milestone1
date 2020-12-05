@@ -13,6 +13,7 @@ body {
     --divider:          #BDBDBD;
 
     --navbar-height: 4em;
+    --space-ratio: 80%;
 
     background-color: var(--background);
     font-family: Roboto, Oxygen, Ubuntu, "Helvetica Neue", sans-serif;
@@ -22,21 +23,30 @@ body {
     vertical-align: baseline;
     margin: 0;
 
-/* FONT SIZES */
   font-size: 13pt;
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.00;
 }
+
+/* CHANGES PER SCREEN SIZE */
 @media screen and (max-width: 1680px) {
-  html {
-    font-size: 11pt; } }
+  body {
+    font-size: 11pt;
+  }
+}
 @media screen and (max-width: 980px) {
-  html {
-    font-size: 12pt; } }
+  body {
+    font-size: 11pt;
+    --space-ratio: 90%;
+  }
+}
 @media screen and (max-width: 480px) {
-  html {
-    font-size: 11pt; } }
+  body {
+    font-size: 10pt;
+    --space-ratio: 95%;
+  }
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
@@ -62,15 +72,6 @@ h5 {
   font-size: 0.9rem; }
 h6 {
   font-size: 0.7rem; }
-@media screen and (max-width: 750px) {
-  h1 {
-    font-size: 2.75rem;
-    line-height: 1.3; }
-  h2 {
-    font-size: 1.75rem;
-    line-height: 1.5; }
-  h3 {
-    font-size: 1.25rem; } }
 
 /* BOX LABEL */
 div.box-label {
@@ -197,9 +198,9 @@ div#table-holder {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 90%;
-  margin-left: 5%;
-  margin-right: 5%;
+  width: var(--space-ratio);
+  margin-left: auto;
+  margin-right: auto;
   border-bottom: 2px solid var(--divider);
 }
 table thead tr {
