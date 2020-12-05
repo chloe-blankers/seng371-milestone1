@@ -10,7 +10,7 @@ import play.i18n.MessagesApi;
 import play.mvc.*;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class ObservationController extends Controller {
         whales.add(w2);
         whales.add(w3);
         this.observations = com.google.common.collect.Lists.newArrayList(
-            new Observation(whales, LocalDateTime.now(), "Canada, BC, Victoria")
+            new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
     }
 
@@ -68,8 +68,8 @@ public class ObservationController extends Controller {
             return badRequest(views.html.listObservations.render(asScala(observations), boundForm, request, messagesApi.preferred(request)));
         } else {
             ObservationData data = boundForm.get();
-            observations.add(new Observation(data.getWhales(), data.getTime(), data.getLocation()));
-            return redirect(routes.ObservationController.listObservations()).flashing("info", "Whale added!");
+            observations.add(new Observation(data.getWhales(), data.getDate(), data.getTime(), data.getLocation()));
+            return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
         }
     }
 

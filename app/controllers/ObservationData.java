@@ -4,6 +4,7 @@ import models.Whale;
 import play.data.validation.Constraints;
 
 import javax.validation.Constraint;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -12,11 +13,14 @@ public class ObservationData {
     @Constraints.Required
     private ArrayList<Whale> whales;
 
-    //@Constraints.Required;
+    @Constraints.Required
     private String location;
 
-    //@Constraints.Required;
-    private LocalDateTime time;
+    @Constraints.Required
+    private String date;
+
+    @Constraints.Required
+    private String time;
 
     public ObservationData() {
     }
@@ -37,11 +41,19 @@ public class ObservationData {
         this.location = location;
     }
 
-    public LocalDateTime getTime() {
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }

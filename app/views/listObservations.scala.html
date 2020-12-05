@@ -33,12 +33,17 @@
 
             <table>
                 <thead>
-                    <tr><th>Location</th><th>Date and Time</th></tr>
+                    <tr><th>Location</th><th>Date</th><th>Time</th></tr>
                 </thead>
                 <tbody>
                 @for(o <- observations) {
 
-                    <tr><td>@o.location</td><td>@o.time</td></tr>
+                    <tr><td>@o.location</td><td>@o.date</td><td>@o.time</td></tr>
+                    <tr><td>Whales</td><td></td><td></td><td></td></tr>
+                    <tr><td>orca</td><td>3000kgs</td><td>male</td><td>0</td></tr>
+                    <tr><td>orca</td><td>2000kgs</td><td>female</td><td>1</td></tr>
+                    <tr><td>killer</td><td>1000kgs</td><td>male</td><td>2</td></tr>
+
                 }
                 </tbody>
             </table>
@@ -52,6 +57,17 @@
                 <label>species</label>
                 @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
                 <button type="submit">Create Whale</button>
+            }
+
+            @b4.vertical.form(routes.ObservationController.createObservation) { implicit vfc =>
+                @helper.CSRF.formField
+                <label>location</label>
+                @b4.text( form("location"))
+                <label>date</label>
+                @b4.date(form("date"))
+                <label>time</label>
+                @b4.select( form("time"), options = Seq("1am" -> "1am", "2am" -> "2am", "3am" -> "3am", "4am" -> "4am", "5am" -> "5am", "6am" -> "6am", "7am" -> "7am", "8am" -> "8am", "9am" -> "9am", "1am" -> "2am", "3am" -> "3am", "4am" -> "4am"))
+                <button type="submit">Create Observation</button>
             }
         </body>
     </html>
