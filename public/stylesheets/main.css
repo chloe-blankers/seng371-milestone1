@@ -78,7 +78,7 @@ div.box-label {
     margin-top: 4rem;
     margin-left: auto;
     margin-right: auto;
-    width: 80vw;
+    width: var(--space-ratio);
 }
 
 
@@ -94,7 +94,7 @@ form {
     padding-top: 2rem;
     padding-bottom: 2rem;
     box-shadow: 0px 0px 10px var(--divider);
-    width: 80vw;
+    width: var(--space-ratio);
 }
 form > label {
     border: 0;
@@ -191,7 +191,7 @@ div#table-holder {
     padding-top: 2rem;
     padding-bottom: 2rem;
     box-shadow: 0px 0px 10px var(--divider);
-    width: 80vw;
+    width: var(--space-ratio);
 
 }
 
@@ -275,5 +275,23 @@ div.nav-holder {
     width: 100%;
     height: var(--navbar-height);
 }
+
+/* GRAPHS */
+div.graph-holder {
+
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    align-items: center;
+    background-color: var(--surface);
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    box-shadow: 0px 0px 10px var(--divider);
+    width: var(--space-ratio);
+
+}
+
 
 
