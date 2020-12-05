@@ -288,8 +288,7 @@ div.graph-holder {
     margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding: 2rem;
     width: var(--space-ratio);
 }
 div.graph-loading {
