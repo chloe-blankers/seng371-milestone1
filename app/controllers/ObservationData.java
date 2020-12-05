@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ObservationData {
 
     @Constraints.Required
-    private ArrayList<Whale> whales;
+    private Whale whale;
 
     @Constraints.Required
     private String location;
@@ -25,12 +25,12 @@ public class ObservationData {
     public ObservationData() {
     }
 
-    public ArrayList<Whale> getWhales() {
-        return whales;
+    public Whale getWhale() {
+        return whale;
     }
 
-    public void setWhales(ArrayList<Whale> whales) {
-        this.whales = whales;
+    public void setWhales(Whale whale) {
+        this.whale = whale;
     }
 
     public String getLocation() {
