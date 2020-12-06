@@ -5,8 +5,7 @@
 <head>
     <title>Stats About Whales</title>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-    <script rel="text/javascript" src="@routes.Assets.versioned("javascripts/stats.js")"></script>
+
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -58,14 +57,15 @@
     </div>
 </div>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+<script rel="text/javascript" src="@routes.Assets.versioned("javascripts/stats.js")"></script>
 <script>
     const dirtyData = "{ \"whales\": [ @for(Whale <- Whales){ @Whale.toString() } {\"id\":-1}] }";
     const whaleData = dirtyData.replace( new RegExp('&quot;', 'g'), "\"" );
 
     loadWhaleNumberGraph('graph-1', whaleData);
-    loadGraph('graph-2', ''); // TODO: Update to our REST API
-    loadGraph('graph-3', ''); // TODO: Update to our REST API
+
+
 </script>
 </body>
 </html>
