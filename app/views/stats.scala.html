@@ -1,0 +1,79 @@
+@(Whales: List[Whale])
+
+@main("Stats About Whales") {
+<html lang="en">
+<head>
+    <title>Stats About Whales</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+</head>
+<body>
+<div class="navigation">
+    <div class="nav-element" >
+        <a class="navigation" href="@routes.WhaleController.index()"><i class="fa fa-home"></i> Home</a>
+    </div>
+    <div class="nav-element" >
+        <a class="navigation" href="@routes.WhaleController.listWhales"><i class="fa fa-eye"></i> @routes.WhaleController.listWhales</a>
+    </div>
+    <div class="nav-element" >
+        <a class="navigation" href=""><i class="fa fa-search"></i> Observations</a>
+    </div>
+    <div class="nav-element" >
+        <a class="navigation" href="@routes.WhaleController.stats"> <i class="fa fa-bar-chart"></i> Stats</a>
+    </div>
+</div>
+<div class="nav-holder"></div>
+
+<div class="box-label">
+    <h3>Graph #1: Number of Whales</h3>
+</div>
+<div class="graph-holder" id="graph-1" >
+    <div class="graph-loading">
+        <div class="graph-loading-spinner" ></div>
+        <h4 class="graph-loading-message">Please wait...</h4>
+    </div>
+</div>
+
+<div class="box-label">
+    <h3>Graph #2: Average Weight of Each Species</h3>
+</div>
+<div class="graph-holder" id="graph-2" >
+    <div class="graph-loading">
+        <div class="graph-loading-spinner" ></div>
+        <h4 class="graph-loading-message">Please wait...</h4>
+    </div>
+</div>
+
+<div class="box-label">
+    <h3>Graph #3:</h3>
+</div>
+<div class="graph-holder" id="graph-3" >
+    <div class="graph-loading">
+        <div class="graph-loading-spinner" ></div>
+        <h4 class="graph-loading-message">Not Yet Implemented</h4>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="footer-col">
+        <h4 class="footer-cell">A SENG330 Project</h4>
+    </div>
+</div>
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+<script rel="text/javascript" src="@routes.Assets.versioned("javascripts/stats.js")"></script>
+<script>
+    const dirtyData = "{ \"whales\": [ @for(Whale <- Whales){ @Whale.toString() } {\"id\":-1}] }";
+    const whaleData = dirtyData.replace( new RegExp('&quot;', 'g'), "\"" );
+
+    loadWhaleNumberGraph('graph-1', whaleData);
+    loadWhaleWeightGraph('graph-2', whaleData);
+
+
+</script>
+</html>
+}

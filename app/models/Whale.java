@@ -23,4 +23,8 @@ public class Whale {
         this.gender = gender;
         this.id = atomicLong.getAndAdd(1);
     }
+
+    public String toString(){
+        return "{ \"species\":\"" + species + "\", \"weight\":" + weight + ", \"gender\":\"" + gender + "\", \"id\":" + id + " },";
+    }
 }

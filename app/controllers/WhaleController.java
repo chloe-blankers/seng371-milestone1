@@ -51,6 +51,11 @@ public class WhaleController extends Controller {
         return ok(views.html.index.render());
     }
 
+    public Result stats() {
+        return ok(views.html.stats.render(Whales));
+    }
+
+
     public Result listWhales(Http.Request request) {
         return ok(views.html.listWhales.render(asScala(Whales), form, request, messagesApi.preferred(request)));
     }
