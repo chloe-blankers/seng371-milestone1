@@ -280,6 +280,7 @@ div.nav-holder {
 div.graph-holder {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
     background-color: var(--surface);
@@ -288,8 +289,11 @@ div.graph-holder {
     margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
-    padding: 2rem;
     width: var(--space-ratio);
+    padding: 2em;
+    height: 60vh;
+}
+canvas{
 }
 div.graph-loading {
     display: flex;
@@ -314,7 +318,7 @@ div.graph-loading > h4 {
   50% { -webkit-transform: perspective(120px) rotateY(180deg) }
   100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
 }
-@keyframes sk-rotateplane {
+@keyframes sk-rotateplane { /* Sourced from: https://tobiasahlin.com/spinkit/ */
   0% {
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);
     -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)

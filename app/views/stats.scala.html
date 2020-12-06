@@ -5,7 +5,6 @@
 <head>
     <title>Stats About Whales</title>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -33,17 +32,17 @@
 <div class="graph-holder" id="graph-1" >
     <div class="graph-loading">
         <div class="graph-loading-spinner" ></div>
-        <h4>Please wait...</h4>
+        <h4 class="graph-loading-message">Please wait...</h4>
     </div>
 </div>
 
 <div class="box-label">
-    <h3>Graph #2:</h3>
+    <h3>Graph #2: Average Weight of Each Species</h3>
 </div>
 <div class="graph-holder" id="graph-2" >
     <div class="graph-loading">
         <div class="graph-loading-spinner" ></div>
-        <h4>Please wait...</h4>
+        <h4 class="graph-loading-message">Please wait...</h4>
     </div>
 </div>
 
@@ -53,7 +52,7 @@
 <div class="graph-holder" id="graph-3" >
     <div class="graph-loading">
         <div class="graph-loading-spinner" ></div>
-        <h4>Please wait...</h4>
+        <h4 class="graph-loading-message">Not Yet Implemented</h4>
     </div>
 </div>
 
@@ -64,6 +63,7 @@
     const whaleData = dirtyData.replace( new RegExp('&quot;', 'g'), "\"" );
 
     loadWhaleNumberGraph('graph-1', whaleData);
+    loadWhaleWeightGraph('graph-2', whaleData);
 
 
 </script>
