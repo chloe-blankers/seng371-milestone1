@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class ObservationData {
 
-    @Constraints.Required
-    private Whale whale;
+    //@Constraints.Required
+    //private Whale whale;
 
     @Constraints.Required
     private String location;
@@ -25,13 +25,13 @@ public class ObservationData {
     public ObservationData() {
     }
 
-    public Whale getWhale() {
+    /*public Whale getWhale() {
         return whale;
     }
 
     public void setWhales(Whale whale) {
         this.whale = whale;
-    }
+    }*/
 
     public String getLocation() {
         return location;
