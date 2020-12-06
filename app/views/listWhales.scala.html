@@ -9,6 +9,7 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     </head>
     <body>
     <div class="navigation">
@@ -22,7 +23,7 @@
             <a class="navigation" href="@routes.ObservationController.listObservations"><i class="fa fa-search"></i>Observations</a>
         </div>
         <div class="nav-element" >
-            <a class="navigation" href=""> <i class="fa fa-bar-chart"></i> Stats</a>
+            <a class="navigation" href="@routes.WhaleController.stats"> <i class="fa fa-bar-chart"></i> Stats</a>
         </div>
     </div>
     <div class="nav-holder"></div>
@@ -61,6 +62,7 @@
     }
     }
     </body>
+
     </html>
 
 }
