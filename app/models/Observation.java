@@ -5,13 +5,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Observation {
-    //public Whale whale;
+
+    public ArrayList<Whale> whales;
     public String date;
     public String time;
     public String location;
 
-    public Observation( String date, String time, String location) {
-        //this.whale = whale;
+    public Observation(ArrayList<Whale> whales, String date, String time, String location) {
+        this.whales = whales;
         this.date = date;
         this.time = time;
         this.location = location;

@@ -36,6 +36,9 @@
                 <tbody>
                 @for(o <- observations) {
                     <tr><td>@o.location</td><td>@o.date</td><td>@o.time</td></tr>
+                    @for(w <- o.whales) {
+                        <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
+                    }
                 }
 
                 </tbody>
