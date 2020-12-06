@@ -331,6 +331,28 @@ div.graph-loading > h4 {
   }
 }
 
+/* FOOTER */
+div.footer{
+    width: var(--space-ratio);
+    margin: auto;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    color: var(--on-background);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+div.footer-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+.footer-cell{
+    margin-top: 0.5rem;
+}
+
 
 
 
