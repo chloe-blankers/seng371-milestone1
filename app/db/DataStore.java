@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class DataStore {
     private static final String DB_DRIVER = "org.h2.Driver";
     private static final String URL = "jdbc:h2:mem";
@@ -59,7 +57,7 @@ public class DataStore {
                 throwables.printStackTrace();
             }
         }
-        assertEquals(true, pass);
+        assert(pass);
     }
 
     public void addWhale(Whale w) throws SQLException {
@@ -97,7 +95,7 @@ public class DataStore {
                 throwables.printStackTrace();
             }
         }
-        assertEquals(true, pass);
+        assert(pass);
     }
 
     public void addWhales(List<Whale> newWhales) throws SQLException {
@@ -139,7 +137,7 @@ public class DataStore {
                 throwables.printStackTrace();
             }
         }
-        assertEquals(true, pass);
+        assert(pass);
     }
 
     public List<Whale> getWhales() throws IOException, SQLException {
@@ -165,7 +163,7 @@ public class DataStore {
             var lgr = Logger.getLogger(DataStore.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        assertEquals(true, pass);
+        assert(pass);
         connection.close();
         return whaleList;
     }
