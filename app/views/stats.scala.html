@@ -1,4 +1,4 @@
-@()
+@(Whales: List[Whale])
 
 @main("Stats About Whales") {
 <html lang="en">
@@ -29,7 +29,7 @@
 <div class="nav-holder"></div>
 
 <div class="box-label">
-    <h3>Graph #1:</h3>
+    <h3>Graph #1: Number of Whales</h3>
 </div>
 <div class="graph-holder" id="graph-1" >
     <div class="graph-loading">
@@ -60,7 +60,10 @@
 
 
 <script>
-    loadGraph('graph-1', ''); // TODO: Update to our REST API
+    const dirtyData = "{ \"whales\": [ @for(Whale <- Whales){ @Whale.toString() } {\"id\":-1}] }";
+    const whaleData = dirtyData.replace( new RegExp('&quot;', 'g'), "\"" );
+
+    loadWhaleNumberGraph('graph-1', whaleData);
     loadGraph('graph-2', ''); // TODO: Update to our REST API
     loadGraph('graph-3', ''); // TODO: Update to our REST API
 </script>

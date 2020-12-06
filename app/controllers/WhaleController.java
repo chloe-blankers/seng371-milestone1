@@ -45,7 +45,7 @@ public class WhaleController extends Controller {
     }
 
     public Result stats() {
-        return ok(views.html.stats.render());
+        return ok(views.html.stats.render(Whales));
     }
 
 
