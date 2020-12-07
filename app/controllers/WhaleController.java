@@ -63,17 +63,25 @@ public class WhaleController extends Controller {
         //Content negotiation
         if (request.accepts("text/html")) {
             return ok(views.html.listWhales.render(asScala(Whales), form, request, messagesApi.preferred(request)));
-        } else {
+        }
+        else {
             ObjectNode result = Json.newObject();
-            if (Whales.size() > 0) {
-                //convert Whales arraylist to json data
-                result.put("isSuccessful", true);
-                result.putPOJO("body", Whales);
-                //return json data
-            } else{
-                result.put("isSuccessful",false);
-                result.put("body","No Whales in system");
+            if (request.accepts("application/txt+json")) {
+                if (Whales.size() > 0) {
+                    //convert Whales arraylist to json data
+                    result.put("isSuccessful", true);
+                    result.putPOJO("body", Whales);
+                    //return json data
+                } else {
+                    result.put("isSuccessful", false);
+                    result.put("body", "No Whales in system");
+                }
             }
+            else{
+                    result.put("isSuccessful",false);
+                    result.put("body","MIME type not supported.");
+            }
+
             return ok(result);
         }
     }
