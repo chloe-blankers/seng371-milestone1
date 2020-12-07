@@ -71,7 +71,7 @@ public class ObservationController extends Controller {
             ObservationData data = boundForm.get();
             ArrayList<Whale> whales = new ArrayList<>();
             int numWhales = data.getNumWhales();
-            for(int i = 0; i < numWhales; i++){
+            for(int i = 0; i < numWhales; i++) {
                 whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
             }
             observations.add(new Observation(whales, data.getDate(), data.getTime(), data.getLocation()));
@@ -93,7 +93,7 @@ public class ObservationController extends Controller {
         } else {
             WhaleData data = boundForm.get();
             System.out.println("data.getId():"+data.getId());
-            //Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
+            Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
             return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
         }
     }
