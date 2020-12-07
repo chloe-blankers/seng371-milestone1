@@ -11,6 +11,7 @@ import play.mvc.*;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static play.libs.Scala.asScala;
@@ -88,9 +89,13 @@ public class WhaleController extends Controller {
             FilterData data = boundForm2.get();
             FilteredWhales = Whales
                         .stream()
-                        .filter(w -> w.species.equals(data.getFilterspecies()))
+                        .filter(w -> w.species.trim().toLowerCase().startsWith(data.getFilterspecies().trim().toLowerCase()))
                         .collect(Collectors.toList());
-            return redirect(routes.WhaleController.listFilterWhales()).flashing("info", "almost there");
+            FilteredWhales = FilteredWhales
+                    .stream()
+                    .filter(w -> w.gender.trim().toLowerCase().startsWith(data.getFiltergender().trim().toLowerCase()))
+                    .collect(Collectors.toList());
+            return redirect(routes.WhaleController.listFilterWhales()).flashing("info", "Whales Filtered");
         }
     }
 }
