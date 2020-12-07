@@ -38,7 +38,7 @@
     @b4.vertical.form(routes.WhaleController.filterWhales) { implicit vfc =>
         @helper.CSRF.formField
         @b4.select( form2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
-        @b4.submit('class -> "btn btn-primary"){ <i class="fa fa-ok"></i> Submit }
+        <button type="submit"></i>Filter</button>
 
     @request.flash.asScala().data.map { case (name, value) =>
         <div class="@name">@value</div>
@@ -69,7 +69,7 @@
         @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
         <label>species</label>
         @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
-        @b4.submit('class -> "btn btn-primary"){ <i class="fa fa-ok"></i> Submit }
+        <button type="submit"></i>Create</button>
     @request.flash.asScala().data.map { case (name, value) =>
         <div class="@name">@value</div>
     }

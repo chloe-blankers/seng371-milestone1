@@ -26,7 +26,6 @@ public class WhaleController extends Controller {
     private final Form<WhaleData> form;
     private MessagesApi messagesApi;
     private final List<Whale> Whales;
-    //private final List<Whale> FilterWhales;
 
     private final Form<FilterData> form2;
 
@@ -42,12 +41,6 @@ public class WhaleController extends Controller {
                 new Whale( "Blue", 301, "Male")
         );
 
-//        this.FilterWhales= com.google.common.collect.Lists.newArrayList(
-//                new Whale( "Beluga", 204, "Male"),
-//                new Whale( "Orca", 111, "Female"),
-//                new Whale( "Blue", 301, "Male")
-//        );
-//
         this.form2 = formFactory.form(FilterData.class);
     }
 
@@ -60,6 +53,7 @@ public class WhaleController extends Controller {
     }
 
     public Result createWhale(Http.Request request) {
+        System.out.println("ayyyyyy");
         final Form<WhaleData> boundForm = form.bindFromRequest(request);
 
         if (boundForm.hasErrors()) {
@@ -73,7 +67,6 @@ public class WhaleController extends Controller {
         } else {
             WhaleData data = boundForm.get();
             Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
-            //FilterWhales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
             return redirect(routes.WhaleController.listWhales()).flashing("info", "Whale added!");
         }
     }
@@ -86,7 +79,7 @@ public class WhaleController extends Controller {
             logger.error("errors = {}", boundForm2.errors());
             return badRequest(views.html.listWhales.render(asScala(Whales), form, boundForm2, request, messagesApi.preferred(request)));
         } else {
-            FilterData data = boundForm2.value().get();
+            FilterData data = boundForm2.get();
             Whales.add(new Whale(data.getFilterspecies(), 13, "Male"));
             return redirect(routes.WhaleController.listWhales()).flashing("info", "almost there");
         }
