@@ -49,22 +49,16 @@
                 </tbody>
             </table>
 
-
-            @b4.vertical.form(routes.ObservationController.createWhale) { implicit vfc =>
+            @b4.vertical.form(routes.ObservationController.createObservation) { implicit vfc =>
                 @helper.CSRF.formField
+                <label>number of whales</label>
+                @b4.text(form("numWhales"))
                 <label>weight</label>
                 @b4.text(form("weight"))
                 <label>gender</label>
                 @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
                 <label>species</label>
                 @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
-                <button type="submit">Add Whale</button>
-            }
-
-            @b4.vertical.form(routes.ObservationController.createObservation) { implicit vfc =>
-                @helper.CSRF.formField
-                <label>number of whales</label>
-                @b4.text(form("numWhales"))
                 <label>location</label>
                 @b4.text( form("location"))
                 <label>date</label>
