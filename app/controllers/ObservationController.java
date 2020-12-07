@@ -26,24 +26,29 @@ import static play.libs.Scala.asScala;
 public class ObservationController extends Controller {
 
     private final Form<ObservationData> form;
+    private final Form<WhaleData> Whaleform;
     private MessagesApi messagesApi;
     private final List<Observation> observations;
+    private final ArrayList<Whale> Whales;
+    public WhaleController wc;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
     @Inject
     public ObservationController(FormFactory formFactory, MessagesApi messagesApi) {
+        System.out.println("HERE$$$$4");
         this.form = formFactory.form(ObservationData.class);
+        this.Whaleform = formFactory.form(WhaleData.class);
         this.messagesApi = messagesApi;
         Whale w1 = new Whale( "Beluga", 204, "Male");
         Whale w2 = new Whale( "Orca", 111, "Female");
         Whale w3 = new Whale( "Blue", 301, "Male");
-        ArrayList<Whale> whales = new ArrayList<>();
-        whales.add(w1);
-        whales.add(w2);
-        whales.add(w3);
+        this.Whales = new ArrayList<>();
+        Whales.add(w1);
+        Whales.add(w2);
+        Whales.add(w3);
         this.observations = com.google.common.collect.Lists.newArrayList(
-            new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
+            new Observation(Whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
     }
 
@@ -68,7 +73,26 @@ public class ObservationController extends Controller {
             return badRequest(views.html.listObservations.render(asScala(observations), boundForm, request, messagesApi.preferred(request)));
         } else {
             ObservationData data = boundForm.get();
-            observations.add(new Observation(data.getWhales(), data.getDate(), data.getTime(), data.getLocation()));
+            observations.add(new Observation(Whales, data.getDate(), data.getTime(), data.getLocation()));
+            return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
+        }
+    }
+
+    public Result createWhale(Http.Request request) {
+        final Form<ObservationData> boundForm = form.bindFromRequest(request);
+        System.out.println("HERE$$$$4");
+        if (boundForm.hasErrors()) {
+            logger.error("errors = {}", boundForm.errors());
+            logger.error("boundForm.errors().size():"+boundForm.errors().size());
+            for(play.data.validation.ValidationError err: boundForm.errors()){
+                logger.error(err.toString());
+            }
+            logger.error("boundForm.toString():"+boundForm.toString());
+            return badRequest(views.html.listObservations.render(asScala(observations), boundForm, request, messagesApi.preferred(request)));
+        } else {
+            WhaleData data = boundForm.get();
+            System.out.println("data.getId():"+data.getId());
+            Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
             return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
         }
     }

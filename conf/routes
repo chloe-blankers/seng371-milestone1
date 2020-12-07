@@ -12,6 +12,8 @@ POST    /Whales                   controllers.WhaleController.createWhale(reques
 # Observations
 GET     /observations                    controllers.ObservationController.listObservations(request: Request)
 POST    /observations                    controllers.ObservationController.createObservation(request: Request)
+GET    /observations                    controllers.ObservationController.listObservations(request: Request)
+POST    /observations                    controllers.ObservationController.createWhale(request: Request)
 
 # Stats
 GET     /Stats                      controllers.WhaleController.stats

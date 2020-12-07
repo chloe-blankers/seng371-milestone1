@@ -8,18 +8,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ObservationData {
+public class ObservationData extends WhaleData {
 
-    @Constraints.Required
+    //@Constraints.Required
     private ArrayList<Whale> whales;
 
-    @Constraints.Required
+    //@Constraints.Required
     private String location;
 
-    @Constraints.Required
+    //@Constraints.Required
     private String date;
 
-    @Constraints.Required
+    //@Constraints.Required
     private String time;
 
     public ObservationData() {

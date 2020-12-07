@@ -1,5 +1,9 @@
 package models;
 
+import controllers.WhaleData;
+import play.data.DynamicForm;
+import play.data.Form;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
