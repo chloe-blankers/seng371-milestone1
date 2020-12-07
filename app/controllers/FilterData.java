@@ -17,8 +17,23 @@ public class FilterData {
         this.filtergender = filtergender;
     }
 
+    public int getMinweight() {
+        return minweight;
+    }
+    public void setMinweight(int minweight) {
+        this.minweight = minweight;
+    }
+    public int getMaxweight() {
+        return maxweight;
+    }
+    public void setMaxweight(int maxweight) {
+        this.maxweight = maxweight;
+    }
+
     private String filterspecies;
     private String filtergender;
+    private int minweight;
+    private int maxweight;
 
     public FilterData() {
     }

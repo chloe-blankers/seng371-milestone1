@@ -27,7 +27,7 @@ public class WhaleController extends Controller {
 
     private final Form<WhaleData> form;
     private MessagesApi messagesApi;
-    private final List<Whale> Whales;
+    private List<Whale> Whales;
 
     private final Form<FilterData> form2;
     private List<Whale> FilteredWhales;
@@ -95,6 +95,23 @@ public class WhaleController extends Controller {
                     .stream()
                     .filter(w -> w.gender.trim().toLowerCase().startsWith(data.getFiltergender().trim().toLowerCase()))
                     .collect(Collectors.toList());
+            System.out.println("data.getMaxweight():"+data.getMaxweight());
+            if(data.getMaxweight()>0){
+                System.out.println("if(data.getMaxweight()>0)");
+                FilteredWhales = FilteredWhales
+                        .stream()
+                        .filter(w -> w.weight<(data.getMaxweight()))
+                        .collect(Collectors.toList());
+            }
+            System.out.println("data.getMinweight():"+data.getMinweight());
+            if(data.getMinweight()>0) {
+                System.out.println("if(data.getMinweight()>0)");
+                FilteredWhales = FilteredWhales
+                        .stream()
+                        .filter(w -> w.weight > (data.getMinweight()))
+                        .collect(Collectors.toList());
+            }
+            this.Whales = FilteredWhales;
             return redirect(routes.WhaleController.listFilterWhales()).flashing("info", "Whales Filtered");
         }
     }

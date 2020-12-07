@@ -31,7 +31,7 @@
     <div class="box-label">
         <h3>Filter Whales</h3>
     </div>
-    @b4.vertical.form(routes.WhaleController.filterWhales) { implicit vfc =>
+    @b4.inline.form(routes.WhaleController.filterWhales) { implicit vfc =>
         @helper.CSRF.formField
         @b4.select( form2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
             "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
@@ -40,6 +40,8 @@
         @b4.select( form2("filtergender"), options = Seq("Male" -> "Male", "Female" -> "Female"),
             'value -> "Male", '_default -> "Male"
         )
+        <label>Max Weight</label> @b4.text( form2("maxweight"), 'value -> "900000", '_default -> "900000")
+        <label>Min Weight</label> @b4.text( form2("minweight"), 'value -> "0", '_default -> "0")
         <button type="submit"></i>Filter</button>
         @request.flash.asScala().data.map { case (name, value) =>
             <div class="@name">@value</div>
