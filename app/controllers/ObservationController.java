@@ -26,19 +26,15 @@ import static play.libs.Scala.asScala;
 public class ObservationController extends Controller {
 
     private final Form<ObservationData> form;
-    private final Form<WhaleData> Whaleform;
     private MessagesApi messagesApi;
     private final List<Observation> observations;
     private final ArrayList<Whale> Whales;
-    public WhaleController wc;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
     @Inject
     public ObservationController(FormFactory formFactory, MessagesApi messagesApi) {
-        System.out.println("HERE$$$$4");
         this.form = formFactory.form(ObservationData.class);
-        this.Whaleform = formFactory.form(WhaleData.class);
         this.messagesApi = messagesApi;
         Whale w1 = new Whale( "Beluga", 204, "Male");
         Whale w2 = new Whale( "Orca", 111, "Female");
@@ -73,7 +69,12 @@ public class ObservationController extends Controller {
             return badRequest(views.html.listObservations.render(asScala(observations), boundForm, request, messagesApi.preferred(request)));
         } else {
             ObservationData data = boundForm.get();
-            observations.add(new Observation(Whales, data.getDate(), data.getTime(), data.getLocation()));
+            ArrayList<Whale> whales = new ArrayList<>();
+            int numWhales = data.getNumWhales();
+            for(int i = 0; i < numWhales; i++){
+                whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
+            }
+            observations.add(new Observation(whales, data.getDate(), data.getTime(), data.getLocation()));
             return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
         }
     }
@@ -92,7 +93,7 @@ public class ObservationController extends Controller {
         } else {
             WhaleData data = boundForm.get();
             System.out.println("data.getId():"+data.getId());
-            Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
+            //Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
             return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
         }
     }

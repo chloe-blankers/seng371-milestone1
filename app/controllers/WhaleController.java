@@ -72,7 +72,7 @@ public class WhaleController extends Controller {
         } else {
             WhaleData data = boundForm.get();
             System.out.println("data.getId():"+data.getId());
-            Whale newWhale = new Whale(data.getSpecies(), data.getWeight(), data.getGender());
+            Whale newWhale = new Whale(data.getSpecies(), 100, data.getGender());
             Whales.add(newWhale);
             System.out.println("newWhale.id:"+newWhale.id);
             this.ds.addWhale(newWhale);
