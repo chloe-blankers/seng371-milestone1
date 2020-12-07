@@ -87,32 +87,45 @@ public class WhaleController extends Controller {
             return badRequest(views.html.listWhales.render(asScala(Whales), form, boundForm2, request, messagesApi.preferred(request)));
         } else {
             FilterData data = boundForm2.get();
-            FilteredWhales = Whales
-                        .stream()
-                        .filter(w -> w.species.trim().toLowerCase().startsWith(data.getFilterspecies().trim().toLowerCase()))
-                        .collect(Collectors.toList());
+            this.FilterWhales(data);
+            return redirect(routes.WhaleController.listFilterWhales()).flashing("info", "Whales Filtered");
+        }
+    }
+
+    public void FilterWhales(FilterData data){
+        FilteredWhales = Whales;
+        System.out.println("data.getFilterspecies():"+data.getFilterspecies());
+        System.out.println("data.getFilterspecies().compareTo(\"None\"):"+data.getFilterspecies().compareTo("None"));
+        if(data.getFilterspecies().compareTo("None")!=0) {
+            FilteredWhales = FilteredWhales
+                    .stream()
+                    .filter(w -> w.species.trim().toLowerCase().startsWith(data.getFilterspecies().trim().toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        System.out.println("data.getFiltergender():"+data.getFiltergender());
+        System.out.println("data.getFiltergender().compareTo(\"None\"):"+data.getFiltergender().compareTo("None"));
+        if(data.getFiltergender().compareTo("None")!=0) {
             FilteredWhales = FilteredWhales
                     .stream()
                     .filter(w -> w.gender.trim().toLowerCase().startsWith(data.getFiltergender().trim().toLowerCase()))
                     .collect(Collectors.toList());
-            System.out.println("data.getMaxweight():"+data.getMaxweight());
-            if(data.getMaxweight()>0){
-                System.out.println("if(data.getMaxweight()>0)");
-                FilteredWhales = FilteredWhales
-                        .stream()
-                        .filter(w -> w.weight<(data.getMaxweight()))
-                        .collect(Collectors.toList());
-            }
-            System.out.println("data.getMinweight():"+data.getMinweight());
-            if(data.getMinweight()>0) {
-                System.out.println("if(data.getMinweight()>0)");
-                FilteredWhales = FilteredWhales
-                        .stream()
-                        .filter(w -> w.weight > (data.getMinweight()))
-                        .collect(Collectors.toList());
-            }
-            this.Whales = FilteredWhales;
-            return redirect(routes.WhaleController.listFilterWhales()).flashing("info", "Whales Filtered");
         }
+        System.out.println("data.getMaxweight():"+data.getMaxweight());
+        if(data.getMaxweight()>0){
+            System.out.println("if(data.getMaxweight()>0)");
+            FilteredWhales = FilteredWhales
+                    .stream()
+                    .filter(w -> w.weight<(data.getMaxweight()))
+                    .collect(Collectors.toList());
+        }
+        System.out.println("data.getMinweight():"+data.getMinweight());
+        if(data.getMinweight()>0) {
+            System.out.println("if(data.getMinweight()>0)");
+            FilteredWhales = FilteredWhales
+                    .stream()
+                    .filter(w -> w.weight > (data.getMinweight()))
+                    .collect(Collectors.toList());
+        }
+        this.Whales = FilteredWhales;
     }
 }
