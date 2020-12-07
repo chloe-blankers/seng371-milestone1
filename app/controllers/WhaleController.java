@@ -27,6 +27,8 @@ public class WhaleController extends Controller {
     private MessagesApi messagesApi;
     private final List<Whale> Whales;
 
+    private final Form<FilterData> form2;
+
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
     @Inject
@@ -38,6 +40,8 @@ public class WhaleController extends Controller {
                 new Whale( "Orca", 111, "Female"),
                 new Whale( "Blue", 301, "Male")
         );
+
+        this.form2 = formFactory.form(FilterData.class);
     }
 
     public Result index() {
@@ -63,6 +67,19 @@ public class WhaleController extends Controller {
             WhaleData data = boundForm.get();
             Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
             return redirect(routes.WhaleController.listWhales()).flashing("info", "Whale added!");
+        }
+    }
+
+    public Result filterWhales(Http.Request request) {
+        final Form<FilterData> boundForm = form2.bindFromRequest(request);
+
+        if (boundForm.hasErrors()) {
+            logger.error("errors = {}", boundForm.errors());
+            return badRequest(views.html.listWhales.render(asScala(Whales), boundForm, request, messagesApi.preferred(request)));
+        } else {
+            FilterData data = boundForm.get();
+            Whales.add(new Whale(data.getSpecies(), 13, "Male"));
+            return redirect(routes.WhaleController.listWhales()).flashing("info", "almost there");
         }
     }
 }
