@@ -11,6 +11,7 @@ import play.mvc.*;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static play.libs.Scala.asScala;
 
@@ -28,6 +29,7 @@ public class WhaleController extends Controller {
     private final List<Whale> Whales;
 
     private final Form<FilterData> form2;
+    private List<Whale> FilteredWhales;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
@@ -50,6 +52,10 @@ public class WhaleController extends Controller {
 
     public Result listWhales(Http.Request request) {
         return ok(views.html.listWhales.render(asScala(Whales), form, form2, request, messagesApi.preferred(request)));
+    }
+
+    public Result listFilterWhales(Http.Request request) {
+        return ok(views.html.listWhales.render(asScala(FilteredWhales), form, form2, request, messagesApi.preferred(request)));
     }
 
     public Result createWhale(Http.Request request) {
@@ -80,8 +86,11 @@ public class WhaleController extends Controller {
             return badRequest(views.html.listWhales.render(asScala(Whales), form, boundForm2, request, messagesApi.preferred(request)));
         } else {
             FilterData data = boundForm2.get();
-            Whales.add(new Whale(data.getFilterspecies(), 13, "Male"));
-            return redirect(routes.WhaleController.listWhales()).flashing("info", "almost there");
+            FilteredWhales = Whales
+                        .stream()
+                        .filter(w -> w.species.equals(data.getFilterspecies()))
+                        .collect(Collectors.toList());
+            return redirect(routes.WhaleController.listFilterWhales()).flashing("info", "almost there");
         }
     }
 }
