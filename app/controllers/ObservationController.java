@@ -3,8 +3,10 @@ package controllers;
 import play.mvc.*;
 
 /**
- * An example of form processing.
+ * Code based off
+ * https://github.com/playframework/play-java-forms-example
  *
+ * Form processing tutorials.
  * https://playframework.com/documentation/latest/JavaForms
  * https://adrianhurt.github.io/play-bootstrap/
  */

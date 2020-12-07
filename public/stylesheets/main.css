@@ -78,7 +78,7 @@ div.box-label {
     margin-top: 4rem;
     margin-left: auto;
     margin-right: auto;
-    width: 80vw;
+    width: var(--space-ratio);
 }
 
 
@@ -94,7 +94,7 @@ form {
     padding-top: 2rem;
     padding-bottom: 2rem;
     box-shadow: 0px 0px 10px var(--divider);
-    width: 80vw;
+    width: var(--space-ratio);
 }
 form > label {
     border: 0;
@@ -191,7 +191,7 @@ div#table-holder {
     padding-top: 2rem;
     padding-bottom: 2rem;
     box-shadow: 0px 0px 10px var(--divider);
-    width: 80vw;
+    width: var(--space-ratio);
 
 }
 
@@ -275,5 +275,84 @@ div.nav-holder {
     width: 100%;
     height: var(--navbar-height);
 }
+
+/* GRAPHS */
+div.graph-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--surface);
+    box-shadow: 0px 0px 10px var(--divider);
+
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: var(--space-ratio);
+    padding: 2em;
+    height: 60vh;
+}
+canvas{
+}
+div.graph-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 20rem;
+}
+div.graph-loading-spinner {
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary);
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+div.graph-loading > h4 {
+    margin-top: 2rem;
+}
+
+@-webkit-keyframes sk-rotateplane { /* Sourced from: https://tobiasahlin.com/spinkit/ */
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+@keyframes sk-rotateplane { /* Sourced from: https://tobiasahlin.com/spinkit/ */
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+  } 50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+  } 100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+/* FOOTER */
+div.footer{
+    width: var(--space-ratio);
+    margin: auto;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    color: var(--on-background);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+div.footer-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+.footer-cell{
+    margin-top: 0.5rem;
+}
+
+
 
 
