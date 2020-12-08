@@ -28,6 +28,7 @@ public class ObservationController extends Controller {
     private final Form<ObservationData> form;
     private MessagesApi messagesApi;
     private final List<Observation> observations;
+    private ArrayList<Whale> fakeWhales = new ArrayList<>();
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
@@ -45,6 +46,16 @@ public class ObservationController extends Controller {
         this.observations = com.google.common.collect.Lists.newArrayList(
             new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
+
+        // TODO: Remove this when not needed anymore (when ListObservations can display the whales from the BD).
+        this.fakeWhales.add(w1);
+        this.fakeWhales.add(w2);
+        this.fakeWhales.add(w3);
+        this.fakeWhales.add( new Whale( "Beluga", 10000, "Male") );
+        this.fakeWhales.add( new Whale( "Beluga", 11000, "Female") );
+        this.fakeWhales.add( new Whale( "Orca", 10100, "Male") );
+        this.fakeWhales.add( new Whale( "Sperm", 20000, "Male") );
+        this.fakeWhales.add( new Whale( "Orca", 50000, "Female") );
     }
 
     public Result index() {
@@ -52,19 +63,7 @@ public class ObservationController extends Controller {
     }
 
     public Result listObservations(Http.Request request) {
-        // TEMP - A whales list to allow me to set up a way to select which whales you're seeing while inputting an observation.
-        // TODO: Could we merge ObservationController and WhaleController together so that we can pass both lists?
-
-        ArrayList<Whale> whales = new ArrayList<>();
-        whales.add( new Whale( "Beluga", 20400, "Male"));
-        whales.add( new Whale( "Orca", 11100, "Female"));
-        whales.add( new Whale( "Orca", 15000, "Male"));
-        whales.add( new Whale( "Blue", 30100, "Male"));
-        whales.add( new Whale( "Blue", 25500, "Female"));
-        whales.add( new Whale( "Blue", 11100, "Male"));
-        whales.add( new Whale( "Grey", 30100, "Male"));
-
-        return ok(views.html.listObservations.render(asScala(observations), asScala(whales), form, request, messagesApi.preferred(request)));
+        return ok(views.html.listObservations.render(asScala(observations), asScala(this.fakeWhales), form, request, messagesApi.preferred(request)));
     }
 
     public Result createObservation(Http.Request request) {
