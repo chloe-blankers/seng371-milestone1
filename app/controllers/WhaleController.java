@@ -55,6 +55,7 @@ public class WhaleController extends Controller {
         return ok(views.html.stats.render(Whales));
     }
 
+
     public Result listWhales(Http.Request request) {
         return ok(views.html.listWhales.render(asScala(Whales), form, request, messagesApi.preferred(request)));
     }
@@ -72,7 +73,7 @@ public class WhaleController extends Controller {
         } else {
             WhaleData data = boundForm.get();
             System.out.println("data.getId():"+data.getId());
-            Whale newWhale = new Whale(data.getSpecies(), 100, data.getGender());
+            Whale newWhale = new Whale(data.getSpecies(), data.getWeight(), data.getGender());
             Whales.add(newWhale);
             System.out.println("newWhale.id:"+newWhale.id);
             this.ds.addWhale(newWhale);
