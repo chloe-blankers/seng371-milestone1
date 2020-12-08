@@ -30,6 +30,7 @@
             <div class="box-label">
                 <h3>Observations</h3>
             </div>
+            <div id="table-holder">
             <table>
                 <thead>
                     <tr><th>Location</th><th>Date</th><th>Time</th><th></th></tr>
@@ -50,15 +51,18 @@
                     }
 
                 }
-
                 </tbody>
             </table>
+            </div>
 
+            <div class="box-label">
+                <h3>Add New Observation</h3>
+            </div>
             @b4.vertical.form(routes.ObservationController.createObservation) { implicit vfc =>
                 @helper.CSRF.formField
                 <label>number of whales</label>
                 @b4.text(form("numWhales"))
-                <label>weights</label>
+                <label>weights (in kgs)</label>
                 @b4.text(form("weights"))
                 <label>gender</label>
                 @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
