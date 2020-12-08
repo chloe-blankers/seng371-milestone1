@@ -7,7 +7,11 @@ GET     /                           controllers.WhaleController.index
 
 # Whales
 GET     /Whales                    controllers.WhaleController.listWhales(request: Request)
-POST    /Whales                    controllers.WhaleController.createWhale(request: Request)
+POST    /Whales                   controllers.WhaleController.createWhale(request: Request)
+
+# Observations
+GET     /observations                    controllers.ObservationController.listObservations(request: Request)
+POST    /observations                    controllers.ObservationController.createObservation(request: Request)
 
 # Stats
 GET     /Stats                      controllers.WhaleController.stats

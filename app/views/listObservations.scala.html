@@ -1,0 +1,71 @@
+@import play.mvc.Http.Request
+@import views.html.helper.options
+@(observations: Seq[Observation], form: Form[ObservationData])(implicit request: Request, messages: play.i18n.Messages)
+@main("observations") {
+    <html lang="en">
+        <head>
+            <title>Observations</title>
+            <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+            <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        </head>
+        <body>
+            <div class="navigation">
+                <div class="nav-element" >
+                    <a class="navigation" href="@routes.WhaleController.index()"><i class="fa fa-home"></i> Home</a>
+                </div>
+                <div class="nav-element" >
+                    <a class="navigation" href="@routes.WhaleController.listWhales"><i class="fa fa-eye"></i>Whales</a>
+                </div>
+                <div class="nav-element" >
+                    <a class="navigation" href="@routes.ObservationController.listObservations"><i class="fa fa-search"></i>Observations</a>
+                </div>
+                <div class="nav-element" >
+                    <a class="navigation" href="@routes.WhaleController.stats"> <i class="fa fa-bar-chart"></i> Stats</a>
+                </div>
+            </div>
+            <div class="nav-holder"></div>
+
+            <div class="box-label">
+                <h3>Observations</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Location</th><th>Date</th><th>Time</th></tr>
+                </thead>
+                <tbody>
+                @for(o <- observations) {
+                    <tr><td>@o.location</td><td>@o.date</td><td>@o.time</td></tr>
+                    @for(w <- o.whales) {
+                        <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
+                    }
+                }
+
+                </tbody>
+            </table>
+
+            @b4.vertical.form(routes.WhaleController.createWhale) { implicit vfc =>
+                @helper.CSRF.formField
+                <label>weight</label>
+                @b4.text( form("weight"))
+                <label>gender</label>
+                @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
+                <label>species</label>
+                @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
+                <button type="submit">Add Whale</button>
+            }
+
+            @b4.vertical.form(routes.ObservationController.createObservation) { implicit vfc =>
+                @helper.CSRF.formField
+                <label>location</label>
+                @b4.text( form("location"))
+                <label>date</label>
+                @b4.date(form("date"))
+                <label>time</label>
+                @b4.select( form("time"), options = Seq("12pm" -> "12pm", "1pm" -> "1pm", "2pm" -> "2pm", "3pm" -> "3pm", "4pm" -> "4pm", "5pm" -> "5pm", "6pm" -> "6pm", "7pm" -> "7pm",  "8pm" -> "8pm", "9pm" -> "9pm", "10pm" -> "10pm", "11pm" -> "11pm", "12am" -> "12am", "1am" -> "1am", "2am" -> "2am", "3am" -> "3am", "4am" -> "4am", "5am" -> "5am", "6am" -> "6am", "7am" -> "7am", "8am" -> "8am", "9am" -> "9am", "10am" -> "10am", "11am" -> "11am"))
+                <button type="submit">Create Observation</button>
+            }
+        </body>
+    </html>
+
+}
