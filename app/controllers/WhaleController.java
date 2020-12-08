@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import db.DataStore;
 import models.Whale;
 import org.slf4j.Logger;
@@ -16,10 +17,12 @@ import javax.inject.Singleton;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
-
 import static play.libs.Scala.asScala;
+
+import play.libs.Json;
+import views.html.listWhales;
+
 
 /**
  * Code based off
@@ -73,6 +76,33 @@ public class WhaleController extends Controller {
         return ok(views.html.listWhales.render(asScala(FilteredWhales), form, form2, request, messagesApi.preferred(request)));
     }
 
+    public Result getWhales(Http.Request request) {
+        //Content negotiation
+        if (request.accepts("text/html")) {
+            return ok(views.html.listWhales.render(asScala(Whales), form, form2, request, messagesApi.preferred(request)));
+        }
+        else {
+            ObjectNode result = Json.newObject();
+            if (request.accepts("application/txt+json")) {
+                if (Whales.size() > 0) {
+                    //convert Whales arraylist to json data
+                    result.put("isSuccessful", true);
+                    result.putPOJO("body", Whales);
+                    //return json data
+                } else {
+                    result.put("isSuccessful", false);
+                    result.put("body", "No Whales in system");
+                }
+            }
+            else{
+                    result.put("isSuccessful",false);
+                    result.put("body","MIME type not supported.");
+            }
+
+            return ok(result);
+        }
+    }
+
 
     public Result createWhale(Http.Request request) throws IOException, SQLException {
         final Form<WhaleData> boundForm = form.bindFromRequest(request);
@@ -100,10 +130,9 @@ public class WhaleController extends Controller {
     public Result filterWhales(Http.Request request) {
         System.out.println("hellloooo");
         final Form<FilterData> boundForm2 = form2.bindFromRequest(request);
-
         if (boundForm2.hasErrors()) {
             logger.error("errors = {}", boundForm2.errors());
-            return badRequest(views.html.listWhales.render(asScala(Whales), form, boundForm2, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listWhales.render(asScala(FilteredWhales), form, form2, request, messagesApi.preferred(request)));
         } else {
             FilterData data = boundForm2.get();
             this.FilterWhales(data);

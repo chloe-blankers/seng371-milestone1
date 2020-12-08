@@ -9,6 +9,8 @@ GET     /                           controllers.WhaleController.index
 GET     /Whales                    controllers.WhaleController.listWhales(request: Request)
 POST    /Whales                    controllers.WhaleController.createWhale(request: Request)
 POST    /Whales/filter             controllers.WhaleController.filterWhales(request: Request)
+GET     /Whales/getWhales          controllers.WhaleController.getWhales(request: Request)
+POST    /Whales/filter             controllers.WhaleController.filterWhales(request: Request)
 GET     /Whales/filter             controllers.WhaleController.listFilterWhales(request: Request)
 
 # Stats
