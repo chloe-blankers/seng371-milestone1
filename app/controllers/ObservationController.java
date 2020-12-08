@@ -85,23 +85,5 @@ public class ObservationController extends Controller {
         }
     }
 
-    public Result createWhale(Http.Request request) {
-        final Form<ObservationData> boundForm = form.bindFromRequest(request);
-        if (boundForm.hasErrors()) {
-            logger.error("errors = {}", boundForm.errors());
-            logger.error("boundForm.errors().size():"+boundForm.errors().size());
-            for(play.data.validation.ValidationError err: boundForm.errors()){
-                logger.error(err.toString());
-            }
-            logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listObservations.render(asScala(observations), boundForm, request, messagesApi.preferred(request)));
-        } else {
-            WhaleData data = boundForm.get();
-            System.out.println("data.getId():"+data.getId());
-            Whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
-            return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
-        }
-    }
-
 }
 
