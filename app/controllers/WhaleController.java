@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import db.DataStore;
 import models.Whale;
 import org.slf4j.Logger;
@@ -16,8 +17,10 @@ import javax.inject.Singleton;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import static play.libs.Scala.asScala;
+
+import play.libs.Json;
+
 
 /**
  * Code based off
@@ -59,7 +62,30 @@ public class WhaleController extends Controller {
 
 
     public Result listWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(Whales), form, request, messagesApi.preferred(request)));
+        //Content negotiation
+        if (request.accepts("text/html")) {
+            return ok(views.html.listWhales.render(asScala(Whales), form, request, messagesApi.preferred(request)));
+        }
+        else {
+            ObjectNode result = Json.newObject();
+            if (request.accepts("application/txt+json")) {
+                if (Whales.size() > 0) {
+                    //convert Whales arraylist to json data
+                    result.put("isSuccessful", true);
+                    result.putPOJO("body", Whales);
+                    //return json data
+                } else {
+                    result.put("isSuccessful", false);
+                    result.put("body", "No Whales in system");
+                }
+            }
+            else{
+                    result.put("isSuccessful",false);
+                    result.put("body","MIME type not supported.");
+            }
+
+            return ok(result);
+        }
     }
 
     public Result createWhale(Http.Request request) throws IOException, SQLException {
