@@ -87,7 +87,7 @@ public class ParentController extends Controller {
         return ok(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
     }
 
-    public Result createObservation(Http.Request request) {
+    public Result createObservation(Http.Request request) throws SQLException {
         final Form<ObservationData> boundForm = observationForm.bindFromRequest(request);
 
         if (boundForm.hasErrors()) {
@@ -115,7 +115,9 @@ public class ParentController extends Controller {
                     touristWhaleObs.add(w);
                 }
             }
-            observations.add(new Observation(whales, data.getDate(), data.getTime(), data.getLocation()));
+            Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation());
+            observations.add(newOb);
+            ds.addObservation(newOb);
             return redirect(routes.ParentController.listObservations()).flashing("info", "Observation added!");
         }
     }

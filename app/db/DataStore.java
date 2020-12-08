@@ -1,5 +1,6 @@
 package db;
 
+import models.Observation;
 import models.Whale;
 
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class DataStore {
             stmt2 = dbConnection.createStatement();
             stmt2.execute("DROP TABLE OBSERVATIONS IF EXISTS");
             stmt2.execute("CREATE TABLE OBSERVATIONS(id int primary key, location varchar(255), numWhales integer, " +
-                    "date varchar(255), time varchar(255), String weights)");
+                    "date varchar(255), time varchar(255))");
             stmt2.close();
             dbConnection.commit();
             stmt3 = dbConnection.createStatement();
@@ -178,5 +179,86 @@ public class DataStore {
         assert(pass);
         connection.close();
         return whaleList;
+    }
+
+    public void addObservation(Observation o) throws SQLException {
+        Connection dbConnection = DriverManager.getConnection("jdbc:h2:~/whale", "sa", "");
+        String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
+        PreparedStatement pStmt = null;
+        PreparedStatement pStmt2 = null;
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        boolean pass = true;
+        try {
+            String sql = "INSERT INTO OBSERVATIONS(id, location, numWhales, date, time) VALUES(?,?,?,?,?)";
+            System.out.println("sql:"+sql);
+            pStmt = dbConnection.prepareStatement(sql);
+            pStmt.setInt(1,(int)o.id);
+            pStmt.setString(2,o.location);
+            pStmt.setInt(3,(int)o.whales.size());
+            pStmt.setString(4,o.date);
+            pStmt.setString(5,o.time);
+            System.out.println("+pStmt.toString():"+pStmt.toString());
+            int res = pStmt.executeUpdate();
+            System.out.println("res:"+res);
+            for(Whale w:o.whales){
+                pStmt2 = dbConnection.prepareStatement(sql);
+                pStmt2.setInt(1,(int)w.id);
+                pStmt2.setInt(2,(int)o.id);
+                System.out.println("+pStmt.toString():"+pStmt.toString());
+                res = pStmt.executeUpdate();
+                System.out.println("res:"+res);
+            }
+        } catch (SQLException e) {
+            pass = false;
+            String err = "Exception Message " + e.getLocalizedMessage();
+            System.out.println(err);
+        } catch (Exception e) {
+            pass = false;
+            e.printStackTrace();
+        } finally {
+            try {
+                dbConnection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        assert(pass);
+    }
+
+    /*
+    TODO
+
+            We will need an sql statement that joins the OBSERVATIONS and RELATIONSHIPS
+             so that each observation has a list of whales that was observed
+    */
+    public List<Observation> getObservations() throws IOException, SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:h2:~/whale", "sa", "");
+        List<Observation> observationList = new ArrayList<>();
+        String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
+        System.out.println(getClass().getClassLoader().getResource("logging.properties"));
+        //Connection connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+        boolean pass = true;
+        try (var con = connection;
+             var stm = con.createStatement();
+             /*
+                We will need an sql statement that joins the OBSERVATIONS and RELATIONSHIPS
+                so that each observation has a list of whales that was observed
+             */
+             var rs = stm.executeQuery("SELECT * from OBSERVATIONS")) {
+            while (rs.next()) {
+
+            }
+        } catch (SQLException ex) {
+            pass = false;
+            var lgr = Logger.getLogger(DataStore.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        assert (pass);
+        connection.close();
+        return observationList;
     }
 }
