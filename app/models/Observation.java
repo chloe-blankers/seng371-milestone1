@@ -9,6 +9,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Code based off
+ * https://github.com/playframework/play-java-forms-example
+ *
+ * Form processing tutorials.
+ * https://playframework.com/documentation/latest/JavawhaleForms
+ * https://adrianhurt.github.io/play-bootstrap/
+ */
 public class Observation {
     public long id;
     public ArrayList<Whale> whales;

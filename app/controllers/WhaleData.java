@@ -10,7 +10,7 @@ import java.util.List;
  * https://github.com/playframework/play-java-forms-example
  *
  * Form processing tutorials.
- * https://playframework.com/documentation/latest/JavaForms
+ * https://playframework.com/documentation/latest/JavawhaleForms
  * https://adrianhurt.github.io/play-bootstrap/
  */
 public class WhaleData {

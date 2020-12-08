@@ -32,9 +32,9 @@ import views.html.listWhales;
 
 /**
  * Code based off
- * https://github.com/playframework/play-java-whaleForms-example
+ * https://github.com/playframework/play-java-forms-example
  *
- * whaleForm processing tutorials.
+ * Form processing tutorials.
  * https://playframework.com/documentation/latest/JavawhaleForms
  * https://adrianhurt.github.io/play-bootstrap/
  */
