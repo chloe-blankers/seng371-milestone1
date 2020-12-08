@@ -10,6 +10,7 @@ import play.i18n.MessagesApi;
 import play.mvc.*;
 
 import javax.inject.Inject;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +46,12 @@ public class ObservationController extends Controller {
         Whales.add(w1);
         Whales.add(w2);
         Whales.add(w3);
+        ArrayList<Whale> whales = new ArrayList<>();
+        whales.add(w1);
+        whales.add(w2);
+        whales.add(w3);
         this.observations = com.google.common.collect.Lists.newArrayList(
-            new Observation(Whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
+            new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
     }
 
