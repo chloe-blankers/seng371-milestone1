@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * https://github.com/playframework/play-java-forms-example
  *
  * Form processing tutorials.
- * https://playframework.com/documentation/latest/JavawhaleForms
+ * https://playframework.com/documentation/latest/JavaForms
  * https://adrianhurt.github.io/play-bootstrap/
  */
 public class Observation {
