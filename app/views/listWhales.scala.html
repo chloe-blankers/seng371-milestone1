@@ -31,8 +31,7 @@
     <div class="box-label">
         <h3>Filter Whales</h3>
     </div>
-    @b4.inline.form(routes.WhaleController.filterWhales) { implicit vfc =>
-        @helper.CSRF.formField
+    @b4.inline.formCSRF(routes.WhaleController.filterWhales) { implicit vfc =>
         <label>Filter Species</label> @b4.select( form2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
             "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
             "Sperm" -> "Sperm", "Bowhead" -> "Bowhead", "None"->"None"),
@@ -44,7 +43,8 @@
         )
         <label>Max Weight</label> @b4.text( form2("maxweight"), 'value -> "900000", '_default -> "900000")
         <label>Min Weight</label> @b4.text( form2("minweight"), 'value -> "0", '_default -> "0")
-        <button type="submit"></i>Filter</button>
+        @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Filter</b> }<br/>
+        @b4.reset('class -> "btn btn-default"){ Clear }
         @request.flash.asScala().data.map { case (name, value) =>
             <div class="@name">@value</div>
         }
@@ -66,18 +66,18 @@
     <div class="box-label">
         <h3>Add New Whale</h3>
     </div>
-    @b4.vertical.form(routes.WhaleController.createWhale) { implicit vfc =>
-        @helper.CSRF.formField
+    @b4.vertical.formCSRF(routes.WhaleController.createWhale) { implicit vfc =>
         <label>weight</label>
         @b4.text( form("weight"))
         <label>gender</label>
         @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
         <label>species</label>
         @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
-        <button type="submit"></i>Create</button>
-    @request.flash.asScala().data.map { case (name, value) =>
-        <div class="@name">@value</div>
-    }
+        @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Create</b> }<br/>
+        @b4.reset('class -> "btn btn-default"){ Clear }
+        @request.flash.asScala().data.map { case (name, value) =>
+            <div class="@name">@value</div>
+        }
     }
     </body>
 
