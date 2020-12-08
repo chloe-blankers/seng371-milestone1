@@ -1,5 +1,6 @@
 package controllers;
 
+import db.DataStore;
 import models.Observation;
 import models.Whale;
 import org.slf4j.Logger;
@@ -32,11 +33,13 @@ public class ObservationController extends Controller {
     private MessagesApi messagesApi;
     private final List<Observation> observations;
     private final ArrayList<Whale> Whales;
+    private DataStore ds;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
     @Inject
     public ObservationController(FormFactory formFactory, MessagesApi messagesApi) {
+        this.ds = new DataStore();
         this.form = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
         Whale w1 = new Whale( "Beluga", 204, "Male");
