@@ -14,17 +14,25 @@ function selectMe( button ){
 function submitWhales( submitButton ){
 
     // Get the rows (whales that can be selected)
-    const selector = document.getElementById("wSelect");
-    const rows = selector.getElementsByClassName("whale-selector-row");
+    const table = submitButton.parentElement.children[0];
+    const rows = table.children[1].children; // Get the rows from the tbody, ignore the thead.
 
     // Iterate through list, if a whale was selected, add it to whalesToSubmit
     let whalesToSubmit = [];
     for( i in rows ){
         const row = rows[i];
         if ( typeof row == 'number' ) break; // The last entry in rows is the length of rows.
-        if ( row.getElementsByClassName("row-select-radio-box")[0].selected == "true" ){
-            // Add the values from the row in here. How do you want it? JSON?
-            console.log( row );
+        if( row.children[4].children[0].selected == "true" ){
+            // Do what you want with the data here.
+            console.log( row.children[0].innerHTML );
+            console.log( row.children[1].innerHTML );
+            console.log( row.children[2].innerHTML );
+            console.log( row.children[3].innerHTML );
+            console.log( "END OF WHALE");
         }
+
     }
+
+
+
 }

@@ -30,6 +30,8 @@
             <div class="box-label">
                 <h3>Observations</h3>
             </div>
+
+            <div class="table-holder">
             <table>
                 <thead>
                     <tr><th>Location</th><th>Date</th><th>Time</th></tr>
@@ -44,31 +46,40 @@
 
                 </tbody>
             </table>
+            </div>
 
             @******* WHALE SELECTOR ******@
-            <div class="selector-holder">
-                <div class="whale-selector" id="wSelect">
-                    @******* TODO: Change this from rows/cell to a table format ******@
-                    @for(whale <- whales){
-                    <div class="whale-selector-row">
-                        <div class="whale-selector-cell species">
-                            @whale.species
-                        </div>
-                        <div class="whale-selector-cell weight">
-                            @whale.weight
-                        </div>
-                        <div class="whale-selector-cell gender">
-                            @whale.gender
-                        </div>
-                        <div class="whale-selector-cell id">
-                            @whale.id
-                        </div>
-                        <div class="row-select-radio-box" onclick="selectMe(this);"></div>
-                    </div>
+            <div class="table-holder">
+                <table>
+                    <thead>
+                        <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th><th>Select?</th></tr>
+                    </thead>
+                    <tbody>
+                        @******* TODO: Change this from rows/cell to a table format ******@
+                        @for(whale <- whales){
+                        <tr>
+                            <td>
+                                @whale.species
+                            </td>
+                            <td>
+                                @whale.weight
+                            </td>
+                            <td>
+                                @whale.gender
+                            </td>
+                            <td>
+                                @whale.id
+                            </td>
+                            <td>
+                                <div class="row-select-radio-box" onclick="selectMe(this);"></div>
+                            </td>
+                        </tr>
                     }
-                </div>
-                <div class="whale-selector-submit-button" onclick="submitWhales(this);">Submit All Whales</div>
+                    </tbody>
+                </table>
+                <button onclick="submitWhales(this);">Submit All Whales</button>
             </div>
+
             @b4.vertical.form(routes.ObservationController.createObservation) { implicit vfc =>
                 @helper.CSRF.formField
                 <label>location</label>

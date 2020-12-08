@@ -180,9 +180,10 @@ div.invalid-feedback{
 
 
 /* TABLE */
-div#table-holder {
-    -webkit-overflow-scrolling: touch;
-    overflow-x: auto;
+div.table-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-color: var(--surface);
     margin-top: 1rem;
@@ -194,7 +195,6 @@ div#table-holder {
     width: var(--space-ratio);
 
 }
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
