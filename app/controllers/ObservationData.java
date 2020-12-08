@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Whale;
+import play.data.validation.Constraints;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,11 @@ public class ObservationData extends WhaleData {
     //@Constraints.Required
     private String time;
 
+    //@Constraints.Required
     private int numWhales;
+
+    //@Constraints.Required
+    private String weights;
 
     public ObservationData() {
     }
@@ -61,5 +66,13 @@ public class ObservationData extends WhaleData {
 
     public void setNumWhales(int numWhales) {
         this.numWhales = numWhales;
+    }
+
+    public String getWeights() {
+        return weights;
+    }
+
+    public void setWeights(String weights) {
+        this.weights = weights;
     }
 }

@@ -71,8 +71,14 @@ public class ObservationController extends Controller {
             ObservationData data = boundForm.get();
             ArrayList<Whale> whales = new ArrayList<>();
             int numWhales = data.getNumWhales();
+            String weights = data.getWeights();
+            String[] weigthsList = weights.split(",");
             for(int i = 0; i < numWhales; i++) {
-                whales.add(new Whale(data.getSpecies(), data.getWeight(), data.getGender()));
+                try {
+                    whales.add(new Whale(data.getSpecies(), Integer.parseInt(weigthsList[i]), data.getGender()));
+                } catch (Exception e) {
+                    whales.add(new Whale(data.getSpecies(), 0, data.getGender()));
+                }
             }
             observations.add(new Observation(whales, data.getDate(), data.getTime(), data.getLocation()));
             return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
@@ -81,7 +87,6 @@ public class ObservationController extends Controller {
 
     public Result createWhale(Http.Request request) {
         final Form<ObservationData> boundForm = form.bindFromRequest(request);
-        System.out.println("HERE$$$$4");
         if (boundForm.hasErrors()) {
             logger.error("errors = {}", boundForm.errors());
             logger.error("boundForm.errors().size():"+boundForm.errors().size());

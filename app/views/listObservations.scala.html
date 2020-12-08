@@ -39,7 +39,12 @@
                     <tr><td>@o.location</td><td>@o.date</td><td>@o.time</td></tr>
                     @for(w <- o.whales) {
                         <tr><td>@w.species</td>
-                            <td>@w.weight</td>
+                            @if(w.weight == 0){
+                                <td>Unknown</td>
+                            }
+                            @if(w.weight != 0){
+                                <td>@w.weight</td>
+                            }
                             <td>@w.gender</td>
                             <td>@w.id</td></tr>
                     }
@@ -53,8 +58,8 @@
                 @helper.CSRF.formField
                 <label>number of whales</label>
                 @b4.text(form("numWhales"))
-                <label>weight</label>
-                @b4.text(form("weight"))
+                <label>weights</label>
+                @b4.text(form("weights"))
                 <label>gender</label>
                 @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
                 <label>species</label>
