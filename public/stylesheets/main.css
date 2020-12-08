@@ -353,6 +353,63 @@ div.footer-col{
     margin-top: 0.5rem;
 }
 
+/* WHALE SELECTOR */
+div.selector-holder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--surface);
+    box-shadow: 0px 0px 10px var(--divider);
+
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: var(--space-ratio);
+    padding: 2em;
+}
+div.whale-selector{
+    width: 90%;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+div.whale-selector-row {
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+div.row-select-radio-box{
+    content: "";
+    cursor: pointer;
+    width: 0.8rem;
+    height: 0.8rem;
+    background-color: var(--surface);
+    border-radius: 50%;
+    border: 2px solid var(--background);
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+div.whale-selector-submit-button{
+    cursor: pointer;
+    padding: 0.2rem;
+    margin-top: 2rem;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+
 
 
 

@@ -52,7 +52,19 @@ public class ObservationController extends Controller {
     }
 
     public Result listObservations(Http.Request request) {
-        return ok(views.html.listObservations.render(asScala(observations), form, request, messagesApi.preferred(request)));
+        // TEMP - A whales list to allow me to set up a way to select which whales you're seeing while inputting an observation.
+        // TODO: Could we merge ObservationController and WhaleController together so that we can pass both lists?
+
+        ArrayList<Whale> whales = new ArrayList<>();
+        whales.add( new Whale( "Beluga", 20400, "Male"));
+        whales.add( new Whale( "Orca", 11100, "Female"));
+        whales.add( new Whale( "Orca", 15000, "Male"));
+        whales.add( new Whale( "Blue", 30100, "Male"));
+        whales.add( new Whale( "Blue", 25500, "Female"));
+        whales.add( new Whale( "Blue", 11100, "Male"));
+        whales.add( new Whale( "Grey", 30100, "Male"));
+
+        return ok(views.html.listObservations.render(asScala(observations), asScala(whales), form, request, messagesApi.preferred(request)));
     }
 
     public Result createObservation(Http.Request request) {
@@ -65,7 +77,8 @@ public class ObservationController extends Controller {
                 logger.error(err.toString());
             }
             logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listObservations.render(asScala(observations), boundForm, request, messagesApi.preferred(request)));
+            ArrayList<Whale> whales = new ArrayList<>();
+            return badRequest(views.html.listObservations.render(asScala(observations), asScala(whales), boundForm, request, messagesApi.preferred(request)));
         } else {
             ObservationData data = boundForm.get();
             observations.add(new Observation(data.getWhales(), data.getDate(), data.getTime(), data.getLocation()));

@@ -1,6 +1,6 @@
 @import play.mvc.Http.Request
 @import views.html.helper.options
-@(observations: Seq[Observation], form: Form[ObservationData])(implicit request: Request, messages: play.i18n.Messages)
+@(observations: Seq[Observation], whales: Seq[Whale], form: Form[ObservationData])(implicit request: Request, messages: play.i18n.Messages)
 @main("observations") {
     <html lang="en">
         <head>
@@ -8,6 +8,7 @@
             <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
             <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script rel="text/javascript" src="@routes.Assets.versioned("javascripts/observationList.js")"></script>
         </head>
         <body>
             <div class="navigation">
@@ -44,17 +45,30 @@
                 </tbody>
             </table>
 
-            @b4.vertical.form(routes.WhaleController.createWhale) { implicit vfc =>
-                @helper.CSRF.formField
-                <label>weight</label>
-                @b4.text( form("weight"))
-                <label>gender</label>
-                @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
-                <label>species</label>
-                @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
-                <button type="submit">Add Whale</button>
-            }
-
+            @******* WHALE SELECTOR ******@
+            <div class="selector-holder">
+                <div class="whale-selector" id="wSelect">
+                    @******* TODO: Change this from rows/cell to a table format ******@
+                    @for(whale <- whales){
+                    <div class="whale-selector-row">
+                        <div class="whale-selector-cell species">
+                            @whale.species
+                        </div>
+                        <div class="whale-selector-cell weight">
+                            @whale.weight
+                        </div>
+                        <div class="whale-selector-cell gender">
+                            @whale.gender
+                        </div>
+                        <div class="whale-selector-cell id">
+                            @whale.id
+                        </div>
+                        <div class="row-select-radio-box" onclick="selectMe(this);"></div>
+                    </div>
+                    }
+                </div>
+                <div class="whale-selector-submit-button" onclick="submitWhales(this);">Submit All Whales</div>
+            </div>
             @b4.vertical.form(routes.ObservationController.createObservation) { implicit vfc =>
                 @helper.CSRF.formField
                 <label>location</label>
