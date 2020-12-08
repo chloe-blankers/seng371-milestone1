@@ -2,6 +2,9 @@ package controllers;
 
 import play.data.validation.Constraints;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Code based off
  * https://github.com/playframework/play-java-forms-example
@@ -12,16 +15,16 @@ import play.data.validation.Constraints;
  */
 public class WhaleData {
 
-    @Constraints.Required
+    //@Constraints.Required
     private String species;
 
-    @Constraints.Min(0)
+    //@Constraints.Min(0)
     private int weight;
 
-    @Constraints.Required
+    //@Constraints.Required
     private String gender;
 
-    @Constraints.Required
+    //@Constraints.Required
     private long id;
 
     public WhaleData() {
