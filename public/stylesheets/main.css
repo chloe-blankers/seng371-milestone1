@@ -180,9 +180,10 @@ div.invalid-feedback{
 
 
 /* TABLE */
-div#table-holder {
-    -webkit-overflow-scrolling: touch;
-    overflow-x: auto;
+div.table-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-color: var(--surface);
     margin-top: 1rem;
@@ -194,7 +195,6 @@ div#table-holder {
     width: var(--space-ratio);
 
 }
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -352,6 +352,29 @@ div.footer-col{
 .footer-cell{
     margin-top: 0.5rem;
 }
+
+
+div.row-select-radio-box{
+    content: "";
+    cursor: pointer;
+    width: 0.8rem;
+    height: 0.8rem;
+    background-color: var(--surface);
+    border-radius: 50%;
+    border: 2px solid var(--background);
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+div.whale-selector-submit-button{
+    cursor: pointer;
+    padding: 0.2rem;
+    margin-top: 2rem;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
 
 
 
