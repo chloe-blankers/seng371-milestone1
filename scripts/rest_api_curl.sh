@@ -1,0 +1,1 @@
+curl -X GET -H "Accept: application/txt+json" http://localhost:9000/Whales/getWhales

@@ -17,9 +17,11 @@ import javax.inject.Singleton;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 import static play.libs.Scala.asScala;
 
 import play.libs.Json;
+import views.html.listWhales;
 
 
 /**
@@ -35,8 +37,11 @@ public class WhaleController extends Controller {
 
     private final Form<WhaleData> form;
     private MessagesApi messagesApi;
-    private final List<Whale> Whales;
+    private final Form<FilterData> form2;
+    private List<Whale> FilteredWhales;
+    private List<Whale> Whales;
     private DataStore ds;
+
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
@@ -50,6 +55,8 @@ public class WhaleController extends Controller {
                 new Whale( "Orca", 111, "Female"),
                 new Whale( "Blue", 301, "Male")
         );
+
+        this.form2 = formFactory.form(FilterData.class);
     }
 
     public Result index() {
@@ -62,9 +69,17 @@ public class WhaleController extends Controller {
 
 
     public Result listWhales(Http.Request request) {
+        return ok(views.html.listWhales.render(asScala(Whales), form, form2, request, messagesApi.preferred(request)));
+    }
+
+    public Result listFilterWhales(Http.Request request) {
+        return ok(views.html.listWhales.render(asScala(FilteredWhales), form, form2, request, messagesApi.preferred(request)));
+    }
+
+    public Result getWhales(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
-            return ok(views.html.listWhales.render(asScala(Whales), form, request, messagesApi.preferred(request)));
+            return ok(views.html.listWhales.render(asScala(Whales), form, form2, request, messagesApi.preferred(request)));
         }
         else {
             ObjectNode result = Json.newObject();
@@ -88,6 +103,7 @@ public class WhaleController extends Controller {
         }
     }
 
+
     public Result createWhale(Http.Request request) throws IOException, SQLException {
         final Form<WhaleData> boundForm = form.bindFromRequest(request);
         if (boundForm.hasErrors()) {
@@ -97,7 +113,7 @@ public class WhaleController extends Controller {
                 logger.error(err.toString());
             }
             logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listWhales.render(asScala(Whales), boundForm, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listWhales.render(asScala(Whales), boundForm, form2, request, messagesApi.preferred(request)));
         } else {
             WhaleData data = boundForm.get();
             System.out.println("data.getId():"+data.getId());
@@ -109,5 +125,55 @@ public class WhaleController extends Controller {
             System.out.println("allWhales.size():"+allWhales.size());
             return redirect(routes.WhaleController.listWhales()).flashing("info", "Whale added!");
         }
+    }
+
+    public Result filterWhales(Http.Request request) {
+        System.out.println("hellloooo");
+        final Form<FilterData> boundForm2 = form2.bindFromRequest(request);
+        if (boundForm2.hasErrors()) {
+            logger.error("errors = {}", boundForm2.errors());
+            return badRequest(views.html.listWhales.render(asScala(FilteredWhales), form, form2, request, messagesApi.preferred(request)));
+        } else {
+            FilterData data = boundForm2.get();
+            this.FilterWhales(data);
+            return redirect(routes.WhaleController.listFilterWhales()).flashing("info", "Whales Filtered");
+        }
+    }
+
+    public void FilterWhales(FilterData data){
+        FilteredWhales = Whales;
+        System.out.println("data.getFilterspecies():"+data.getFilterspecies());
+        System.out.println("data.getFilterspecies().compareTo(\"None\"):"+data.getFilterspecies().compareTo("None"));
+        if(data.getFilterspecies().compareTo("None")!=0) {
+            FilteredWhales = FilteredWhales
+                    .stream()
+                    .filter(w -> w.species.trim().toLowerCase().startsWith(data.getFilterspecies().trim().toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        System.out.println("data.getFiltergender():"+data.getFiltergender());
+        System.out.println("data.getFiltergender().compareTo(\"None\"):"+data.getFiltergender().compareTo("None"));
+        if(data.getFiltergender().compareTo("None")!=0) {
+            FilteredWhales = FilteredWhales
+                    .stream()
+                    .filter(w -> w.gender.trim().toLowerCase().startsWith(data.getFiltergender().trim().toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        System.out.println("data.getMaxweight():"+data.getMaxweight());
+        if(data.getMaxweight()>0){
+            System.out.println("if(data.getMaxweight()>0)");
+            FilteredWhales = FilteredWhales
+                    .stream()
+                    .filter(w -> w.weight<(data.getMaxweight()))
+                    .collect(Collectors.toList());
+        }
+        System.out.println("data.getMinweight():"+data.getMinweight());
+        if(data.getMinweight()>0) {
+            System.out.println("if(data.getMinweight()>0)");
+            FilteredWhales = FilteredWhales
+                    .stream()
+                    .filter(w -> w.weight > (data.getMinweight()))
+                    .collect(Collectors.toList());
+        }
+        this.Whales = FilteredWhales;
     }
 }
