@@ -1,7 +1,7 @@
 @import play.mvc.Http.Request
 @import views.html.helper.options
 @import scala.Console.in
-@(Whales: Seq[Whale], observations: Seq[Observation], observationForm: Form[ObservationData], whaleForm: Form[WhaleData],
+@(touristWhaleObs: Seq[Whale], Whales: Seq[Whale], observations: Seq[Observation], observationForm: Form[ObservationData], whaleForm: Form[WhaleData],
         whaleForm2: Form[FilterData])(implicit request: Request, messages: play.i18n.Messages)
 @main("observations") {
     <html lang="en">
@@ -29,7 +29,7 @@
             <div class="nav-holder"></div>
 
             <div id="table-holder">
-                <h1>Scientist Identified Whales</h1>
+                <h1>Whales Identified by Scientists</h1>
                 <table>
                     <thead>
                         <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
@@ -78,6 +78,19 @@
                 @b4.select( observationForm("time"), options = Seq("12pm" -> "12pm", "1pm" -> "1pm", "2pm" -> "2pm", "3pm" -> "3pm", "4pm" -> "4pm", "5pm" -> "5pm", "6pm" -> "6pm", "7pm" -> "7pm",  "8pm" -> "8pm", "9pm" -> "9pm", "10pm" -> "10pm", "11pm" -> "11pm", "12am" -> "12am", "1am" -> "1am", "2am" -> "2am", "3am" -> "3am", "4am" -> "4am", "5am" -> "5am", "6am" -> "6am", "7am" -> "7am", "8am" -> "8am", "9am" -> "9am", "10am" -> "10am", "11am" -> "11am"))
                 <button type="submit">Create Observation</button>
             }
+            <div id="table-holder">
+                <h1>Whales Identified by Citizens or Tourists</h1>
+                <table>
+                    <thead>
+                        <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
+                    </thead>
+                    <tbody>
+                    @for(w <- touristWhaleObs) {
+                        <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
         </body>
     </html>
 
