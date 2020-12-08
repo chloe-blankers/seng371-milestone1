@@ -32,11 +32,11 @@
             </div>
             <table>
                 <thead>
-                    <tr><th>Location</th><th>Date</th><th>Time</th></tr>
+                    <tr><th>Location</th><th>Date</th><th>Time</th><th></th></tr>
                 </thead>
                 <tbody>
                 @for(o <- observations) {
-                    <tr><td>@o.location</td><td>@o.date</td><td>@o.time</td></tr>
+                    <tr><td>@o.location</td><td>@o.date</td><td>@o.time</td><td></td></tr>
                     @for(w <- o.whales) {
                         <tr><td>@w.species</td>
                             @if(w.weight == 0){
