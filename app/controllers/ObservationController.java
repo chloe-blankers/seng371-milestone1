@@ -27,6 +27,7 @@ import static play.libs.Scala.asScala;
  * https://adrianhurt.github.io/play-bootstrap/
  */
 
+/*
 public class ObservationController extends Controller {
 
     private final Form<ObservationData> form;
@@ -100,4 +101,5 @@ public class ObservationController extends Controller {
     }
 
 }
+ */
 

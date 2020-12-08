@@ -42,12 +42,13 @@ import views.html.listWhales;
 public class ParentController extends Controller {
 
     private MessagesApi messagesApi;
-    private final List<Observation> observations;
-    private final Form<ObservationData> observationForm;
+    private Form<ObservationData> observationForm;
+    private Form<ObservationData> observationForm2;
     private final Form<WhaleData> whaleForm;
     private final Form<FilterData> whaleForm2;
     private List<Whale> FilteredWhales;
-    private List<Whale> Whales;
+    private ArrayList<Whale> Whales;
+    private final List<Observation> observations;
     private DataStore ds;
 
 
@@ -62,14 +63,57 @@ public class ParentController extends Controller {
         this.messagesApi = messagesApi;
         //this.Whales=this.ds.getWhales();
         //No whales in the database, so put some default whales in for the sake of displaying the app
-        this.Whales = com.google.common.collect.Lists.newArrayList(
-                new Whale( "Beluga", 204, "Male"),
-                new Whale( "Orca", 111, "Female"),
-                new Whale( "Blue", 301, "Male")
-        );
+        Whale w1 = new Whale( "Beluga", 204, "Male");
+        Whale w2 = new Whale( "Orca", 111, "Female");
+        Whale w3 = new Whale( "Blue", 301, "Male");
+        this.Whales = new ArrayList<>();
+        Whales.add(w1);
+        Whales.add(w2);
+        Whales.add(w3);
+        ArrayList<Whale> whales = new ArrayList<>();
+        whales.add(w1);
+        whales.add(w2);
+        whales.add(w3);
         this.observations = com.google.common.collect.Lists.newArrayList(
-                new Observation((ArrayList<Whale>) Whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
+                new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
+    }
+
+    public Result listObservations(Http.Request request) {
+        return ok(views.html.listObservations.render(asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+    }
+
+    public Result createObservation(Http.Request request) {
+        final Form<ObservationData> boundForm = observationForm.bindFromRequest(request);
+
+        if (boundForm.hasErrors()) {
+            logger.error("errors = {}", boundForm.errors());
+            logger.error("boundForm.errors().size():"+boundForm.errors().size());
+            for(play.data.validation.ValidationError err: boundForm.errors()){
+                logger.error(err.toString());
+            }
+            logger.error("boundForm.toString():"+boundForm.toString());
+            return badRequest(views.html.listObservations.render(asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        } else {
+            ObservationData data = boundForm.get();
+            ArrayList<Whale> whales = new ArrayList<>();
+            int numWhales = data.getNumWhales();
+            String weights = data.getWeights();
+            String[] weigthsList = weights.split(",");
+            for(int i = 0; i < numWhales; i++) {
+                try {
+                    Whale w = new Whale(data.getSpecies(), Integer.parseInt(weigthsList[i]), data.getGender());
+                    whales.add(w);
+                    Whales.add(w);
+                } catch (Exception e) {
+                    Whale w = new Whale(data.getSpecies(), 0, data.getGender());
+                    whales.add(w);
+                    Whales.add(w);
+                }
+            }
+            observations.add(new Observation(whales, data.getDate(), data.getTime(), data.getLocation()));
+            return redirect(routes.ParentController.listObservations()).flashing("info", "Observation added!");
+        }
     }
 
     public Result index() {
@@ -77,22 +121,22 @@ public class ParentController extends Controller {
     }
 
     public Result stats() {
-        return ok(views.html.stats.render(Whales));
+        return ok(views.html.stats.render(Whales, observations));
     }
 
 
     public Result listWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(Whales), whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        return ok(views.html.listWhales.render(asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
     }
 
     public Result listFilterWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        return ok(views.html.listWhales.render(asScala(FilteredWhales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
     }
 
     public Result getWhales(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
-            return ok(views.html.listWhales.render(asScala(Whales), whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+            return ok(views.html.listWhales.render(asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
         }
         else {
             ObjectNode result = Json.newObject();
@@ -126,7 +170,7 @@ public class ParentController extends Controller {
                 logger.error(err.toString());
             }
             logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listWhales.render(asScala(Whales), boundForm, whaleForm2, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listWhales.render(asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
         } else {
             WhaleData data = boundForm.get();
             System.out.println("data.getId():"+data.getId());
@@ -136,7 +180,7 @@ public class ParentController extends Controller {
             this.ds.addWhale(newWhale);
             List<Whale> allWhales = this.ds.getWhales();
             System.out.println("allWhales.size():"+allWhales.size());
-            return redirect(routes.WhaleController.listWhales()).flashing("info", "Whale added!");
+            return redirect(routes.ParentController.listWhales()).flashing("info", "Whale added!");
         }
     }
 
@@ -145,12 +189,11 @@ public class ParentController extends Controller {
         final Form<FilterData> boundForm2 = whaleForm2.bindFromRequest(request);
         if (boundForm2.hasErrors()) {
             logger.error("errors = {}", boundForm2.errors());
-            return badRequest(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, whaleForm2, request,
-                    messagesApi.preferred(request)));
+            return badRequest(views.html.listWhales.render(asScala(FilteredWhales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
         } else {
             FilterData data = boundForm2.get();
             this.FilterWhales(data);
-            return redirect(routes.WhaleController.listFilterWhales()).flashing("info", "Whales Filtered");
+            return redirect(routes.ParentController.listFilterWhales()).flashing("info", "Whales Filtered");
         }
     }
 
@@ -188,6 +231,7 @@ public class ParentController extends Controller {
                     .filter(w -> w.weight > (data.getMinweight()))
                     .collect(Collectors.toList());
         }
-        this.Whales = FilteredWhales;
+        this.Whales = (ArrayList<Whale>) FilteredWhales;
     }
+
 }

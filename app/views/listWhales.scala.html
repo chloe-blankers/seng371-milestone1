@@ -1,7 +1,7 @@
 @import play.mvc.Http.Request
 @import views.html.helper.options
-@(Whales: Seq[Whale], form: Form[WhaleData], form2: Form[FilterData])(implicit request: Request, messages: play.i18n.Messages)
-
+@(Whales: Seq[Whale], observations: Seq[Observation], observationForm: Form[ObservationData], whaleForm: Form[WhaleData],
+        whaleForm2: Form[FilterData])(implicit request: Request, messages: play.i18n.Messages)
 @main("Whales") {
     <html lang="en">
     <head>
@@ -14,16 +14,16 @@
     <body>
     <div class="navigation">
         <div class="nav-element" >
-            <a class="navigation" href="@routes.WhaleController.index()"><i class="fa fa-home"></i> Home</a>
+            <a class="navigation" href="@routes.ParentController.index()"><i class="fa fa-home"></i> Home</a>
         </div>
         <div class="nav-element" >
-            <a class="navigation" href="@routes.WhaleController.listWhales"><i class="fa fa-eye"></i>Whales</a>
+            <a class="navigation" href="@routes.ParentController.listWhales"><i class="fa fa-eye"></i>Whales</a>
         </div>
         <div class="nav-element" >
-            <a class="navigation" href="@routes.ObservationController.listObservations"><i class="fa fa-search"></i>Observations</a>
+            <a class="navigation" href="@routes.ParentController.listObservations"><i class="fa fa-search"></i>Observations</a>
         </div>
         <div class="nav-element" >
-            <a class="navigation" href="@routes.WhaleController.stats"> <i class="fa fa-bar-chart"></i>Stats</a>
+            <a class="navigation" href="@routes.ParentController.stats"> <i class="fa fa-bar-chart"></i>Stats</a>
         </div>
     </div>
     <div class="nav-holder"></div>
@@ -31,18 +31,18 @@
     <div class="box-label">
         <h3>Filter Whales</h3>
     </div>
-    @b4.inline.formCSRF(routes.WhaleController.filterWhales) { implicit vfc =>
-        <label>Filter Species</label> @b4.select( form2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
+    @b4.inline.formCSRF(routes.ParentController.filterWhales) { implicit vfc =>
+        <label>Filter Species</label> @b4.select( whaleForm2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
             "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
             "Sperm" -> "Sperm", "Bowhead" -> "Bowhead", "None"->"None"),
             'value -> "None", '_default -> "None"
         )
-        <label>Filter Gender</label>@b4.select( form2("filtergender"), options = Seq("Male" -> "Male",
+        <label>Filter Gender</label>@b4.select( whaleForm2("filtergender"), options = Seq("Male" -> "Male",
             "Female" -> "Female", "None"->"None"),
             'value -> "None", '_default -> "None"
         )
-        <label>Max Weight</label> @b4.text( form2("maxweight"), 'value -> "900000", '_default -> "900000")
-        <label>Min Weight</label> @b4.text( form2("minweight"), 'value -> "0", '_default -> "0")
+        <label>Max Weight</label> @b4.text( whaleForm2("maxweight"), 'value -> "900000", '_default -> "900000")
+        <label>Min Weight</label> @b4.text( whaleForm2("minweight"), 'value -> "0", '_default -> "0")
         @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Filter</b> }<br/>
         @b4.reset('class -> "btn btn-default"){ Clear }
         @request.flash.asScala().data.map { case (name, value) =>
@@ -66,13 +66,13 @@
     <div class="box-label">
         <h3>Add New Whale</h3>
     </div>
-    @b4.vertical.formCSRF(routes.WhaleController.createWhale) { implicit vfc =>
+    @b4.vertical.formCSRF(routes.ParentController.createWhale) { implicit vfc =>
         <label>weight</label>
-        @b4.text( form("weight"))
+        @b4.text( whaleForm("weight"))
         <label>gender</label>
-        @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
+        @b4.select( whaleForm("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
         <label>species</label>
-        @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
+        @b4.select( whaleForm("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
         @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Create</b> }<br/>
         @b4.reset('class -> "btn btn-default"){ Clear }
         @request.flash.asScala().data.map { case (name, value) =>

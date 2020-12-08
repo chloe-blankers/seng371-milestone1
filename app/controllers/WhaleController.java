@@ -32,6 +32,7 @@ import views.html.listWhales;
  * https://playframework.com/documentation/latest/JavaForms
  * https://adrianhurt.github.io/play-bootstrap/
  */
+/*
 @Singleton
 public class WhaleController extends Controller {
 
@@ -182,3 +183,4 @@ public class WhaleController extends Controller {
         this.Whales = FilteredWhales;
     }
 }
+ */
