@@ -1,10 +1,14 @@
 package controllers;
 
+
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import db.DataStore;
+import models.Observation;
 import models.Whale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import play.data.Form;
 import play.data.Form;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
@@ -16,6 +20,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import static play.libs.Scala.asScala;
@@ -26,18 +32,20 @@ import views.html.listWhales;
 
 /**
  * Code based off
- * https://github.com/playframework/play-java-forms-example
+ * https://github.com/playframework/play-java-whaleForms-example
  *
- * Form processing tutorials.
- * https://playframework.com/documentation/latest/JavaForms
+ * whaleForm processing tutorials.
+ * https://playframework.com/documentation/latest/JavawhaleForms
  * https://adrianhurt.github.io/play-bootstrap/
  */
 @Singleton
-public class WhaleController extends Controller {
+public class ParentController extends Controller {
 
-    private final Form<WhaleData> form;
     private MessagesApi messagesApi;
-    private final Form<FilterData> form2;
+    private final List<Observation> observations;
+    private final Form<ObservationData> observationForm;
+    private final Form<WhaleData> whaleForm;
+    private final Form<FilterData> whaleForm2;
     private List<Whale> FilteredWhales;
     private List<Whale> Whales;
     private DataStore ds;
@@ -46,22 +54,22 @@ public class WhaleController extends Controller {
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
     @Inject
-    public WhaleController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
+    public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
         this.ds = new DataStore();
-        this.form = formFactory.form(WhaleData.class);
+        this.whaleForm = formFactory.form(WhaleData.class);
+        this.whaleForm2 = formFactory.form(FilterData.class);
+        this.observationForm = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
-        this.Whales=this.ds.getWhales();
-        if(this.Whales.size()<1){
-            //No whales in the database, so put some default whales in for the sake of displaying the app
-            this.Whales = com.google.common.collect.Lists.newArrayList(
-                    new Whale( "Beluga", 204, "Male"),
-                    new Whale( "Orca", 111, "Female"),
-                    new Whale( "Blue", 301, "Male")
-            );
-        }
-
-
-        this.form2 = formFactory.form(FilterData.class);
+        //this.Whales=this.ds.getWhales();
+        //No whales in the database, so put some default whales in for the sake of displaying the app
+        this.Whales = com.google.common.collect.Lists.newArrayList(
+                new Whale( "Beluga", 204, "Male"),
+                new Whale( "Orca", 111, "Female"),
+                new Whale( "Blue", 301, "Male")
+        );
+        this.observations = com.google.common.collect.Lists.newArrayList(
+                new Observation((ArrayList<Whale>) Whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
+        );
     }
 
     public Result index() {
@@ -74,17 +82,17 @@ public class WhaleController extends Controller {
 
 
     public Result listWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(Whales), form, form2, request, messagesApi.preferred(request)));
+        return ok(views.html.listWhales.render(asScala(Whales), whaleForm, whaleForm2, request, messagesApi.preferred(request)));
     }
 
     public Result listFilterWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(FilteredWhales), form, form2, request, messagesApi.preferred(request)));
+        return ok(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, whaleForm2, request, messagesApi.preferred(request)));
     }
 
     public Result getWhales(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
-            return ok(views.html.listWhales.render(asScala(Whales), form, form2, request, messagesApi.preferred(request)));
+            return ok(views.html.listWhales.render(asScala(Whales), whaleForm, whaleForm2, request, messagesApi.preferred(request)));
         }
         else {
             ObjectNode result = Json.newObject();
@@ -100,8 +108,8 @@ public class WhaleController extends Controller {
                 }
             }
             else{
-                    result.put("isSuccessful",false);
-                    result.put("body","MIME type not supported.");
+                result.put("isSuccessful",false);
+                result.put("body","MIME type not supported.");
             }
 
             return ok(result);
@@ -110,7 +118,7 @@ public class WhaleController extends Controller {
 
 
     public Result createWhale(Http.Request request) throws IOException, SQLException {
-        final Form<WhaleData> boundForm = form.bindFromRequest(request);
+        final Form<WhaleData> boundForm = whaleForm.bindFromRequest(request);
         if (boundForm.hasErrors()) {
             logger.error("errors = {}", boundForm.errors());
             logger.error("boundForm.errors().size():"+boundForm.errors().size());
@@ -118,7 +126,7 @@ public class WhaleController extends Controller {
                 logger.error(err.toString());
             }
             logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listWhales.render(asScala(Whales), boundForm, form2, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listWhales.render(asScala(Whales), boundForm, whaleForm2, request, messagesApi.preferred(request)));
         } else {
             WhaleData data = boundForm.get();
             System.out.println("data.getId():"+data.getId());
@@ -134,10 +142,11 @@ public class WhaleController extends Controller {
 
     public Result filterWhales(Http.Request request) {
         System.out.println("hellloooo");
-        final Form<FilterData> boundForm2 = form2.bindFromRequest(request);
+        final Form<FilterData> boundForm2 = whaleForm2.bindFromRequest(request);
         if (boundForm2.hasErrors()) {
             logger.error("errors = {}", boundForm2.errors());
-            return badRequest(views.html.listWhales.render(asScala(FilteredWhales), form, form2, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, whaleForm2, request,
+                    messagesApi.preferred(request)));
         } else {
             FilterData data = boundForm2.get();
             this.FilterWhales(data);

@@ -29,6 +29,8 @@ public class DataStore {
         }
         String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
         Statement stmt = null;
+        Statement stmt2 = null;
+        Statement stmt3 = null;
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -36,12 +38,22 @@ public class DataStore {
         }
         boolean pass = true;
         try {
-
             stmt = dbConnection.createStatement();
             stmt.execute("DROP TABLE WHALES IF EXISTS");
             stmt.execute("CREATE TABLE WHALES(id int primary key, species varchar(255), weight integer, " +
                     "gender varchar(255))");
             stmt.close();
+            dbConnection.commit();
+            stmt2 = dbConnection.createStatement();
+            stmt2.execute("DROP TABLE OBSERVATIONS IF EXISTS");
+            stmt2.execute("CREATE TABLE OBSERVATIONS(id int primary key, location varchar(255), numWhales integer, " +
+                    "date varchar(255), time varchar(255), String weights)");
+            stmt2.close();
+            dbConnection.commit();
+            stmt3 = dbConnection.createStatement();
+            stmt3.execute("DROP TABLE RELATIONSHIPS IF EXISTS");
+            stmt3.execute("CREATE TABLE RELATIONSHIPS(whale_id int primary key, observation_id int primary key)");
+            stmt3.close();
             dbConnection.commit();
         } catch (SQLException e) {
             pass = false;
