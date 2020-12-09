@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static play.libs.Scala.asScala;
 
@@ -32,6 +33,7 @@ public class ObservationController extends Controller {
     private MessagesApi messagesApi;
     private final List<Observation> observations;
     private final ArrayList<Whale> Whales;
+    private List<Observation> FilteredObservations;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
@@ -93,6 +95,34 @@ public class ObservationController extends Controller {
             }
             observations.add(new Observation(whales, data.getDate(), data.getTime(), data.getLocation()));
             return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");
+        }
+    }
+
+    public Result listFilteredObservations(Http.Request request) {
+        return ok(views.html.listObservations.render(asScala(FilteredObservations), form, request, messagesApi.preferred(request)));
+    }
+
+    public void FilterObservationsList(ObservationData data){
+        System.out.println("FilterObservationsList");
+        if(data.getDate() != null) {
+            FilteredObservations = observations
+                    .stream()
+                    .filter(w -> w.date.equals(data.getDate()))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    public Result filterObservations(Http.Request request){
+        System.out.println("filterObservations");
+        final Form<ObservationData> boundForm = form.bindFromRequest(request);
+
+        if (boundForm.hasErrors()) {
+            logger.error("errors = {}", boundForm.errors());
+            return badRequest(views.html.listObservations.render(asScala(observations), form, request, messagesApi.preferred(request)));
+        } else {
+            ObservationData data = boundForm.get();
+            this.FilterObservationsList(data);
+            return redirect(routes.ObservationController.listFilteredObservations()).flashing("info", "Observations Filtered");
         }
     }
 

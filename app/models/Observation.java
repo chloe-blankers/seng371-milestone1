@@ -1,5 +1,6 @@
 package models;
 
+import controllers.ObservationData;
 import controllers.WhaleData;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -20,6 +21,16 @@ public class Observation {
         this.date = date;
         this.time = time;
         this.location = location;
+    }
+
+    //copy constructor
+    public Observation(Observation other){
+        if(other != null){
+            this.whales = new ArrayList<Whale>(other.whales);
+            this.date = other.date;
+            this.time = other.time;
+            this.location = other.location;
+        }
     }
 
 }
