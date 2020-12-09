@@ -77,17 +77,15 @@ public class ObservationController extends Controller {
             ArrayList<Whale> whales = new ArrayList<>();
             int numWhales = data.getNumWhales();
             String weights = data.getWeights();
-            String[] weigthsList = weights.split(",");
+            String[] weigthList = weights.split(",");
+            String genders = data.getGenders();
+            String[] genderList = genders.split(",");
+            String species = data.getSpecies();
+            String[] speciesList = species.split(",");
             for(int i = 0; i < numWhales; i++) {
-                try {
-                    Whale w = new Whale(data.getSpecies(), Integer.parseInt(weigthsList[i]), data.getGender());
+                    Whale w = new Whale(speciesList[i], Integer.parseInt(weigthList[i]), genderList[i]);
                     whales.add(w);
                     Whales.add(w);
-                } catch (Exception e) {
-                    Whale w = new Whale(data.getSpecies(), 0, data.getGender());
-                    whales.add(w);
-                    Whales.add(w);
-                }
             }
             observations.add(new Observation(whales, data.getDate(), data.getTime(), data.getLocation()));
             return redirect(routes.ObservationController.listObservations()).flashing("info", "Observation added!");

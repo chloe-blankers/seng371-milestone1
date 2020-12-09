@@ -10,7 +10,7 @@
             <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         </head>
-        <body>
+        <body style="background-color:lightblue">
             <div class="navigation">
                 <div class="nav-element" >
                     <a class="navigation" href="@routes.WhaleController.index()"><i class="fa fa-home"></i> Home</a>
@@ -39,14 +39,24 @@
                 @for(o <- observations) {
                     <tr><td>@o.location</td><td>@o.date</td><td>@o.time</td><td></td></tr>
                     @for(w <- o.whales) {
-                        <tr><td>@w.species</td>
+                        <tr>@if(w.species == "?") {
+                                <td>Unknown</td>
+                            }
+                            @if(w.species != "?"){
+                                <td>@w.species</td>
+                            }
                             @if(w.weight == 0){
                                 <td>Unknown</td>
                             }
                             @if(w.weight != 0){
                                 <td>@w.weight</td>
                             }
-                            <td>@w.gender</td>
+                            @if(w.gender == "?") {
+                                <td>Unknown</td>
+                            }
+                            @if(w.gender != "?") {
+                                <td>@w.gender</td>
+                            }
                             <td>@w.id</td></tr>
                     }
 
@@ -62,16 +72,22 @@
                 @helper.CSRF.formField
                 <label>number of whales</label>
                 @b4.text(form("numWhales"))
-                <label>weights (in kgs)</label>
+                </br>
+                <label>estimated weights (in kgs) <p style="color:cornflowerblue">Note: If weight of a whale is unknown input '0'</p></label>
                 @b4.text(form("weights"))
-                <label>gender</label>
-                @b4.select( form("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
-                <label>species</label>
-                @b4.select( form("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
+                </br>
+                <label>gender <p style="color:cornflowerblue">Note: If gender of a whale is unknown input '?'</p></label>
+                @b4.text( form("genders"))
+                </br>
+                <label>species <p style="color:cornflowerblue">Note: If species of a whale is unknown input '?'</p></label>
+                @b4.text( form("species"))
+                </br>
                 <label>location</label>
                 @b4.text( form("location"))
+                </br>
                 <label>date</label>
                 @b4.date(form("date"))
+                </br>
                 <label>time</label>
                 @b4.select( form("time"), options = Seq("12pm" -> "12pm", "1pm" -> "1pm", "2pm" -> "2pm", "3pm" -> "3pm", "4pm" -> "4pm", "5pm" -> "5pm", "6pm" -> "6pm", "7pm" -> "7pm",  "8pm" -> "8pm", "9pm" -> "9pm", "10pm" -> "10pm", "11pm" -> "11pm", "12am" -> "12am", "1am" -> "1am", "2am" -> "2am", "3am" -> "3am", "4am" -> "4am", "5am" -> "5am", "6am" -> "6am", "7am" -> "7am", "8am" -> "8am", "9am" -> "9am", "10am" -> "10am", "11am" -> "11am"))
                 <button type="submit">Create Observation</button>
