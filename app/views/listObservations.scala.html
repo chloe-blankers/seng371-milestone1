@@ -38,8 +38,12 @@
                 <label>date</label>
                 @b4.date(form("date"))
                 @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Filter</b> }<br/>
-                @b4.reset('class -> "btn btn-default"){ Clear }
+                @b4.vertical.formCSRF(routes.ObservationController.removeObservationFilter) { implicit vfc =>
+                    @b4.reset('class -> "btn btn-default") { Clear }
+                }
             }
+
+
 
             <div id="table-holder">
             <table>

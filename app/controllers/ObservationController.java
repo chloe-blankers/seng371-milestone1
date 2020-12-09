@@ -62,6 +62,7 @@ public class ObservationController extends Controller {
     }
 
     public Result listObservations(Http.Request request) {
+        System.out.println("hello listing observations");
         return ok(views.html.listObservations.render(asScala(observations), form, request, messagesApi.preferred(request)));
     }
 
@@ -124,6 +125,11 @@ public class ObservationController extends Controller {
             this.FilterObservationsList(data);
             return redirect(routes.ObservationController.listFilteredObservations()).flashing("info", "Observations Filtered");
         }
+    }
+
+    public Result removeObservationFilter(){
+        System.out.println("hello");
+        return redirect(routes.ObservationController.listObservations()).flashing("info", "Observations Restored");
     }
 
 }

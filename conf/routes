@@ -17,6 +17,7 @@ GET     /observations                    controllers.ObservationController.listO
 POST    /observations                    controllers.ObservationController.createObservation(request: Request)
 POST    /observations/filter             controllers.ObservationController.filterObservations(request: Request)
 GET     /observations/filter             controllers.ObservationController.listFilteredObservations(request: Request)
+POST    /observations/filter/removeFilter       controllers.ObservationController.removeObservationFilter()
 
 # Stats
 GET     /Stats                      controllers.WhaleController.stats
