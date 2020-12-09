@@ -1,33 +1,43 @@
 
 
+async function loadGraphs( gidWhaleNum, gidWhaleWeight, gidObservationDays ){
+
+    // Use REST API to get JSON representing all the whales.
+    const whaleResponse = await fetch( '/Whales/getWhales', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
+        .then( (data) => data.json() )
+        .then( (data) => {
+                loadWhaleNumberGraph( gidWhaleNum, data['body'] )
+                loadWhaleWeightGraph( gidWhaleWeight, data['body'] )
+        } );
+
+    // Use REST API to get JSON Representing all the observations.
 
 
-function loadWhaleNumberGraph( graphID, dataJSON ){
+
+
+}
+
+function loadWhaleNumberGraph( graphID, whalesJSON ){
 
     // Get relevant graph Holder
     let graphHolder = document.getElementById( graphID );
 
     // Parse JSON
-    let data = JSON.parse( dataJSON );
-    if ( data.whales[data.whales.length - 1].id != -1 ){
-        console.log("ERROR: Expected an empty array element with id == -1 in last position in JSON string (in loadWhaleNumberGraph();)");
-        let header = graphHolder.getElementsByClassName('graph-loading')[0].getElementsByClassName('graph-loading-message')[0];
-        header.style = "color: var(--error);"
-        header.innerHTML = "Error: Unable to Process Data."
-        return false;
+    let whales = [];
+    for ( i in whalesJSON ){
+        whales.push( whalesJSON[i] );
     }
-    data.whales.pop();
 
     // Calculate Number of Whales of Each Species
     let whaleFreq = {};
     let keys = [];
-    for ( i in data.whales ){
-        if ( whaleFreq[data.whales[i].species] ) {
-            whaleFreq[data.whales[i].species] += 1;
+    for ( i in whales ){
+        if ( whaleFreq[whales[i]['species']] ) {
+            whaleFreq[whales[i]['species']] += 1;
         }
         else {
-            whaleFreq[data.whales[i].species] = 1;
-            keys.push( data.whales[i].species );
+            whaleFreq[ whales[i]['species']] = 1;
+            keys.push( whales[i]['species'] );
         }
     }
 
@@ -74,33 +84,27 @@ function loadWhaleNumberGraph( graphID, dataJSON ){
     graphHolder.replaceChild( canvasElement, graphHolder.getElementsByClassName('graph-loading')[0] );
 }
 
-
-function loadWhaleWeightGraph( graphID, dataJSON ){
+function loadWhaleWeightGraph( graphID, whalesJSON ){
 
     // Get relevant graph Holder
     let graphHolder = document.getElementById( graphID );
 
     // Parse JSON
-    console.log( dataJSON );
-    let data = JSON.parse( dataJSON );
-    if ( data.whales[data.whales.length - 1].id != -1 ){
-        let header = graphHolder.getElementsByClassName('graph-loading')[0].getElementsByClassName('graph-loading-message')[0];
-        header.style = "color: var(--error);"
-        header.innerHTML = "Error: Unable to Process Data."
-        return false;
+    let whales = [];
+    for ( i in whalesJSON ){
+        whales.push( whalesJSON[i] );
     }
-    data.whales.pop();
 
     // Calculate Average Weights
     let whaleDict = {};
-    for ( var whale in data.whales ){
-        whale = data.whales[whale];
-        if ( whaleDict[whale.species] ) {
-            whaleDict[whale.species] = [ (whaleDict[whale.species][0] * whaleDict[whale.species][1] +
-                               whale.weight) / (whaleDict[whale.species][1] + 1), whaleDict[whale.species][1] + 1 ];
+    for ( var i in whales ){
+        whale = whales[i];
+        if ( whaleDict[whale['species']] ) {
+            whaleDict[whale['species']] = [ (whaleDict[whale['species']][0] * whaleDict[whale['species']][1] +
+                               whale['weight']) / (whaleDict[whale['species']][1] + 1), whaleDict[whale['species']][1] + 1 ];
         }
         else {
-            whaleDict[whale.species] = [ whale.weight, 1 ];
+            whaleDict[whale['species']] = [ whale['weight'], 1 ];
         }
     }
 

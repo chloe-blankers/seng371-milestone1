@@ -52,7 +52,7 @@
 <div class="graph-holder" id="graph-3" >
     <div class="graph-loading">
         <div class="graph-loading-spinner" ></div>
-        <h4 class="graph-loading-message">Not Yet Implemented</h4>
+        <h4 class="graph-loading-message">Please wait...</h4>
     </div>
 </div>
 
@@ -67,13 +67,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 <script rel="text/javascript" src="@routes.Assets.versioned("javascripts/stats.js")"></script>
 <script>
-        const dirtyData = "{ \"whales\": [ @for(Whale <- Whales){ @Whale.toString() } {\"id\":-1}] }";
-        const whaleData = dirtyData.replace( new RegExp('&quot;', 'g'), "\"" );
-
-        loadWhaleNumberGraph('graph-1', whaleData);
-        loadWhaleWeightGraph('graph-2', whaleData);
-
-
+        loadGraphs( 'graph-1', 'graph-2', 'graph-3' );
 </script>
 </html>
 }
