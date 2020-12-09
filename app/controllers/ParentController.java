@@ -75,14 +75,12 @@ public class ParentController extends Controller {
         Whales.add(w2);
         Whales.add(w3);
         this.touristWhaleObs = new ArrayList<>();
-        Whale t1 = new Whale( "Beluga", 204, "Male");
-        Whale t2 = new Whale( "Orca", 111, "Female");
-        Whale t3 = new Whale( "Blue", 301, "Male");
-        touristWhaleObs.add(t1);
-        touristWhaleObs.add(t2);
-        touristWhaleObs.add(t3);
+        ArrayList<Whale> whales = new ArrayList<>();
+        whales.add(w1);
+        whales.add(w2);
+        whales.add(w3);
         this.observations = com.google.common.collect.Lists.newArrayList(
-                new Observation(touristWhaleObs, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
+                new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
     }
 
