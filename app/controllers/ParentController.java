@@ -161,6 +161,7 @@ public class ParentController extends Controller {
             else{
                 result.put("isSuccessful",false);
                 result.put("body","MIME type not supported.");
+                return badRequest(result);
             }
 
 
