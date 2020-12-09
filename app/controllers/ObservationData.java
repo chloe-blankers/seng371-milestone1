@@ -3,24 +3,35 @@ package controllers;
 import models.Whale;
 import play.data.validation.Constraints;
 
-import javax.validation.Constraint;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ObservationData {
+/**
+ * Code based off
+ * https://github.com/playframework/play-java-forms-example
+ *
+ * Form processing tutorials.
+ * https://playframework.com/documentation/latest/JavaForms
+ * https://adrianhurt.github.io/play-bootstrap/
+ */
+public class ObservationData extends WhaleData {
 
-    @Constraints.Required
+    //@Constraints.Required
     private ArrayList<Whale> whales;
 
-    @Constraints.Required
+    //@Constraints.Required
     private String location;
 
-    @Constraints.Required
+    //@Constraints.Required
     private String date;
 
-    @Constraints.Required
+    //@Constraints.Required
     private String time;
+
+    //@Constraints.Required
+    private int numWhales;
+
+    //@Constraints.Required
+    private String weights;
 
     public ObservationData() {
     }
@@ -55,5 +66,21 @@ public class ObservationData {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getNumWhales() {
+        return numWhales;
+    }
+
+    public void setNumWhales(int numWhales) {
+        this.numWhales = numWhales;
+    }
+
+    public String getWeights() {
+        return weights;
+    }
+
+    public void setWeights(String weights) {
+        this.weights = weights;
     }
 }
