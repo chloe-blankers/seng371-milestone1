@@ -103,17 +103,15 @@ public class ParentController extends Controller {
             ArrayList<Whale> whales = new ArrayList<>();
             int numWhales = data.getNumWhales();
             String weights = data.getWeights();
-            String[] weigthsList = weights.split(",");
+            String[] weigthList = weights.split(",");
+            String genders = data.getGenders();
+            String[] genderList = genders.split(",");
+            String species = data.getSpecies();
+            String[] speciesList = species.split(",");
             for(int i = 0; i < numWhales; i++) {
-                try {
-                    Whale w = new Whale(data.getSpecies(), Integer.parseInt(weigthsList[i]), data.getGender());
-                    whales.add(w);
-                    touristWhaleObs.add(w);
-                } catch (Exception e) {
-                    Whale w = new Whale(data.getSpecies(), 0, data.getGender());
-                    whales.add(w);
-                    touristWhaleObs.add(w);
-                }
+                Whale w = new Whale(speciesList[i], Integer.parseInt(weigthList[i]), genderList[i]);
+                whales.add(w);
+                Whales.add(w);
             }
             Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation());
             observations.add(newOb);
