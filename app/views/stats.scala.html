@@ -1,4 +1,4 @@
-@(Whales: List[Whale])
+@(Whales: List[Whale], observations: List[Observation])
 
 @main("Stats About Whales") {
 <html lang="en">
@@ -12,16 +12,16 @@
 <body>
 <div class="navigation">
     <div class="nav-element" >
-        <a class="navigation" href="@routes.WhaleController.index()"><i class="fa fa-home"></i> Home</a>
+        <a class="navigation" href="@routes.ParentController.index()"><i class="fa fa-home"></i> Home</a>
     </div>
     <div class="nav-element" >
-        <a class="navigation" href="@routes.WhaleController.listWhales"><i class="fa fa-eye"></i>Whales</a>
+        <a class="navigation" href="@routes.ParentController.listWhales"><i class="fa fa-eye"></i>Whales</a>
     </div>
     <div class="nav-element" >
-        <a class="navigation" href="@routes.ObservationController.listObservations"><i class="fa fa-search"></i>Observations</a>
+        <a class="navigation" href="@routes.ParentController.listObservations"><i class="fa fa-search"></i>Observations</a>
     </div>
     <div class="nav-element" >
-        <a class="navigation" href="@routes.WhaleController.stats"> <i class="fa fa-bar-chart"></i> Stats</a>
+        <a class="navigation" href="@routes.ParentController.stats"> <i class="fa fa-bar-chart"></i> Stats</a>
     </div>
 </div>
 <div class="nav-holder"></div>
@@ -67,11 +67,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 <script rel="text/javascript" src="@routes.Assets.versioned("javascripts/stats.js")"></script>
 <script>
-    const dirtyData = "{ \"whales\": [ @for(Whale <- Whales){ @Whale.toString() } {\"id\":-1}] }";
-    const whaleData = dirtyData.replace( new RegExp('&quot;', 'g'), "\"" );
+        const dirtyData = "{ \"whales\": [ @for(Whale <- Whales){ @Whale.toString() } {\"id\":-1}] }";
+        const whaleData = dirtyData.replace( new RegExp('&quot;', 'g'), "\"" );
 
-    loadWhaleNumberGraph('graph-1', whaleData);
-    loadWhaleWeightGraph('graph-2', whaleData);
+        loadWhaleNumberGraph('graph-1', whaleData);
+        loadWhaleWeightGraph('graph-2', whaleData);
 
 
 </script>
