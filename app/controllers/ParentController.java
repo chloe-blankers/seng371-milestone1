@@ -67,28 +67,9 @@ public class ParentController extends Controller {
         this.whaleForm2 = formFactory.form(FilterData.class);
         this.observationForm = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
-        //this.Whales=this.ds.getWhales();
-        //No whales in the database, so put some default whales in for the sake of displaying the app
-        Whale w1 = new Whale( "Beluga", 204, "Male");
-        Whale w2 = new Whale( "Orca", 111, "Female");
-        Whale w3 = new Whale( "Blue", 301, "Male");
-        this.Whales = new ArrayList<>();
-        Whales.add(w1);
-        Whales.add(w2);
-        Whales.add(w3);
-        this.touristWhaleObs = new ArrayList<>();
-        ArrayList<Whale> whales = new ArrayList<>();
-        whales.add(w1);
-        whales.add(w2);
-        whales.add(w3);
-        FilteredWhales = new ArrayList<>();
-        this.observations = com.google.common.collect.Lists.newArrayList(
-                new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
-        );
-        //this.Whales= (ArrayList<Whale>) rs.getWhaleList();
-        //this.touristWhaleObs = this.Whales;
-        //this.observations = rs.getObservationList();
-
+        this.Whales= (ArrayList<Whale>) rs.getWhaleList();
+        this.touristWhaleObs = this.Whales;
+        this.observations = rs.getObservationList();
     }
 
     public Result listObservations(Http.Request request) {
