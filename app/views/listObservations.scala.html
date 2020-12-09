@@ -1,6 +1,7 @@
 @import play.mvc.Http.Request
 @import views.html.helper.options
 @import scala.Console.in
+@import views.html.helper.defaultField
 @(observations: Seq[Observation], form: Form[ObservationData])(implicit request: Request, messages: play.i18n.Messages)
 @main("observations") {
     <html lang="en">
@@ -71,16 +72,16 @@
             @b4.vertical.form(routes.ObservationController.createObservation) { implicit vfc =>
                 @helper.CSRF.formField
                 <label>number of whales</label>
-                @b4.text(form("numWhales"))
+                @b4.text(form("numWhales"), 'placeholder -> "ex: 3")
                 </br>
                 <label>estimated weights (in kgs) <p style="color:cornflowerblue">Note: If weight of a whale is unknown input '0'</p></label>
-                @b4.text(form("weights"))
+                @b4.text(form("weights"), 'placeholder -> "ex: 1000,2000,?")
                 </br>
                 <label>gender <p style="color:cornflowerblue">Note: If gender of a whale is unknown input '?'</p></label>
-                @b4.text( form("genders"))
+                @b4.text( form("genders"), 'placeholder -> "ex: M,?,F")
                 </br>
                 <label>species <p style="color:cornflowerblue">Note: If species of a whale is unknown input '?'</p></label>
-                @b4.text( form("species"))
+                @b4.text( form("species"), 'placeholder -> "ex: ?,Orca,Killer")
                 </br>
                 <label>location</label>
                 @b4.text( form("location"))
