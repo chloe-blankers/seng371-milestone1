@@ -4,6 +4,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import db.DataStore;
+import db.ResultData;
 import models.Observation;
 import models.Whale;
 import org.slf4j.Logger;
@@ -57,30 +58,15 @@ public class ParentController extends Controller {
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
-        this.ds = new DataStore();
+        this.ds=new DataStore();
+        ResultData rs = this.ds.setup(false);
         this.whaleForm = formFactory.form(WhaleData.class);
         this.whaleForm2 = formFactory.form(FilterData.class);
         this.observationForm = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
-        //this.Whales=this.ds.getWhales();
-        //No whales in the database, so put some default whales in for the sake of displaying the app
-        Whale w1 = new Whale( "Beluga", 204, "Male");
-        Whale w2 = new Whale( "Orca", 111, "Female");
-        Whale w3 = new Whale( "Blue", 301, "Male");
-        this.Whales = new ArrayList<>();
-        Whales.add(w1);
-        Whales.add(w2);
-        Whales.add(w3);
-        this.touristWhaleObs = new ArrayList<>();
-        Whale t1 = new Whale( "Beluga", 204, "Male");
-        Whale t2 = new Whale( "Orca", 111, "Female");
-        Whale t3 = new Whale( "Blue", 301, "Male");
-        touristWhaleObs.add(t1);
-        touristWhaleObs.add(t2);
-        touristWhaleObs.add(t3);
-        this.observations = com.google.common.collect.Lists.newArrayList(
-                new Observation(touristWhaleObs, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
-        );
+        this.Whales= (ArrayList<Whale>) rs.getWhaleList();
+        this.touristWhaleObs = this.Whales;
+        this.observations = rs.getObservationList();
     }
 
     public Result listObservations(Http.Request request) {
