@@ -83,8 +83,8 @@ public class DataStore {
     }
 
     public void addWhale(Whale w) throws SQLException {
-        Connection dbConnection = DriverManager.getConnection("jdbc:h2:~/whale", "sa", "");
-        String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
+        Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
+        //String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
         PreparedStatement pStmt = null;
         try {
             Class.forName(DB_DRIVER);
@@ -121,8 +121,8 @@ public class DataStore {
     }
 
     public void addWhales(List<Whale> newWhales) throws SQLException {
-        Connection dbConnection = DriverManager.getConnection("jdbc:h2:~/whale", "sa", "");
-        String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
+        Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
+        //String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
         PreparedStatement pStmt = null;
         try {
             Class.forName(DB_DRIVER);
@@ -163,13 +163,13 @@ public class DataStore {
     }
 
     public List<Whale> getWhales() throws IOException, SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:h2:~/whale", "sa", "");
+        Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
         List<Whale> whaleList = new ArrayList<>();
         String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
         System.out.println(getClass().getClassLoader().getResource("logging.properties"));
         //Connection connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
         boolean pass = true;
-        try (var con = connection;
+        try (var con = dbConnection;
              var stm = con.createStatement();
              var rs = stm.executeQuery("SELECT * from WHALES")) {
             while (rs.next()) {
@@ -186,13 +186,13 @@ public class DataStore {
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         assert(pass);
-        connection.close();
+        dbConnection.close();
         return whaleList;
     }
 
     public void addObservation(Observation o) throws SQLException {
-        Connection dbConnection = DriverManager.getConnection("jdbc:h2:~/whale", "sa", "");
-        String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
+        Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
+        //String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
         PreparedStatement pStmt = null;
         PreparedStatement pStmt2 = null;
         try {
@@ -248,14 +248,14 @@ public class DataStore {
              so that each observation has a list of whales that was observed
     */
     public List<Observation> getObservations() throws IOException, SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:h2:~/whale", "sa", "");
+        Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
         List<Observation> observationList = new ArrayList<>();
         HashMap<Integer, Observation> obMap = new HashMap<Integer, Observation>();
         String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
         System.out.println(getClass().getClassLoader().getResource("logging.properties"));
         //Connection connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
         boolean pass = true;
-        try (var con = connection;
+        try (var con = dbConnection;
              var stm = con.createStatement();
              /*
                 We will need an sql statement that joins the OBSERVATIONS and SIGHTINGS
@@ -296,7 +296,7 @@ public class DataStore {
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         assert (pass);
-        connection.close();
+        dbConnection.close();
         observationList = new ArrayList(obMap.values());
         return observationList;
     }
