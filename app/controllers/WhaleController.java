@@ -141,11 +141,10 @@ public class WhaleController extends Controller {
     }
 
     public void FilterWhales(FilterData data){
-        FilteredWhales = Whales;
         System.out.println("data.getFilterspecies():"+data.getFilterspecies());
         System.out.println("data.getFilterspecies().compareTo(\"None\"):"+data.getFilterspecies().compareTo("None"));
         if(data.getFilterspecies().compareTo("None")!=0) {
-            FilteredWhales = FilteredWhales
+            FilteredWhales = Whales
                     .stream()
                     .filter(w -> w.species.trim().toLowerCase().startsWith(data.getFilterspecies().trim().toLowerCase()))
                     .collect(Collectors.toList());
@@ -174,6 +173,10 @@ public class WhaleController extends Controller {
                     .filter(w -> w.weight > (data.getMinweight()))
                     .collect(Collectors.toList());
         }
-        this.Whales = FilteredWhales;
+    }
+
+    public Result removeWhaleFilter(){
+        System.out.println("hello whales");
+        return redirect(routes.WhaleController.listWhales()).flashing("info", "Whales Restored");
     }
 }

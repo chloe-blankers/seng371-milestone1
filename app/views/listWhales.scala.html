@@ -44,10 +44,12 @@
         <label>Max Weight</label> @b4.text( form2("maxweight"), 'value -> "900000", '_default -> "900000")
         <label>Min Weight</label> @b4.text( form2("minweight"), 'value -> "0", '_default -> "0")
         @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Filter</b> }<br/>
-        @b4.reset('class -> "btn btn-default"){ Clear }
         @request.flash.asScala().data.map { case (name, value) =>
             <div class="@name">@value</div>
         }
+    }
+    @b4.inline.formCSRF(routes.WhaleController.removeWhaleFilter) { implicit vfc =>
+        @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
     }
 
     <div id="table-holder">
