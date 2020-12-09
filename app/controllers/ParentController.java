@@ -153,16 +153,18 @@ public class ParentController extends Controller {
                     result.putPOJO("body", Whales);
                     //return json data
                 } else {
-                    result.put("isSuccessful", false);
+                    result.put("isSuccessful", true);
                     result.put("body", "No Whales in system");
                 }
+                return ok(result);
             }
             else{
                 result.put("isSuccessful",false);
                 result.put("body","MIME type not supported.");
+                return badRequest(result);
             }
 
-            return ok(result);
+
         }
     }
 
