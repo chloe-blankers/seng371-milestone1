@@ -79,6 +79,7 @@ public class ParentController extends Controller {
         whales.add(w1);
         whales.add(w2);
         whales.add(w3);
+        FilteredWhales = new ArrayList<>();
         this.observations = com.google.common.collect.Lists.newArrayList(
                 new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
