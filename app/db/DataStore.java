@@ -214,12 +214,12 @@ public class DataStore {
             int res = pStmt.executeUpdate();
             System.out.println("res:"+res);
             for(Whale w:o.whales){
-                String sql2 = "INSERT INTO SIGHTINGS(int, int) VALUES(?,?)";
+                String sql2 = "INSERT INTO SIGHTINGS(whale_id, observation_id) VALUES(?,?)";
                 pStmt2 = dbConnection.prepareStatement(sql2);
                 pStmt2.setInt(1,(int)w.id);
                 pStmt2.setInt(2,(int)o.id);
-                System.out.println("+pStmt.toString():"+pStmt.toString());
-                res = pStmt.executeUpdate();
+                System.out.println("+pStmt2.toString():"+pStmt2.toString());
+                res = pStmt2.executeUpdate();
                 System.out.println("res:"+res);
             }
         } catch (SQLException e) {
@@ -288,6 +288,7 @@ public class DataStore {
                 }else {
                     Observation ob = new Observation(new ArrayList<>(), date, time, location);
                     ob.whales.add(w);
+                    obMap.put(Integer.valueOf((int)o.id), ob);
                 }
             }
         } catch (SQLException ex) {
@@ -297,6 +298,7 @@ public class DataStore {
         }
         assert (pass);
         dbConnection.close();
+        System.out.println("observationList.size():"+observationList.size());
         observationList = new ArrayList(obMap.values());
         return observationList;
     }
