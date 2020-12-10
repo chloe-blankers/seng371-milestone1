@@ -69,6 +69,7 @@ public class ParentController extends Controller {
         this.messagesApi = messagesApi;
         this.Whales= (ArrayList<Whale>) rs.getWhaleList();
         this.touristWhaleObs = this.Whales;
+        FilteredWhales = new ArrayList<>();
         this.observations = rs.getObservationList();
         this.insertDummyData();
     }
@@ -89,11 +90,11 @@ public class ParentController extends Controller {
             this.ds.addWhales(Whales);
         }
         if(this.observations.size()<1){ //add a dummy observation
+            System.out.println("dummy");
             ArrayList<Whale> whales = new ArrayList<>();
             whales.add(w1);
             whales.add(w2);
             whales.add(w3);
-            FilteredWhales = new ArrayList<>();
             Observation ob = new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria");
             this.observations = com.google.common.collect.Lists.newArrayList(
                     ob
