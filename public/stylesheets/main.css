@@ -1,6 +1,7 @@
 body {
-    --background:       #dddddd;
+    --background:       lightblue;
     --surface:          #ffffff;
+    --surface2:         #cccccc;
     --primary:          #2196f3;
     --primary-var:      #1976D2;
     --secondary:        #00BCD4;
@@ -24,10 +25,10 @@ body {
     vertical-align: baseline;
     margin: 0;
 
-  font-size: 13pt;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.00;
+    font-size: 13pt;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.00;
 }
 
 /* CHANGES PER SCREEN SIZE */
@@ -57,9 +58,9 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.5;
     text-transform: uppercase;
     margin: 0 0 1.5rem 0;
-    color: var(--on-background);
     color: inherit;
     text-decoration: none;
+    text-align: center;
 }
 
 h1 {
@@ -91,13 +92,13 @@ div.form-holder {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--surface);
+    background-color: inherit;
     margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
     padding-top: 2rem;
     padding-bottom: 2rem;
-    box-shadow: 0px 0px 10px var(--divider);
+    /*box-shadow: 0px 0px 10px var(--divider);*/
     width: var(--space-ratio);
 }
 form.form-inline{
@@ -167,12 +168,11 @@ button:hover {
     color: var(--secondary);
 }
 input.width8, select.width8 {
-
     width: 8rem;
 }
 input, select {
     box-sizing: border-box;
-    background-color: var(--background);
+    background-color: var(--surface);
     border: 0;
     margin: 0;
     padding: 0;
@@ -209,7 +209,7 @@ input[type="radio"]:checked + *::before {
 }
 div.info {
     margin-top: 1rem;
-    color: var(--on-surface);
+    color: var(--on-background);
     font-size: 0.9rem;
     animation: fadeOut ease 4s forwards;
     text-align: center;
@@ -232,21 +232,6 @@ div.invalid-feedback{
 
 
 /* TABLE */
-div.table-holder {
-    -webkit-overflow-scrolling: touch;
-    overflow-x: auto;
-    align-items: center;
-    background-color: var(--surface);
-    margin-top: 1rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    box-shadow: 0px 0px 10px var(--divider);
-    width: var(--space-ratio);
-
-}
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -263,7 +248,7 @@ table tbody tr {
   background-color: var(--surface);
 }
 table tbody tr:nth-child(2n + 1) {
-    background-color: var(--background);
+    background-color: var(--surface2);
 }
 table td {
   padding: 0.75rem 0.75rem; }
@@ -290,7 +275,7 @@ table.alt {
     border-top: 0; }
 
 table th {
-  color: var(--on-surface); }
+  color: var(--on-background); }
 table thead {
   border-bottom-color: var(--divider);
 }
