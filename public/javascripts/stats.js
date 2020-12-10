@@ -4,26 +4,24 @@ async function loadGraphs( gidWhaleNum, gidWhaleWeight, gidObsID ){
 
     // Use REST API to get JSON representing all the whales.
     const whaleResponse = await fetch( '/Whales/getWhales', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
+        .then( (debug) => {console.log(debug); return debug;})
         .then( (data) => data.json() )
         .then( (data) => {
                 loadWhaleNumberGraph( gidWhaleNum, data['body'] )
                 loadWhaleWeightGraph( gidWhaleWeight, data['body'] )
         } );
 
-    console.log( "TIME TO LEARN");
     // Use REST API to get JSON Representing all the observations.
-    const obsResponse = await fetch( '/Stats', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
-            .then( (debug) => {console.log(debug); return debug;})
+    const obsResponse = await fetch( '/observations/getObservations', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
             .then( (data) => data.json() )
             .then( (data) => {
                     loadObsGraph( gidObsID, data['body'] )
             } );
+
+
 }
 
 function loadObsGraph( graphID, obsJSON ){
-
-    console.log( "START OF LOAD OBS GRAPH FUNCTION CALL");
-
 
     // Get relevant graph Holder
     let graphHolder = document.getElementById( graphID );
@@ -31,14 +29,28 @@ function loadObsGraph( graphID, obsJSON ){
     // Parse JSON
     let observations = [];
     for ( i in obsJSON ){
-        observations.push( whalesJSON[i] );
+        observations.push( obsJSON[i] );
     }
 
     // Calculate Monthly Observations
+    let monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+    let obsPerMonth = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+    for ( i in observations ){
+
+        let curMonth = Number( observations[i]['date'].slice(5,7) ) - 1;
+        console.log( curMonth );
+        console.log( curMonth >= 0 );
+        console.log( curMonth <= 11);
+        if ( curMonth >= 0 && curMonth <= 11 ){
+            console.log( obsPerMonth[curMonth] );
+            obsPerMonth[ curMonth ] += 1;
+            console.log( obsPerMonth[curMonth] );
+        }
+    }
+    console.log( obsPerMonth );
+
 
     // Get data in format that ChartJS likes
-    let keys = [ 'January, February, March, April, May, June'];
-    let data = [ 10, 15, 50, 12, 43, 39 ];
     let cusStepSize = 10;
     if (cusStepSize > 100000 ) cusStepSize = 25000;
     else if (cusStepSize > 50000 ) cusStepSize = 10000;
@@ -53,11 +65,11 @@ function loadObsGraph( graphID, obsJSON ){
     var myChart = new Chart(canvasElement, {
         type: 'line',
         data: {
-            labels: keys,
+            labels: monthNames,
             datasets: [{
                 label:              'Observations per Month',
-                data:               vals,
-                backgroundColor:    '#2196f3',
+                data:               obsPerMonth,
+                backgroundColor:    '#2196f366',
                 borderColor:        '#2196f3',
                 borderWidth: 1
             }]
@@ -70,7 +82,7 @@ function loadObsGraph( graphID, obsJSON ){
             },
             title: {
                 display: false,
-                text: 'Chart of the Observations per month for the last 6 months.'
+                text: 'Chart of the Observations each month.'
             },
             scales: {
                 yAxes: [{
@@ -128,7 +140,7 @@ function loadWhaleNumberGraph( graphID, whalesJSON ){
             datasets: [{
                 label:              '# of Whales Per Species',
                 data:               vals,
-                backgroundColor:    '#2196f3',
+                backgroundColor:    '#2196f366',
                 borderColor:        '#2196f3',
                 borderWidth: 1
             }]
@@ -204,7 +216,7 @@ function loadWhaleWeightGraph( graphID, whalesJSON ){
             datasets: [{
                 label:              'Ave Weight of Whales Per Species',
                 data:               vals,
-                backgroundColor:    '#2196f3',
+                backgroundColor:    '#2196f366',
                 borderColor:        '#2196f3',
                 borderWidth: 1
             }]
