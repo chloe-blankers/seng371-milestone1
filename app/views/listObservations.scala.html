@@ -35,7 +35,6 @@
 
             <div class="form-holder">
                 <h3>Filter Observations</h3>
-
             <div class="form-button-hbox">
             @b4.inline.formCSRF(routes.ParentController.filterObservations) { implicit vfc =>
                 <label>date</label>
@@ -52,7 +51,6 @@
 
             <div class="spacer"></div>
 
-            <div id="table-holder">
             <table>
                 <thead>
                     <tr><th>Location</th><th>Date</th><th>Time</th><th></th></tr>
@@ -63,7 +61,7 @@
                     @for(w <- o.whales) {
                         <tr>@if(w.species == "?") {
                             <td>Unknown</td>
-                        }
+                            }
                             @if(w.species != "?"){
                                 <td>@w.species</td>
                             }
@@ -86,12 +84,10 @@
                 </tbody>
             </table>
             </div>
-
             <div class="box-label">
                 <h3>Add New Observation</h3>
             </div>
             <div class="form-holder">
-
             @b4.vertical.formCSRF(routes.ParentController.createObservation) { implicit vfc =>
                 <label>number of whales</label>
                 @b4.text(observationForm("numWhales"), 'placeholder -> "ex: 3")

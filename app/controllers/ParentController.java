@@ -112,13 +112,15 @@ public class ParentController extends Controller {
             int numWhales = data.getNumWhales();
             String weights = data.getWeights();
             String[] weigthList = weights.split(",");
+            String[] fullWeightList = fillArrays(weigthList, numWhales, true);
             String genders = data.getGenders();
             String[] genderList = genders.split(",");
+            String[] fullGenderList = fillArrays(genderList, numWhales, false);
             String species = data.getSpecies();
             String[] speciesList = species.split(",");
-            String[] gL = fillArrays(genderList, numWhales);
+            String[] fullSpeciesList = fillArrays(speciesList, numWhales, false);
             for(int i = 0; i < numWhales; i++) {
-                Whale w = new Whale(speciesList[i], Integer.parseInt(weigthList[i]), gL[i]);
+                Whale w = new Whale(fullSpeciesList[i], Integer.parseInt(fullWeightList[i]), fullGenderList[i]);
                 whales.add(w);
                 Whales.add(w);
             }
@@ -129,14 +131,23 @@ public class ParentController extends Controller {
         }
     }
 
-    public String[] fillArrays(String[] array, int length) {
+    public String[] fillArrays(String[] array, int length, boolean isWeights) {
         String[] newArray = new String[length];
         int i = 0;
         while( i < array.length) {
             newArray[i] = array[i];
+            i++;
         }
-        while(i < length) {
-            newArray[i] = "?";
+        if (isWeights) {
+            while(i < length) {
+                newArray[i] = "0";
+                i++;
+            }
+        } else {
+            while (i < length) {
+                newArray[i] = "?";
+                i++;
+            }
         }
         return newArray;
     }
