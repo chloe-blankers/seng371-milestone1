@@ -87,7 +87,25 @@
             </thead>
             <tbody>
             @for(w <- Whales) {
-                <tr><td>@w.species</td><td>@w.weight</td><td>@w.gender</td><td>@w.id</td></tr>
+                <tr>@if(w.species == "?") {
+                    <td>Unknown</td>
+                    }
+                    @if(w.species != "?"){
+                        <td>@w.species</td>
+                    }
+                    @if(w.weight == 0){
+                        <td>Unknown</td>
+                    }
+                    @if(w.weight != 0){
+                        <td>@w.weight</td>
+                    }
+                    @if(w.gender == "?") {
+                        <td>Unknown</td>
+                    }
+                    @if(w.gender != "?") {
+                        <td>@w.gender</td>
+                    }
+                <td>@w.id</td></tr>
             }
             </tbody>
         </table>

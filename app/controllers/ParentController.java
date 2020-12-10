@@ -4,6 +4,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import db.DataStore;
+import db.ResultData;
 import models.Observation;
 import models.Whale;
 import org.slf4j.Logger;
@@ -60,28 +61,15 @@ public class ParentController extends Controller {
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
-        this.ds = new DataStore();
+        this.ds=new DataStore();
+        ResultData rs = this.ds.setup(false);
         this.whaleForm = formFactory.form(WhaleData.class);
         this.whaleForm2 = formFactory.form(FilterData.class);
         this.observationForm = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
-        //this.Whales=this.ds.getWhales();
-        //No whales in the database, so put some default whales in for the sake of displaying the app
-        Whale w1 = new Whale( "Beluga", 204, "Male");
-        Whale w2 = new Whale( "Orca", 111, "Female");
-        Whale w3 = new Whale( "Blue", 301, "Male");
-        this.Whales = new ArrayList<>();
-        Whales.add(w1);
-        Whales.add(w2);
-        Whales.add(w3);
-        this.touristWhaleObs = new ArrayList<>();
-        ArrayList<Whale> whales = new ArrayList<>();
-        whales.add(w1);
-        whales.add(w2);
-        whales.add(w3);
-        this.observations = com.google.common.collect.Lists.newArrayList(
-                new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
-        );
+        this.Whales= (ArrayList<Whale>) rs.getWhaleList();
+        this.touristWhaleObs = this.Whales;
+        this.observations = rs.getObservationList();
     }
 
     public Result listObservations(Http.Request request) {
@@ -104,17 +92,15 @@ public class ParentController extends Controller {
             ArrayList<Whale> whales = new ArrayList<>();
             int numWhales = data.getNumWhales();
             String weights = data.getWeights();
-            String[] weigthsList = weights.split(",");
+            String[] weigthList = weights.split(",");
+            String genders = data.getGenders();
+            String[] genderList = genders.split(",");
+            String species = data.getSpecies();
+            String[] speciesList = species.split(",");
             for(int i = 0; i < numWhales; i++) {
-                try {
-                    Whale w = new Whale(data.getSpecies(), Integer.parseInt(weigthsList[i]), data.getGender());
-                    whales.add(w);
-                    touristWhaleObs.add(w);
-                } catch (Exception e) {
-                    Whale w = new Whale(data.getSpecies(), 0, data.getGender());
-                    whales.add(w);
-                    touristWhaleObs.add(w);
-                }
+                Whale w = new Whale(speciesList[i], Integer.parseInt(weigthList[i]), genderList[i]);
+                whales.add(w);
+                Whales.add(w);
             }
             Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation());
             observations.add(newOb);
