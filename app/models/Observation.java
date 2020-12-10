@@ -44,5 +44,8 @@ public class Observation {
             this.location = other.location;
         }
     }
+    public String toString(){
+        return "{ \"date\":\"" + date + "\", \"time\":" + time + ", \"location\":\"" + location + "\", \"id\":" + id + " },";
+    }
 
 }
