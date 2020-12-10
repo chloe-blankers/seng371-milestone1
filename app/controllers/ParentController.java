@@ -143,6 +143,33 @@ public class ParentController extends Controller {
         }
     }
 
+    public Result getObservations(Http.Request request) {
+        //Content negotiation
+        if (request.accepts("text/html")) {
+            return ok(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        }
+        else {
+            ObjectNode result = Json.newObject();
+            if (request.accepts("application/txt+json")) {
+                if (observations.size() > 0) {
+                    //convert observations arraylist to json data
+                    result.put("isSuccessful", true);
+                    result.putPOJO("body", observations);
+                    //return json data
+                } else {
+                    result.put("isSuccessful", true);
+                    result.put("body", "No Observations in system");
+                }
+                return ok(result);
+            }
+            else{
+                result.put("isSuccessful",false);
+                result.put("body","MIME type not supported.");
+                return badRequest(result);
+            }
+        }
+    }
+
     public Result index() {
         return ok(views.html.index.render());
     }
