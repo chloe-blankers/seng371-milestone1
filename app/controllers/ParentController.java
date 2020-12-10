@@ -4,6 +4,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import db.DataStore;
+import db.ResultData;
 import models.Observation;
 import models.Whale;
 import org.slf4j.Logger;
@@ -60,7 +61,8 @@ public class ParentController extends Controller {
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
-        this.ds = new DataStore();
+        this.ds=new DataStore();
+        ResultData rs = this.ds.setup(false);
         this.whaleForm = formFactory.form(WhaleData.class);
         this.whaleForm2 = formFactory.form(FilterData.class);
         this.observationForm = formFactory.form(ObservationData.class);
@@ -83,6 +85,10 @@ public class ParentController extends Controller {
         this.observations = com.google.common.collect.Lists.newArrayList(
                 new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
+        //this.Whales= (ArrayList<Whale>) rs.getWhaleList();
+        //this.touristWhaleObs = this.Whales;
+        //this.observations = rs.getObservationList();
+
     }
 
     public Result listObservations(Http.Request request) {
