@@ -33,6 +33,10 @@ public class ObservationData extends WhaleData {
     //@Constraints.Required
     private String weights;
 
+    private String genders;
+
+    private String species;
+
     public ObservationData() {
     }
 
@@ -82,5 +86,21 @@ public class ObservationData extends WhaleData {
 
     public void setWeights(String weights) {
         this.weights = weights;
+    }
+
+    public String getGenders() {
+        return genders;
+    }
+
+    public void setGenders(String genders) {
+        this.genders = genders;
+    }
+
+    public String getSpeciesList() {
+        return species;
+    }
+
+    public void setSpeciesList(String species) {
+        this.species = species;
     }
 }
