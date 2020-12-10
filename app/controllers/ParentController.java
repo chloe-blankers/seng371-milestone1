@@ -19,10 +19,12 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import static play.libs.Scala.asScala;
@@ -70,7 +72,22 @@ public class ParentController extends Controller {
         this.Whales= (ArrayList<Whale>) rs.getWhaleList();
         this.touristWhaleObs = this.Whales;
         this.observations = rs.getObservationList();
+        System.out.println("Arrays.toString(this.observations.toArray())");
+        FileWriter fw = new FileWriter("output.txt");
+        System.out.println(Arrays.toString(this.observations.toArray()));
+        fw.write(Arrays.toString(this.observations.toArray()));
+        for(Observation ob : this.observations){
+            System.out.println(ob.toString());
+            fw.write(ob.toString());
+            for(Whale w:ob.whales){
+                System.out.println(w.toString());
+                fw.write(w.toString());
+            }
+            System.out.println("\n");
+            fw.write("\n");
+        }
         this.insertDummyData();
+        fw.close();
     }
     /*
            Inserts dummy data into the application for testing and aesthetics,

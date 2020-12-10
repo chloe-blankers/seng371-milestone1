@@ -266,27 +266,29 @@ public class DataStore {
                      "LEFT JOIN WHALES W ON W.id=whale_id " +
                      "ORDER BY S.observation_id ")) {
             while (rs.next()) {
-                System.out.println("rs.findColumn(\"id\"):"+rs.findColumn("id"));
+                System.out.println("rs.findColumn(\"whale_id\"):"+rs.findColumn("whale_id"));
+                System.out.println("rs.findColumn(\"observation_id\"):"+rs.findColumn("observation_id"));
                 System.out.println("rs.findColumn(\"species\"):"+rs.findColumn("species"));
                 System.out.println("rs.findColumn(\"weight\"):"+rs.findColumn("weight"));
                 System.out.println("rs.findColumn(\"gender\"):"+rs.findColumn("gender"));
                 System.out.println("rs.findColumn(\"location\"):"+rs.findColumn("location"));
                 System.out.println("rs.findColumn(\"date\"):"+rs.findColumn("date"));
                 System.out.println("rs.findColumn(\"time\"):"+rs.findColumn("time"));
-                int id = rs.getInt(rs.findColumn("id"));
+                int whale_id = rs.getInt(rs.findColumn("whale_id"));
+                int observation_id = rs.getInt(rs.findColumn("observation_id"));
                 String species = rs.getString(rs.findColumn("species"));
                 int weight = rs.getInt(rs.findColumn("weight"));
                 String gender = rs.getString(rs.findColumn("gender"));
                 String location = rs.getString(rs.findColumn("location"));
                 String date = rs.getString(rs.findColumn("date"));
                 String time = rs.getString(rs.findColumn("time"));
-                Whale w = new Whale(species, weight, gender);
+                Whale w = new Whale(whale_id, species, weight, gender);
                 Observation o =  new Observation(new ArrayList<>(), date, time, location);
                 if(obMap.containsKey(Integer.valueOf((int)o.id))){
                     Observation ob = obMap.get(Integer.valueOf((int)o.id));
                     ob.whales.add(w);
                 }else {
-                    Observation ob = new Observation(new ArrayList<>(), date, time, location);
+                    Observation ob = new Observation(observation_id, new ArrayList<>(), date, time, location);
                     ob.whales.add(w);
                     obMap.put(Integer.valueOf((int)o.id), ob);
                 }

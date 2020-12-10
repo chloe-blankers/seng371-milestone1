@@ -27,6 +27,13 @@ public class Observation {
 
     private static final AtomicLong atomicLong = new AtomicLong(0L);
 
+    public Observation(long id, ArrayList<Whale> whales, String date, String time, String location) {
+        this.whales = whales;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.id = id;
+    }
     public Observation(ArrayList<Whale> whales, String date, String time, String location) {
         this.whales = whales;
         this.date = date;
@@ -44,5 +51,9 @@ public class Observation {
             this.location = other.location;
         }
     }
+    public String toString(){
+        return "{ \"date\":\"" + date + "\", \"time\":" + time + ", \"location\":\"" + location + "\", \"id\":" + id + " },";
+    }
+
 
 }
