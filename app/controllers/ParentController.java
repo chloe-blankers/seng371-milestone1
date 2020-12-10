@@ -71,6 +71,7 @@ public class ParentController extends Controller {
         this.touristWhaleObs = this.Whales;
         FilteredWhales = new ArrayList<>();
         //this.observations = rs.getObservationList();
+        this.observations = new ArrayList<>();
         this.insertDummyData();
     }
     /*
