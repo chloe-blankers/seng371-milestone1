@@ -116,8 +116,9 @@ public class ParentController extends Controller {
             String[] genderList = genders.split(",");
             String species = data.getSpecies();
             String[] speciesList = species.split(",");
+            String[] gL = fillArrays(genderList, numWhales);
             for(int i = 0; i < numWhales; i++) {
-                Whale w = new Whale(speciesList[i], Integer.parseInt(weigthList[i]), genderList[i]);
+                Whale w = new Whale(speciesList[i], Integer.parseInt(weigthList[i]), gL[i]);
                 whales.add(w);
                 Whales.add(w);
             }
@@ -126,6 +127,18 @@ public class ParentController extends Controller {
             ds.addObservation(newOb);
             return redirect(routes.ParentController.listObservations()).flashing("info", "Observation added!");
         }
+    }
+
+    public String[] fillArrays(String[] array, int length) {
+        String[] newArray = new String[length];
+        int i = 0;
+        while( i < array.length) {
+            newArray[i] = array[i];
+        }
+        while(i < length) {
+            newArray[i] = "?";
+        }
+        return newArray;
     }
 
     public Result index() {
