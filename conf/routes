@@ -11,10 +11,14 @@ GET     /Whales                    controllers.ParentController.listWhales(reque
 GET     /Whales/getWhales          controllers.ParentController.getWhales(request: Request)
 POST    /Whales/filter             controllers.ParentController.filterWhales(request: Request)
 GET     /Whales/filter             controllers.ParentController.listFilterWhales(request: Request)
+POST    /Whales/filter/removeFilter       controllers.ParentController.removeWhaleFilter()
 
 # Observations
 GET     /observations                    controllers.ParentController.listObservations(request: Request)
 POST    /observations                    controllers.ParentController.createObservation(request: Request)
+POST    /observations/filter             controllers.ParentController.filterObservations(request: Request)
+GET     /observations/filter             controllers.ParentController.listFilteredObservations(request: Request)
+POST    /observations/filter/removeFilter       controllers.ParentController.removeObservationFilter()
 
 # Stats
 GET     /Stats                      controllers.ParentController.stats

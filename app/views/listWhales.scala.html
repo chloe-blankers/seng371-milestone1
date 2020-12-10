@@ -36,7 +36,7 @@
         @b4.inline.formCSRF(routes.ParentController.filterWhales) { implicit vfc =>
             <div class="form-box">
                 <label>Filter Species</label>
-                @b4.select( whaleForm2("small"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
+                @b4.select( whaleForm2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
                     "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
                     "Sperm" -> "Sperm", "Bowhead" -> "Bowhead", "None"->"None"),
                     'value -> "None", '_default -> "None",
@@ -69,11 +69,14 @@
             </div>
             <div class="form-button-hbox">
                 @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Filter }
-                @b4.reset('class -> "btn btn-default"){ Clear }
                 @request.flash.asScala().data.map { case (name, value) =>
                     <div class="@name">@value</div>
                 }
             </div>
+        }
+
+        @b4.inline.formCSRF(routes.ParentController.removeWhaleFilter) { implicit vfc =>
+            @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
         }
 
         <div class="spacer"></div>
