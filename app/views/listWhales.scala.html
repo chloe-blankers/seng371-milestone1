@@ -7,7 +7,7 @@
     <head>
         <title>Whales</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon-32x32.png")">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     </head>
@@ -29,30 +29,58 @@
     <div class="nav-holder"></div>
 
     <div class="box-label">
-        <h3>Filter Whales</h3>
-    </div>
-    @b4.inline.formCSRF(routes.ParentController.filterWhales) { implicit vfc =>
-        <label>Filter Species</label> @b4.select( whaleForm2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
-            "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
-            "Sperm" -> "Sperm", "Bowhead" -> "Bowhead", "None"->"None"),
-            'value -> "None", '_default -> "None"
-        )
-        <label>Filter Gender</label>@b4.select( whaleForm2("filtergender"), options = Seq("Male" -> "Male",
-            "Female" -> "Female", "None"->"None"),
-            'value -> "None", '_default -> "None"
-        )
-        <label>Max Weight</label> @b4.text( whaleForm2("maxweight"), 'value -> "900000", '_default -> "900000")
-        <label>Min Weight</label> @b4.text( whaleForm2("minweight"), 'value -> "0", '_default -> "0")
-        @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Filter</b> }<br/>
-        @b4.reset('class -> "btn btn-default"){ Clear }
-        @request.flash.asScala().data.map { case (name, value) =>
-            <div class="@name">@value</div>
-        }
-    }
-    <div class="box-label">
         <h3>Whales</h3>
     </div>
-    <div id="table-holder">
+
+    <div class="form-holder">
+        @b4.inline.formCSRF(routes.ParentController.filterWhales) { implicit vfc =>
+            <div class="form-box">
+                <label>Filter Species</label>
+                @b4.select( whaleForm2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
+                    "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
+                    "Sperm" -> "Sperm", "Bowhead" -> "Bowhead", "None"->"None"),
+                    'value -> "None", '_default -> "None",
+                    'class -> "width8"
+                )
+            </div>
+            <div class="form-box">
+                <label>Filter Gender</label>
+                @b4.select( whaleForm2("filtergender"), options = Seq("Male" -> "Male",
+                    "Female" -> "Female", "None"->"None"),
+                    'value -> "None", '_default -> "None",
+                    'class -> "width8"
+                )
+            </div>
+            <div class="form-box">
+                <label>Max Weight</label>
+                @b4.text( whaleForm2("maxweight"),
+                    'value -> "900000",
+                    '_default -> "900000",
+                    'class -> "width8"
+                )
+            </div>
+            <div class="form-box">
+                <label>Min Weight</label>
+                @b4.text( whaleForm2("minweight"),
+                    'value -> "0",
+                    '_default -> "0",
+                    'class -> "width8"
+                )
+            </div>
+            <div class="form-button-hbox">
+                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Filter }
+                @request.flash.asScala().data.map { case (name, value) =>
+                    <div class="@name">@value</div>
+                }
+            </div>
+        }
+
+        @b4.inline.formCSRF(routes.ParentController.removeWhaleFilter) { implicit vfc =>
+            @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
+        }
+
+        <div class="spacer"></div>
+
         <table>
             <thead>
                 <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
@@ -68,6 +96,7 @@
     <div class="box-label">
         <h3>Add New Whale</h3>
     </div>
+    <div class="form-holder">
     @b4.vertical.formCSRF(routes.ParentController.createWhale) { implicit vfc =>
         <label>weight</label>
         @b4.text( whaleForm("weight"))
@@ -81,6 +110,7 @@
             <div class="@name">@value</div>
         }
     }
+    </div>
     </body>
 
     </html>

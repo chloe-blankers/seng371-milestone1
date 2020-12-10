@@ -14,6 +14,7 @@ body {
 
     --navbar-height: 4em;
     --space-ratio: 80%;
+    --small-space-ratio: 40%;
 
     background-color: var(--background);
     font-family: Roboto, Oxygen, Ubuntu, "Helvetica Neue", sans-serif;
@@ -39,12 +40,15 @@ body {
   body {
     font-size: 11pt;
     --space-ratio: 90%;
+    --small-space-ratio: 60%;
   }
 }
 @media screen and (max-width: 480px) {
   body {
     font-size: 10pt;
     --space-ratio: 95%;
+    --small-space-ratio: 80%;
+
   }
 }
 
@@ -83,7 +87,7 @@ div.box-label {
 
 
 /* FORM */
-form {
+div.form-holder {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -96,25 +100,48 @@ form {
     box-shadow: 0px 0px 10px var(--divider);
     width: var(--space-ratio);
 }
+form.form-inline{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+}
+div.form-box {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+div.form-button-hbox{
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.4rem;
+}
+div.form-button-hbox > div.form-group {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
 form > label {
     border: 0;
-    width: 20rem;
     margin-top: 1rem;
     margin-bottom: 0.2rem;
 }
-div.form-group {
+form.form-vertical > div.form-group {
     border: 0;
     height: 2rem;
     width: 20rem;
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
 }
+div.spacer {
+    height: 2rem;
+}
+
 button {
     display: flex;
     flex-direction: row;
     align-items: center;
     font-size: 13pt;
-    margin-top: 2rem;
+
     padding-left: 1rem;
     padding-right: 1rem;
     height: 2rem;
@@ -129,6 +156,10 @@ button {
 button:hover {
     color: var(--secondary);
 }
+input.width8, select.width8 {
+
+    width: 8rem;
+}
 input, select {
     box-sizing: border-box;
     background-color: var(--background);
@@ -140,6 +171,7 @@ input, select {
     height: 2rem;
     width: 20rem;
 }
+
 span.buttonset {
     display: flex;
     flex-direction: column;
@@ -181,9 +213,8 @@ div.invalid-feedback{
 
 /* TABLE */
 div.table-holder {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
     align-items: center;
     background-color: var(--surface);
     margin-top: 1rem;
@@ -195,6 +226,7 @@ div.table-holder {
     width: var(--space-ratio);
 
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -276,6 +308,35 @@ div.nav-holder {
     height: var(--navbar-height);
 }
 
+/* HOMEPAGE */
+div.homebox {
+    padding: 4rem;
+    box-sizing: border-box;
+    width: var(--small-space-ratio);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40vh;
+    background-color: var(--surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+div.homebox > h3 {
+    text-align: center;
+    margin: 0.5rem;
+
+}
+div.homebox > h5 {
+    text-align: center;
+    margin: 0.5rem;
+}
+div.homebox > div {
+    text-align: center;
+    margin: 0.5rem;
+}
+
+
 /* GRAPHS */
 div.graph-holder {
     display: flex;
@@ -352,29 +413,6 @@ div.footer-col{
 .footer-cell{
     margin-top: 0.5rem;
 }
-
-
-div.row-select-radio-box{
-    content: "";
-    cursor: pointer;
-    width: 0.8rem;
-    height: 0.8rem;
-    background-color: var(--surface);
-    border-radius: 50%;
-    border: 2px solid var(--background);
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-div.whale-selector-submit-button{
-    cursor: pointer;
-    padding: 0.2rem;
-    margin-top: 2rem;
-    background-color: var(--primary);
-    color: var(--on-primary);
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-
 
 
 

@@ -4,6 +4,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import db.DataStore;
+import db.ResultData;
 import models.Observation;
 import models.Whale;
 import org.slf4j.Logger;
@@ -52,12 +53,16 @@ public class ParentController extends Controller {
     private final List<Observation> observations;
     private DataStore ds;
 
+    private List<Observation> FilteredObservations;
+
+
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
-        this.ds = new DataStore();
+        this.ds=new DataStore();
+        ResultData rs = this.ds.setup(false);
         this.whaleForm = formFactory.form(WhaleData.class);
         this.whaleForm2 = formFactory.form(FilterData.class);
         this.observationForm = formFactory.form(ObservationData.class);
@@ -72,15 +77,18 @@ public class ParentController extends Controller {
         Whales.add(w2);
         Whales.add(w3);
         this.touristWhaleObs = new ArrayList<>();
-        Whale t1 = new Whale( "Beluga", 204, "Male");
-        Whale t2 = new Whale( "Orca", 111, "Female");
-        Whale t3 = new Whale( "Blue", 301, "Male");
-        touristWhaleObs.add(t1);
-        touristWhaleObs.add(t2);
-        touristWhaleObs.add(t3);
+        ArrayList<Whale> whales = new ArrayList<>();
+        whales.add(w1);
+        whales.add(w2);
+        whales.add(w3);
+        FilteredWhales = new ArrayList<>();
         this.observations = com.google.common.collect.Lists.newArrayList(
-                new Observation(touristWhaleObs, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
+                new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
+        //this.Whales= (ArrayList<Whale>) rs.getWhaleList();
+        //this.touristWhaleObs = this.Whales;
+        //this.observations = rs.getObservationList();
+
     }
 
     public Result listObservations(Http.Request request) {
@@ -153,16 +161,18 @@ public class ParentController extends Controller {
                     result.putPOJO("body", Whales);
                     //return json data
                 } else {
-                    result.put("isSuccessful", false);
+                    result.put("isSuccessful", true);
                     result.put("body", "No Whales in system");
                 }
+                return ok(result);
             }
             else{
                 result.put("isSuccessful",false);
                 result.put("body","MIME type not supported.");
+                return badRequest(result);
             }
 
-            return ok(result);
+
         }
     }
 
@@ -203,41 +213,77 @@ public class ParentController extends Controller {
         }
     }
 
-    public void FilterWhales(FilterData data){
-        FilteredWhales = Whales;
-        System.out.println("data.getFilterspecies():"+data.getFilterspecies());
-        System.out.println("data.getFilterspecies().compareTo(\"None\"):"+data.getFilterspecies().compareTo("None"));
-        if(data.getFilterspecies().compareTo("None")!=0) {
-            FilteredWhales = FilteredWhales
+    public void FilterWhales(FilterData data) {
+        System.out.println("data.getFilterspecies():" + data.getFilterspecies());
+        System.out.println("data.getFilterspecies().compareTo(\"None\"):" + data.getFilterspecies().compareTo("None"));
+        if (data.getFilterspecies().compareTo("None") != 0) {
+            FilteredWhales = Whales
                     .stream()
                     .filter(w -> w.species.trim().toLowerCase().startsWith(data.getFilterspecies().trim().toLowerCase()))
                     .collect(Collectors.toList());
         }
-        System.out.println("data.getFiltergender():"+data.getFiltergender());
-        System.out.println("data.getFiltergender().compareTo(\"None\"):"+data.getFiltergender().compareTo("None"));
-        if(data.getFiltergender().compareTo("None")!=0) {
+        System.out.println("data.getFiltergender():" + data.getFiltergender());
+        System.out.println("data.getFiltergender().compareTo(\"None\"):" + data.getFiltergender().compareTo("None"));
+        if (data.getFiltergender().compareTo("None") != 0) {
             FilteredWhales = FilteredWhales
                     .stream()
                     .filter(w -> w.gender.trim().toLowerCase().startsWith(data.getFiltergender().trim().toLowerCase()))
                     .collect(Collectors.toList());
         }
-        System.out.println("data.getMaxweight():"+data.getMaxweight());
-        if(data.getMaxweight()>0){
+        System.out.println("data.getMaxweight():" + data.getMaxweight());
+        if (data.getMaxweight() > 0) {
             System.out.println("if(data.getMaxweight()>0)");
             FilteredWhales = FilteredWhales
                     .stream()
-                    .filter(w -> w.weight<(data.getMaxweight()))
+                    .filter(w -> w.weight < (data.getMaxweight()))
                     .collect(Collectors.toList());
         }
-        System.out.println("data.getMinweight():"+data.getMinweight());
-        if(data.getMinweight()>0) {
+        System.out.println("data.getMinweight():" + data.getMinweight());
+        if (data.getMinweight() > 0) {
             System.out.println("if(data.getMinweight()>0)");
             FilteredWhales = FilteredWhales
                     .stream()
                     .filter(w -> w.weight > (data.getMinweight()))
                     .collect(Collectors.toList());
         }
-        this.Whales = (ArrayList<Whale>) FilteredWhales;
+    }
+
+    public Result removeWhaleFilter(){
+        System.out.println("hello whales");
+        return redirect(routes.ParentController.listWhales()).flashing("info", "Whales Restored");
+    }
+
+    public void FilterObservationsList(ObservationData data){
+        System.out.println("FilterObservationsList");
+        if(data.getDate() != null) {
+            FilteredObservations = observations
+                    .stream()
+                    .filter(w -> w.date.equals(data.getDate()))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    public Result filterObservations(Http.Request request){
+        System.out.println("filterObservations");
+        final Form<ObservationData> boundForm = observationForm.bindFromRequest(request);
+
+        if (boundForm.hasErrors()) {
+            logger.error("errors = {}", boundForm.errors());
+            return badRequest(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        } else {
+            ObservationData data = boundForm.get();
+            this.FilterObservationsList(data);
+            return redirect(routes.ParentController.listFilteredObservations()).flashing("info", "Observations Filtered");
+        }
+    }
+
+    public Result removeObservationFilter(){
+        System.out.println("hello");
+        return redirect(routes.ParentController.listObservations()).flashing("info", "Observations Restored");
+    }
+
+    public Result listFilteredObservations(Http.Request request) {
+        return ok(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(FilteredObservations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
     }
 
 }
