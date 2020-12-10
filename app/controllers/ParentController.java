@@ -51,7 +51,7 @@ public class ParentController extends Controller {
     private ArrayList<Whale> Whales;
     ArrayList<Whale> touristWhaleObs;
     private final List<Observation> observations;
-    private DataStore ds;
+    //private DataStore ds;
 
     private List<Observation> FilteredObservations;
 
@@ -61,8 +61,8 @@ public class ParentController extends Controller {
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
-        this.ds=new DataStore();
-        ResultData rs = this.ds.setup(false);
+        //this.ds=new DataStore();
+        //ResultData rs = this.ds.setup(false);
         this.whaleForm = formFactory.form(WhaleData.class);
         this.whaleForm2 = formFactory.form(FilterData.class);
         this.observationForm = formFactory.form(ObservationData.class);
@@ -86,7 +86,7 @@ public class ParentController extends Controller {
                 new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
         );
         //this.Whales= (ArrayList<Whale>) rs.getWhaleList();
-        //this.touristWhaleObs = this.Whales;
+        this.touristWhaleObs = this.Whales;
         //this.observations = rs.getObservationList();
 
     }
@@ -124,7 +124,7 @@ public class ParentController extends Controller {
             }
             Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation());
             observations.add(newOb);
-            ds.addObservation(newOb);
+            //ds.addObservation(newOb);
             return redirect(routes.ParentController.listObservations()).flashing("info", "Observation added!");
         }
     }
@@ -204,9 +204,9 @@ public class ParentController extends Controller {
             Whale newWhale = new Whale(data.getSpecies(), data.getWeight(), data.getGender());
             Whales.add(newWhale);
             System.out.println("newWhale.id:"+newWhale.id);
-            this.ds.addWhale(newWhale);
-            List<Whale> allWhales = this.ds.getWhales();
-            System.out.println("allWhales.size():"+allWhales.size());
+            //this.ds.addWhale(newWhale);
+            //List<Whale> allWhales = this.ds.getWhales();
+            //System.out.println("allWhales.size():"+allWhales.size());
             return redirect(routes.ParentController.listWhales()).flashing("info", "Whale added!");
         }
     }
