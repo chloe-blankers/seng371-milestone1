@@ -107,6 +107,11 @@ form.form-inline{
     justify-content: center;
     align-items: flex-end;
 }
+form.form-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 div.form-box {
     margin-left: 1rem;
     margin-right: 1rem;
@@ -132,6 +137,11 @@ form.form-vertical > div.form-group {
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
 }
+div.form-group > button.bc {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 div.spacer {
     height: 2rem;
 }
@@ -201,12 +211,22 @@ div.info {
     margin-top: 1rem;
     color: var(--on-surface);
     font-size: 0.9rem;
+    animation: fadeOut ease 4s forwards;
+    text-align: center;
 }
 div.invalid-feedback{
     color: var(--error);
     font-size: 0.9rem;
 }
 
+@keyframes fadeOut{
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 
 
 
@@ -413,7 +433,3 @@ div.footer-col{
 .footer-cell{
     margin-top: 0.5rem;
 }
-
-
-
-
