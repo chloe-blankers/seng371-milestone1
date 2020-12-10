@@ -29,41 +29,29 @@
             <div class="nav-holder"></div>
 
             <div class="box-label">
-                <h3>Whales</h3>
-            </div>
-            <div id="table-holder">
-                <table>
-                    <thead>
-                        <tr><th>Species</th><th>Weight</th><th>Gender</th><th>ID</th></tr>
-                    </thead>
-                    <tbody>
-                    @for(w <- Whales) {
-                        <tr>@if(w.species == "?") {
-                            <td>Unknown</td>
-                        }
-                            @if(w.species != "?"){
-                                <td>@w.species</td>
-                            }
-                            @if(w.weight == 0){
-                                <td>Unknown</td>
-                            }
-                            @if(w.weight != 0){
-                                <td>@w.weight</td>
-                            }
-                            @if(w.gender == "?") {
-                                <td>Unknown</td>
-                            }
-                            @if(w.gender != "?") {
-                                <td>@w.gender</td>
-                            }
-                        <td>@w.id</td></tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-            <div class="box-label">
                 <h3>Observations</h3>
             </div>
+
+
+            <div class="form-holder">
+                <h3>Filter Observations</h3>
+
+            <div class="form-button-hbox">
+            @b4.inline.formCSRF(routes.ParentController.filterObservations) { implicit vfc =>
+                <label>date</label>
+                @b4.date(observationForm("date"))
+                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Filter</b> }<br/>
+            }
+            </div>
+
+            <div class="form-button-hbox">
+            @b4.inline.formCSRF(routes.ParentController.removeObservationFilter) { implicit vfc =>
+                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
+            }
+            </div>
+
+            <div class="spacer"></div>
+
             <div id="table-holder">
             <table>
                 <thead>
@@ -103,8 +91,8 @@
                 <h3>Add New Observation</h3>
             </div>
             <div class="form-holder">
-            @b4.vertical.form(routes.ParentController.createObservation) { implicit vfc =>
-                @helper.CSRF.formField
+
+            @b4.vertical.formCSRF(routes.ParentController.createObservation) { implicit vfc =>
                 <label>number of whales</label>
                 @b4.text(observationForm("numWhales"), 'placeholder -> "ex: 3")
                 </br>
@@ -128,6 +116,7 @@
                 <button type="submit">Create Observation</button>
                 </div>
             }
+            </div>
         </body>
     </html>
 

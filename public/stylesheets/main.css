@@ -14,6 +14,7 @@ body {
 
     --navbar-height: 4em;
     --space-ratio: 80%;
+    --small-space-ratio: 40%;
 
     background-color: var(--background);
     font-family: Roboto, Oxygen, Ubuntu, "Helvetica Neue", sans-serif;
@@ -39,12 +40,14 @@ body {
   body {
     font-size: 11pt;
     --space-ratio: 90%;
+    --small-space-ratio: 60%;
   }
 }
 @media screen and (max-width: 480px) {
   body {
     font-size: 10pt;
     --space-ratio: 95%;
+    --small-space-ratio: 80%;
 
   }
 }
@@ -306,23 +309,31 @@ div.nav-holder {
 }
 
 /* HOMEPAGE */
-img.background {
-    width: 100%;
-
-}
-div.hp-box {
+div.homebox {
     padding: 4rem;
     box-sizing: border-box;
-    width: 100%;
+    width: var(--small-space-ratio);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40vh;
     background-color: var(--surface);
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
 }
-div.hp-box > h3 {
+div.homebox > h3 {
     text-align: center;
+    margin: 0.5rem;
+
+}
+div.homebox > h5 {
+    text-align: center;
+    margin: 0.5rem;
+}
+div.homebox > div {
+    text-align: center;
+    margin: 0.5rem;
 }
 
 
