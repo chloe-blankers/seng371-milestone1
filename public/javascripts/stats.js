@@ -1,33 +1,127 @@
 
 
+async function loadGraphs( gidWhaleNum, gidWhaleWeight, gidObsID ){
+
+    // Use REST API to get JSON representing all the whales.
+    const whaleResponse = await fetch( '/Whales/getWhales', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
+        .then( (debug) => {console.log(debug); return debug;})
+        .then( (data) => data.json() )
+        .then( (data) => {
+                loadWhaleNumberGraph( gidWhaleNum, data['body'] )
+                loadWhaleWeightGraph( gidWhaleWeight, data['body'] )
+        } );
+
+    // Use REST API to get JSON Representing all the observations.
+    const obsResponse = await fetch( '/observations/getObservations', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
+            .then( (data) => data.json() )
+            .then( (data) => {
+                    loadObsGraph( gidObsID, data['body'] )
+            } );
 
 
-function loadWhaleNumberGraph( graphID, dataJSON ){
+}
+
+function loadObsGraph( graphID, obsJSON ){
 
     // Get relevant graph Holder
     let graphHolder = document.getElementById( graphID );
 
     // Parse JSON
-    let data = JSON.parse( dataJSON );
-    if ( data.whales[data.whales.length - 1].id != -1 ){
-        console.log("ERROR: Expected an empty array element with id == -1 in last position in JSON string (in loadWhaleNumberGraph();)");
-        let header = graphHolder.getElementsByClassName('graph-loading')[0].getElementsByClassName('graph-loading-message')[0];
-        header.style = "color: var(--error);"
-        header.innerHTML = "Error: Unable to Process Data."
-        return false;
+    let observations = [];
+    for ( i in obsJSON ){
+        observations.push( obsJSON[i] );
     }
-    data.whales.pop();
+
+    // Calculate Monthly Observations
+    let monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+    let obsPerMonth = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+    for ( i in observations ){
+
+        let curMonth = Number( observations[i]['date'].slice(5,7) ) - 1;
+        console.log( curMonth );
+        console.log( curMonth >= 0 );
+        console.log( curMonth <= 11);
+        if ( curMonth >= 0 && curMonth <= 11 ){
+            console.log( obsPerMonth[curMonth] );
+            obsPerMonth[ curMonth ] += 1;
+            console.log( obsPerMonth[curMonth] );
+        }
+    }
+    console.log( obsPerMonth );
+
+
+    // Get data in format that ChartJS likes
+    let cusStepSize = 10;
+    if (cusStepSize > 100000 ) cusStepSize = 25000;
+    else if (cusStepSize > 50000 ) cusStepSize = 10000;
+    else if (cusStepSize > 10000 ) cusStepSize = 2500;
+    else if (cusStepSize > 1000 ) cusStepSize = 250;
+    else cusStepSize = 10;
+
+
+
+    // Create Chart
+    let canvasElement = document.createElement('canvas');
+    var myChart = new Chart(canvasElement, {
+        type: 'line',
+        data: {
+            labels: monthNames,
+            datasets: [{
+                label:              'Observations per Month',
+                data:               obsPerMonth,
+                backgroundColor:    '#2196f366',
+                borderColor:        '#2196f3',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            title: {
+                display: false,
+                text: 'Chart of the Observations each month.'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: cusStepSize
+                    }
+                }]
+            }
+        }
+    });
+    graphHolder.replaceChild( canvasElement, graphHolder.getElementsByClassName('graph-loading')[0] );
+}
+
+
+
+
+
+function loadWhaleNumberGraph( graphID, whalesJSON ){
+
+    // Get relevant graph Holder
+    let graphHolder = document.getElementById( graphID );
+
+    // Parse JSON
+    let whales = [];
+    for ( i in whalesJSON ){
+        whales.push( whalesJSON[i] );
+    }
 
     // Calculate Number of Whales of Each Species
     let whaleFreq = {};
     let keys = [];
-    for ( i in data.whales ){
-        if ( whaleFreq[data.whales[i].species] ) {
-            whaleFreq[data.whales[i].species] += 1;
+    for ( i in whales ){
+        if ( whaleFreq[whales[i]['species']] ) {
+            whaleFreq[whales[i]['species']] += 1;
         }
         else {
-            whaleFreq[data.whales[i].species] = 1;
-            keys.push( data.whales[i].species );
+            whaleFreq[ whales[i]['species']] = 1;
+            keys.push( whales[i]['species'] );
         }
     }
 
@@ -46,7 +140,7 @@ function loadWhaleNumberGraph( graphID, dataJSON ){
             datasets: [{
                 label:              '# of Whales Per Species',
                 data:               vals,
-                backgroundColor:    '#2196f3',
+                backgroundColor:    '#2196f366',
                 borderColor:        '#2196f3',
                 borderWidth: 1
             }]
@@ -74,33 +168,27 @@ function loadWhaleNumberGraph( graphID, dataJSON ){
     graphHolder.replaceChild( canvasElement, graphHolder.getElementsByClassName('graph-loading')[0] );
 }
 
-
-function loadWhaleWeightGraph( graphID, dataJSON ){
+function loadWhaleWeightGraph( graphID, whalesJSON ){
 
     // Get relevant graph Holder
     let graphHolder = document.getElementById( graphID );
 
     // Parse JSON
-    console.log( dataJSON );
-    let data = JSON.parse( dataJSON );
-    if ( data.whales[data.whales.length - 1].id != -1 ){
-        let header = graphHolder.getElementsByClassName('graph-loading')[0].getElementsByClassName('graph-loading-message')[0];
-        header.style = "color: var(--error);"
-        header.innerHTML = "Error: Unable to Process Data."
-        return false;
+    let whales = [];
+    for ( i in whalesJSON ){
+        whales.push( whalesJSON[i] );
     }
-    data.whales.pop();
 
     // Calculate Average Weights
     let whaleDict = {};
-    for ( var whale in data.whales ){
-        whale = data.whales[whale];
-        if ( whaleDict[whale.species] ) {
-            whaleDict[whale.species] = [ (whaleDict[whale.species][0] * whaleDict[whale.species][1] +
-                               whale.weight) / (whaleDict[whale.species][1] + 1), whaleDict[whale.species][1] + 1 ];
+    for ( var i in whales ){
+        whale = whales[i];
+        if ( whaleDict[whale['species']] ) {
+            whaleDict[whale['species']] = [ (whaleDict[whale['species']][0] * whaleDict[whale['species']][1] +
+                               whale['weight']) / (whaleDict[whale['species']][1] + 1), whaleDict[whale['species']][1] + 1 ];
         }
         else {
-            whaleDict[whale.species] = [ whale.weight, 1 ];
+            whaleDict[whale['species']] = [ whale['weight'], 1 ];
         }
     }
 
@@ -128,7 +216,7 @@ function loadWhaleWeightGraph( graphID, dataJSON ){
             datasets: [{
                 label:              'Ave Weight of Whales Per Species',
                 data:               vals,
-                backgroundColor:    '#2196f3',
+                backgroundColor:    '#2196f366',
                 borderColor:        '#2196f3',
                 borderWidth: 1
             }]
