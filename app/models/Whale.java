@@ -18,7 +18,12 @@ public class Whale {
 
     private static final AtomicLong atomicLong = new AtomicLong(0L);
 
-
+    public Whale(long id, String species, int weight, String gender) {
+        this.species = species;
+        this.weight = weight;
+        this.gender = gender;
+        this.id = id;
+    }
 
     public Whale(String species, int weight, String gender) {
         this.species = species;
