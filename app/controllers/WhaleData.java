@@ -1,10 +1,5 @@
 package controllers;
 
-import play.data.validation.Constraints;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Code based off
  * https://github.com/playframework/play-java-forms-example
@@ -12,6 +7,9 @@ import java.util.List;
  * Form processing tutorials.
  * https://playframework.com/documentation/latest/JavaForms
  * https://adrianhurt.github.io/play-bootstrap/
+ *
+ * Provides fields for whaleForm on Whale page. Enables whale creation and searching
+ *
  */
 public class WhaleData {
 
@@ -53,5 +51,4 @@ public class WhaleData {
     public long getId() {
         return id;
     }
-
 }

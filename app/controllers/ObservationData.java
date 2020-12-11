@@ -1,7 +1,6 @@
 package controllers;
 
 import models.Whale;
-import play.data.validation.Constraints;
 
 import java.util.ArrayList;
 
@@ -12,25 +11,20 @@ import java.util.ArrayList;
  * Form processing tutorials.
  * https://playframework.com/documentation/latest/JavaForms
  * https://adrianhurt.github.io/play-bootstrap/
+ *
  */
 public class ObservationData extends WhaleData {
 
-    //@Constraints.Required
     private ArrayList<Whale> whales;
 
-    //@Constraints.Required
     private String location;
 
-    //@Constraints.Required
     private String date;
 
-    //@Constraints.Required
     private String time;
 
-    //@Constraints.Required
     private int numWhales;
 
-    //@Constraints.Required
     private String weights;
 
     public ObservationData() {
