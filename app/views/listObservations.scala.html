@@ -11,6 +11,7 @@
             <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
             <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon-32x32.png")">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script rel="text/javascript" src="@routes.Assets.versioned("javascripts/validation.js")"></script>
         </head>
         <body>
             <div class="navigation">
@@ -110,6 +111,9 @@
             </div>
             <img class="logo" src="@routes.Assets.versioned("images/logo.png")" >
         </body>
+        <script>
+            loadValidations();
+        </script>
     </html>
 
 }
