@@ -99,7 +99,7 @@ public class ParentController extends Controller {
             whales.add(w1);
             whales.add(w2);
             whales.add(w3);
-            Observation ob = new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria");
+            Observation ob = new Observation(whales, LocalDate.now().toString(), "1pm", "17.001, 15.334");
             this.observations = com.google.common.collect.Lists.newArrayList(
                     ob
             );
