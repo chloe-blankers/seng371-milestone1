@@ -71,7 +71,7 @@ public class ParentController extends Controller {
         this.observationForm = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
         this.Whales= (ArrayList<Whale>) rs.getWhaleList();
-        this.touristWhaleObs = this.Whales;
+        this.touristWhaleObs = new ArrayList<>();
         FilteredWhales = new ArrayList<>();
         //this.observations = rs.getObservationList();
         this.observations = new ArrayList<>();
