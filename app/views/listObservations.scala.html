@@ -33,21 +33,20 @@
                 <h3>Observations</h3>
             </div>
 
-            <div class="form-holder">
-                <h3>Filter Observations</h3>
+            <div class="form-holder-hrz">
+                @b4.inline.formCSRF(routes.ParentController.filterObservations) { implicit vfc =>
+                <div class="form-box">
+                    <label>Date</label>
+                    @b4.date(observationForm("date"))
+                </div>
+                @b4.buttonType("submit", 'class -> "form-box btn btn-secondary"){ <b>Filter</b> }<br/>
+                }
 
-            <div class="form-button-hbox">
-            @b4.inline.formCSRF(routes.ParentController.filterObservations) { implicit vfc =>
-                <label>date</label>
-                @b4.date(observationForm("date"))
-                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Filter</b> }<br/>
-            }
-            </div>
-
-            <div class="form-button-hbox">
-            @b4.inline.formCSRF(routes.ParentController.removeObservationFilter) { implicit vfc =>
-                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
-            }
+                <div class="form-box">
+                @b4.inline.formCSRF(routes.ParentController.removeObservationFilter) { implicit vfc =>
+                    @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
+                }
+                </div>
             </div>
 
             </div>
@@ -87,13 +86,20 @@
                 @b4.text(sightingForm("whaleIDList"))
                 <label>Location</label>
                 @b4.text( sightingForm("location"))
-                <label>date</label>
+                <label>Date</label>
                 @b4.date(sightingForm("date"))
-                <label>time</label>
+                <label>Time</label>
                 @b4.select( sightingForm("time"), options = Seq("12pm" -> "12pm", "1pm" -> "1pm", "2pm" -> "2pm", "3pm" -> "3pm", "4pm" -> "4pm", "5pm" -> "5pm", "6pm" -> "6pm", "7pm" -> "7pm",  "8pm" -> "8pm", "9pm" -> "9pm", "10pm" -> "10pm", "11pm" -> "11pm", "12am" -> "12am", "1am" -> "1am", "2am" -> "2am", "3am" -> "3am", "4am" -> "4am", "5am" -> "5am", "6am" -> "6am", "7am" -> "7am", "8am" -> "8am", "9am" -> "9am", "10am" -> "10am", "11am" -> "11am"))
+                <div class="spacer"></div>
                 <button type="submit">Create Observation</button>
             }
             </div>
+            <div class="footer" >
+                <div class="footer-col">
+                    <h4 class="footer-cell">A SENG330 Project</h4>
+                </div>
+            </div>
+            <img class="logo" src="@routes.Assets.versioned("images/logo.png")" >
         </body>
     </html>
 
