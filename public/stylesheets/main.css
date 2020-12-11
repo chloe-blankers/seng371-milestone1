@@ -322,19 +322,14 @@ div.homebox {
     align-items: center;
     justify-content: space-around;
 }
-div.homebox > h3 {
-    text-align: center;
-    margin: 0.5rem;
+img.logo {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+}
 
-}
-div.homebox > h5 {
-    text-align: center;
-    margin: 0.5rem;
-}
-div.homebox > div {
-    text-align: center;
-    margin: 0.5rem;
-}
+
+
 
 
 /* GRAPHS */
