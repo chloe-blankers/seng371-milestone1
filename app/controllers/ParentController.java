@@ -209,6 +209,36 @@ public class ParentController extends Controller {
         }
     }
 
+    public Result getWhaleIDRange(Http.Request request) {
+        //Content negotiation
+        ObjectNode result = Json.newObject();
+        if (request.accepts("application/txt+json")) {
+            if (Whales.size() > 0) {
+                long minWhaleID = 0;
+                long maxWhaleID = Long.MAX_VALUE;
+                for (Whale w : Whales) {
+                    if (w.id > minWhaleID) minWhaleID = w.id;
+                    if (w.id < maxWhaleID) maxWhaleID = w.id;
+                }
+                //convert observations arraylist to json data
+                result.put("isSuccessful", true);
+                result.putPOJO("minWhaleID", minWhaleID);
+                result.putPOJO("maxWhaleID", maxWhaleID);
+                //return json data
+            } else {
+                result.put("isSuccessful", true);
+                result.put("body", "No whales in system");
+            }
+            return ok(result);
+        }
+        else{
+            result.put("isSuccessful",false);
+            result.put("body","MIME type not supported.");
+            return badRequest(result);
+        }
+    }
+
+
     public Result index() {
         return ok(views.html.index.render());
     }
