@@ -91,14 +91,41 @@ div.form-holder {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--surface);
+    justify-content: space-around;
+    background-color: var(--background);
     margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
     padding-top: 2rem;
     padding-bottom: 2rem;
-    box-shadow: 0px 0px 10px var(--divider);
+    /*box-shadow: 0px 0px 10px var(--divider);*/
     width: var(--space-ratio);
+    position: relative;
+}
+div.hidden-helper{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    color: var(--background);
+}
+div.hidden-helper:hover{
+    color: var(--on-background);
+}
+div.form-holder-hrz {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    background-color: var(--background);
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    /*box-shadow: 0px 0px 10px var(--divider);*/
+    width: var(--space-ratio);
+    position: relative;
 }
 form.form-inline{
     display: flex;
@@ -106,8 +133,15 @@ form.form-inline{
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-end;
+    height: 3rem;
 }
-div.form-box {
+form.form-vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-box {
     margin-left: 1rem;
     margin-right: 1rem;
 }
@@ -116,25 +150,34 @@ div.form-button-hbox{
     flex-direction: row;
     margin-top: 0.4rem;
 }
-div.form-button-hbox > div.form-group {
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
+
 form > label {
     border: 0;
     margin-top: 1rem;
     margin-bottom: 0.2rem;
+    align-self: flex-start;
 }
 form.form-vertical > div.form-group {
     border: 0;
     height: 2rem;
-    width: 20rem;
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
 }
 div.spacer {
     height: 2rem;
 }
+div.info {
+    animation: fadeOut 1s ease 3s forwards;
+}
+@keyframes fadeOut{
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 
 button {
     display: flex;
@@ -162,7 +205,7 @@ input.width8, select.width8 {
 }
 input, select {
     box-sizing: border-box;
-    background-color: var(--background);
+    background-color: var(--surface);
     border: 0;
     margin: 0;
     padding: 0;
@@ -212,46 +255,34 @@ div.invalid-feedback{
 
 
 /* TABLE */
-div.table-holder {
-    -webkit-overflow-scrolling: touch;
-    overflow-x: auto;
-    align-items: center;
-    background-color: var(--surface);
-    margin-top: 1rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    box-shadow: 0px 0px 10px var(--divider);
-    width: var(--space-ratio);
-
-}
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
   width: var(--space-ratio);
+  margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
   border-bottom: 2px solid var(--divider);
+
 }
 table thead tr {
   border-bottom: 2px solid var(--divider);
+  width: 100%;
 }
 table tbody tr {
   width: 100%;
   background-color: var(--surface);
-}
-table tbody tr:nth-child(2n + 1) {
-    background-color: var(--background);
+  border-bottom: 2px solid var(--divider);
 }
 table td {
-  padding: 0.75rem 0.75rem; }
+  padding: 0.75rem 0.75rem;
+}
 table th {
   font-size: 0.9rem;
   font-weight: 600;
-  padding: 0 0.75rem 0.75rem 0.75rem;
-  text-align: left; }
+  padding: 0.75rem 0.75rem;
+  text-align: left;
+}
 table tfoot {
     border-bottom: solid 2px var(--divider)
 }
@@ -322,19 +353,14 @@ div.homebox {
     align-items: center;
     justify-content: space-around;
 }
-div.homebox > h3 {
-    text-align: center;
-    margin: 0.5rem;
+img.logo {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+}
 
-}
-div.homebox > h5 {
-    text-align: center;
-    margin: 0.5rem;
-}
-div.homebox > div {
-    text-align: center;
-    margin: 0.5rem;
-}
+
+
 
 
 /* GRAPHS */
@@ -345,7 +371,7 @@ div.graph-holder {
     align-items: center;
 
     background-color: var(--surface);
-    box-shadow: 0px 0px 10px var(--divider);
+    /*box-shadow: 0px 0px 10px var(--divider);*/
 
     margin-top: 1rem;
     margin-left: auto;
