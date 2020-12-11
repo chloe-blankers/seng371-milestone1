@@ -38,35 +38,10 @@
                 <label>Filter Species</label>
                 @b4.select( whaleForm2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
                     "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
-                    "Sperm" -> "Sperm", "Bowhead" -> "Bowhead", "None"->"None"),
-                    'value -> "None", '_default -> "None",
+                    "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"),
                     'class -> "width8"
                 )
-            </div>
-            <div class="form-box">
-                <label>Filter Gender</label>
-                @b4.select( whaleForm2("filtergender"), options = Seq("Male" -> "Male",
-                    "Female" -> "Female", "None"->"None"),
-                    'value -> "None", '_default -> "None",
-                    'class -> "width8"
-                )
-            </div>
-            <div class="form-box">
-                <label>Max Weight</label>
-                @b4.text( whaleForm2("maxweight"),
-                    'value -> "0",
-                    '_default -> "0",
-                    'class -> "width8"
-                )
-            </div>
-            <div class="form-box">
-                <label>Min Weight</label>
-                @b4.text( whaleForm2("minweight"),
-                    'value -> "0",
-                    '_default -> "0",
-                    'class -> "width8"
-                )
-            </div>
+                </div>
             <div class="form-button-hbox">
                 @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Filter }
                 @request.flash.asScala().data.map { case (name, value) =>
@@ -74,12 +49,14 @@
                 }
             </div>
         }
+        <div class="spacer"></div>
 
         @b4.inline.formCSRF(routes.ParentController.removeWhaleFilter) { implicit vfc =>
             @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
         }
-
+    </div>
         <div class="spacer"></div>
+
 
         <table>
             <thead>
