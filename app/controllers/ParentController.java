@@ -125,17 +125,18 @@ public class ParentController extends Controller {
             ArrayList<Whale> whales = new ArrayList<>();
             int numWhales = data.getNumWhales();
             String weights = data.getWeights();
-            String[] weigthsList = weights.split(",");
+            String[] weigthList = weights.split(",");
+            String[] fullWeightList = fillArrays(weigthList, numWhales, true);
+            String genders = data.getGenders();
+            String[] genderList = genders.split(",");
+            String[] fullGenderList = fillArrays(genderList, numWhales, false);
+            String species = data.getSpecies();
+            String[] speciesList = species.split(",");
+            String[] fullSpeciesList = fillArrays(speciesList, numWhales, false);
             for(int i = 0; i < numWhales; i++) {
-                try {
-                    Whale w = new Whale(data.getSpecies(), Integer.parseInt(weigthsList[i]), data.getGender());
-                    whales.add(w);
-                    touristWhaleObs.add(w);
-                } catch (Exception e) {
-                    Whale w = new Whale(data.getSpecies(), 0, data.getGender());
-                    whales.add(w);
-                    touristWhaleObs.add(w);
-                }
+                Whale w = new Whale(fullSpeciesList[i], Integer.parseInt(fullWeightList[i]), fullGenderList[i]);
+                whales.add(w);
+                Whales.add(w);
             }
             Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation());
             observations.add(newOb);
@@ -143,6 +144,28 @@ public class ParentController extends Controller {
             return redirect(routes.ParentController.listObservations()).flashing("info", "Observation added!");
         }
     }
+
+    public String[] fillArrays(String[] array, int length, boolean isWeights) {
+        String[] newArray = new String[length];
+        int i = 0;
+        while (i < array.length) {
+            newArray[i] = array[i];
+            i++;
+        }
+        if (isWeights) {
+            while (i < length) {
+                newArray[i] = "0";
+                i++;
+            }
+        } else {
+            while (i < length) {
+                newArray[i] = "?";
+                i++;
+            }
+        }
+        return newArray;
+    }
+
 
     public Result getObservations(Http.Request request) {
         //Content negotiation
