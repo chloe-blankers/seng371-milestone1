@@ -11,7 +11,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/*
+        DataStore
+        The DataStore class handles all the connections to the H2 In-Memory Database.
+        The assignment was not focused on Database Design, so the database does not use
+        foreign keys, constraints, or triggers.
+        The Database consists of the Following Tables
+        WHALES: Stores Whales data
+        OBSERVATIONS: Stores Observation data
+        SIGHTINGS: Stores the relationships between WHALES and OBSERVATIONS.
+                    It is a Many-To-Many Relationship
+        Connection Strings to the H2 In-Memory database.
+        H2 Stores a In-Memory database cache in the folder
+        ~/whale for the connection WHALE_CONNECTION = "jdbc:h2:~/whale"
+*/
 
 public class DataStore {
     private static final String DB_DRIVER = "org.h2.Driver";
@@ -22,7 +35,13 @@ public class DataStore {
     private static final String DB_PASSWORD = "";
 
 
-
+    /**
+     *    Creates the database tables if the tables do not exist already, or the
+     *    tables need to be dropped and re-created.
+     *
+     *    @param dropTables    Whether or not to drop the tables and re-create them
+     *    @return  - ResultData which consists of a list of Observations and a list of Whales
+     */
     public ResultData setup(boolean dropTables) throws IOException, SQLException {
         Connection dbConnection = null;
         try {
@@ -82,6 +101,13 @@ public class DataStore {
         return new ResultData(this.getWhales(), this.getObservations());
     }
 
+    /**
+     *    Adds a Whale w to the WHALES table.
+     *    Uses PreparedStatement to avoid SQL injection
+     *
+     *    @param w    The Whale to add to the WHALES table
+     *    @return  None
+     */
     public void addWhale(Whale w) throws SQLException {
         Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
         //String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
@@ -120,6 +146,13 @@ public class DataStore {
         assert(pass);
     }
 
+    /**
+     *    Adds a List of Whale w to the WHALES table.
+     *    Uses PreparedStatement to avoid SQL injection
+     *
+     *    @param newWhales    The List of Whale to add to the WHALES table
+     *    @return  None
+     */
     public void addWhales(List<Whale> newWhales) throws SQLException {
         Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
         //String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
@@ -162,6 +195,13 @@ public class DataStore {
         assert(pass);
     }
 
+    /**
+     *    Gets all the Whales from the WHALES table and returns the
+     *    Whales in a List of Whale objects
+     *
+     *    @param None
+     *    @return whaleList    A list of Whale retrieved from the WHALES table
+     */
     public List<Whale> getWhales() throws IOException, SQLException {
         Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
         List<Whale> whaleList = new ArrayList<>();
@@ -190,6 +230,13 @@ public class DataStore {
         return whaleList;
     }
 
+    /**
+     *    Adds an Observation to the OBSERVATIONS table
+     *    Uses PreparedStatement to avoid SQL injection
+     *
+     *    @param o    The Observation to add to the OBSERVATIONS table
+     *    @return  None
+     */
     public void addObservation(Observation o) throws SQLException {
         Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
         //String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
@@ -239,14 +286,17 @@ public class DataStore {
         assert(pass);
     }
 
-    /*
-        TODO:
-            OPTIMIZE THIS QUERY
-            Can do this with one SQL Statement
-
-            We will need an sql statement that joins the OBSERVATIONS and SIGHTINGS
-             so that each observation has a list of whales that was observed
-    */
+    /**
+     *    Gets all the Observations from the Observations table.
+     *    The Observations Java class contain a list of Whales, but the List
+     *    of Whales is not stored in the OBSERVATIONS table, so the OBSERVATIONS table,
+     *    WHALES table, and SIGHTINGS table need to be joined.
+     *
+     *    @param  None
+     *    @return  observationList  A List of Observation objects where each
+     *              Observation object contains a List of Whales
+     *
+     */
     public List<Observation> getObservations() throws IOException, SQLException {
         Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
         List<Observation> observationList = new ArrayList<>();
