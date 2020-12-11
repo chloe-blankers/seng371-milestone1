@@ -9,6 +9,7 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon-32x32.png")">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <script rel="text/javascript" src="@routes.Assets.versioned("javascripts/validation.js")"></script>
     </head>
     <body>
     <div class="navigation">
@@ -35,7 +36,7 @@
         <div class="hidden-helper">Select a whale species to filter the results.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
         @b4.inline.formCSRF(routes.ParentController.filterWhales) { implicit vfc =>
             <div class="form-box">
-                <label>Filter Species</label>
+                <label>Search Species</label>
                 @b4.select( whaleForm("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
                     "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
                     "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"),
@@ -43,15 +44,15 @@
                 )
                 </div>
             <div class="form-button-hbox">
-                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Filter }
+                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Search }
             </div>
         }
 
         <div class="form-box">
         @b4.inline.formCSRF(routes.ParentController.removeWhaleFilter) { implicit vfc =>
-
-            @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
-
+            @b4.buttonType("submit",
+                'class -> "btn btn-secondary"
+            ){ <b>Show All</b> }<br/>
         }
         </div>
         @request.flash.asScala().data.map { case (name, value) =>
@@ -79,7 +80,10 @@
         <div class="hidden-helper">Enter information in each field and click 'Create'.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
         @b4.vertical.formCSRF(routes.ParentController.createWhale) { implicit vfc =>
             <label>Weight (kg)</label>
-            @b4.text( whaleForm("weight"))
+            @b4.text( whaleForm("weight" ),
+                'class -> "fv", 'id -> "weight",
+                'placeholder -> "Enter the weight in kgs."
+            )
             <label>Gender</label>
             @b4.select( whaleForm("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
             <label>Species</label>
@@ -102,7 +106,9 @@
     <img class="logo" src="@routes.Assets.versioned("images/logo.png")" >
 
     </body>
-
+    <script>
+        loadValidations();
+    </script>
     </html>
 
 }

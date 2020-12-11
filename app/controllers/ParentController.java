@@ -95,7 +95,7 @@ public class ParentController extends Controller {
             whales.add(w1);
             whales.add(w2);
             whales.add(w3);
-            Observation ob = new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria");
+            Observation ob = new Observation(whales, LocalDate.now().toString(), "1pm", "17.001, 15.334");
             this.observations = com.google.common.collect.Lists.newArrayList(
                     ob
             );
@@ -191,6 +191,35 @@ public class ParentController extends Controller {
      *    @param request    The Http.Request
      *    @return  - Result redirects to the stats.scala.html view
      */
+    public Result getWhaleIDRange(Http.Request request) {
+        //Content negotiation
+        ObjectNode result = Json.newObject();
+        if (request.accepts("application/txt+json")) {
+            if (Whales.size() > 0) {
+                long minWhaleID = 0;
+                long maxWhaleID = Long.MAX_VALUE;
+                for (Whale w : Whales) {
+                    if (w.id > minWhaleID) minWhaleID = w.id;
+                    if (w.id < maxWhaleID) maxWhaleID = w.id;
+                }
+                //convert observations arraylist to json data
+                result.put("isSuccessful", true);
+                result.putPOJO("minWhaleID", minWhaleID);
+                result.putPOJO("maxWhaleID", maxWhaleID);
+                //return json data
+            } else {
+                result.put("isSuccessful", true);
+                result.put("body", "No whales in system");
+            }
+            return ok(result);
+        }
+        else{
+            result.put("isSuccessful",false);
+            result.put("body","MIME type not supported.");
+            return badRequest(result);
+        }
+    }
+
     public Result index() {
         return ok(views.html.index.render());
     }
