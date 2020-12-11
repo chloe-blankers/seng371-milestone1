@@ -51,7 +51,7 @@ public class ParentController extends Controller {
     private List<Observation> FilteredObservations;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
-    private static final boolean dropDBTables = true;
+    private static final boolean dropDBTables = false;
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
