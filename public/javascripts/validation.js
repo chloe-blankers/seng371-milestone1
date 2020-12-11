@@ -42,11 +42,11 @@ function checkIDValues( element ){
     }
     let vals = element.value.split( /[,\s]/ );
     for ( i in vals ){
-        if ( vals[i] < maxWhaleID || vals[i] > minWhaleID ){
-            element.type = "number";
+        let val = Number( vals[i] )
+        if ( val < maxWhaleID || val > minWhaleID ){
+            element.type = "file";
             element.placeholder = "Error: IDs must be between " + maxWhaleID + " and " + minWhaleID;
             element.type = "text";
         }
     }
-
 }
