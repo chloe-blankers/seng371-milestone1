@@ -36,7 +36,7 @@
         <div class="hidden-helper">Select a whale species to filter the results.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
         @b4.inline.formCSRF(routes.ParentController.filterWhales) { implicit vfc =>
             <div class="form-box">
-                <label>Filter Species</label>
+                <label>Search Species</label>
                 @b4.select( whaleForm("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
                     "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
                     "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"),
@@ -44,7 +44,7 @@
                 )
                 </div>
             <div class="form-button-hbox">
-                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Filter }
+                @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Search }
             </div>
         }
 
