@@ -1,28 +1,37 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
-import models.Whale;
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
+import play.libs.Json;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.test.Helpers;
 import play.test.WithApplication;
 import static org.junit.Assert.*;
-
 import static play.test.Helpers.*;
-
-
 import static play.test.Helpers.route;
 
+/**
+ * Code based off
+ * https://github.com/playframework/play-samples/blob/2.8.x/play-java-rest-api-example/
+ */
+
 public class ParentControllerTest extends WithApplication {
+
+
+    private JsonNode contentAsJson(Result result) {
+        final String responseBody = contentAsString(result);
+        return Json.parse(responseBody);
+    }
 
     @Override
     protected Application provideApplication(){
         return new GuiceApplicationBuilder().build();
     }
+
 
     //      GET     /                           controllers.ParentController.index
     @Test
@@ -67,7 +76,6 @@ public class ParentControllerTest extends WithApplication {
     }
 
 
-
 //    POST    /Whales/filter             controllers.ParentController.filterWhales(request: Request)
 //    GET     /Whales/filter             controllers.ParentController.listFilterWhales(request: Request)
 //    POST    /Whales/filter/removeFilter       controllers.ParentController.removeWhaleFilter()
@@ -95,7 +103,6 @@ public class ParentControllerTest extends WithApplication {
     }
 
 
-
     //GET     /observations                    controllers.ParentController.listObservations(request: Request)
     @Test
     public void listObservationsTest(){
@@ -106,18 +113,22 @@ public class ParentControllerTest extends WithApplication {
         assertEquals("utf-8", result.charset().get());
     }
 
-/*    //POST    /observations                    controllers.ParentController.createObservation(request: Request)
+    //POST    /observations                    controllers.ParentController.createObservation(request: Request)
     @Test
     public void createObservationTest(){
-        Whale w = new Whale("Orca",2222,"F");
-        Http.RequestBuilder request = Helpers.fakeRequest()
-                .method("POST")
-                .bodyForm(ImmutableMap.of("numWhales","0","weights","2222","gender","Male","species","Orca","location","Victoria, BC Canada"))
-                .uri("/observations");
+        //API call
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales/getWhales").header("Accept","application/txt+json");
         Result result = route(app,request);
+        String id = contentAsJson(result).get("body").get(0).get("id").toString();
+
+        request = Helpers.fakeRequest()
+                .method("POST")
+                .bodyForm(ImmutableMap.of("whaleIDList",id,"location","Victoria BC Canada","date","2020-12-10","time","1pm"))
+                .uri("/observations");
+        result = route(app,request);
         assertEquals(SEE_OTHER, result.status());
     }
-*/
+
 
 //POST    /observations/filter             controllers.ParentController.filterObservations(request: Request)
 //GET     /observations/filter             controllers.ParentController.listFilteredObservations(request: Request)
@@ -154,6 +165,5 @@ public class ParentControllerTest extends WithApplication {
         assertEquals("text/html", result.contentType().get());
         assertEquals("utf-8", result.charset().get());
     }
-
-
 }
+
