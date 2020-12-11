@@ -145,16 +145,15 @@ public class ParentController extends Controller {
         }
     }
 
-<<<<<<< HEAD
     public String[] fillArrays(String[] array, int length, boolean isWeights) {
         String[] newArray = new String[length];
         int i = 0;
-        while( i < array.length) {
+        while (i < array.length) {
             newArray[i] = array[i];
             i++;
         }
         if (isWeights) {
-            while(i < length) {
+            while (i < length) {
                 newArray[i] = "0";
                 i++;
             }
@@ -165,7 +164,8 @@ public class ParentController extends Controller {
             }
         }
         return newArray;
-=======
+    }
+
     public Result getObservations(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
@@ -191,7 +191,6 @@ public class ParentController extends Controller {
                 return badRequest(result);
             }
         }
->>>>>>> a46d4fdde6324e8fa3087f35d2d1e3fa43cc2d17
     }
 
     public Result index() {
