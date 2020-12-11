@@ -1,0 +1,113 @@
+package controllers;
+
+import com.google.common.collect.ImmutableMap;
+import models.Whale;
+import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
+import play.Application;
+import play.inject.guice.GuiceApplicationBuilder;
+import play.mvc.Http;
+import play.mvc.Result;
+import play.test.Helpers;
+import play.test.WithApplication;
+import static org.junit.Assert.*;
+
+import static play.test.Helpers.*;
+
+
+import static play.test.Helpers.route;
+
+public class ParentControllerTest extends WithApplication {
+
+    @Override
+    protected Application provideApplication(){
+        return new GuiceApplicationBuilder().build();
+    }
+
+    //      GET     /                           controllers.ParentController.index
+    @Test
+    public void indexTest() {
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/");
+        Result result = route(app,request);
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
+        assertTrue(contentAsString(result).contains("Welcome"));
+    }
+
+    //    POST    /Whales                    controllers.ParentController.createWhale(request: Request)
+    @Test
+    public void createWhaleTest() {
+        Http.RequestBuilder request = Helpers.fakeRequest()
+                .method("POST")
+                .bodyForm(ImmutableMap.of("species","Orca","weight","2200","gender","F"))
+                .uri("/Whales");
+        Result result = route(app,request);
+        assertEquals(SEE_OTHER, result.status());
+    }
+
+    //    GET     /Whales                    controllers.ParentController.listWhales(request: Request)
+    @Test
+    public void listWhalesTest() {
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales");
+        Result result = route(app,request);
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
+    }
+
+    //    GET     /Whales/getWhales          controllers.ParentController.getWhales(request: Request)
+    @Test
+    public void getWhalesTest() {
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales/getWhales");
+        Result result = route(app,request);
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
+    }
+
+
+
+//    POST    /Whales/filter             controllers.ParentController.filterWhales(request: Request)
+//    GET     /Whales/filter             controllers.ParentController.listFilterWhales(request: Request)
+//    POST    /Whales/filter/removeFilter       controllers.ParentController.removeWhaleFilter()
+
+
+
+    //GET     /observations                    controllers.ParentController.listObservations(request: Request)
+    @Test
+    public void listObservationsTest(){
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations");
+        Result result = route(app,request);
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
+    }
+
+    //POST    /observations                    controllers.ParentController.createObservation(request: Request)
+    @Test
+    public void createObservationTest(){
+        Whale w = new Whale("Orca",2222,"F");
+        Http.RequestBuilder request = Helpers.fakeRequest()
+                .method("POST")
+                .bodyForm(ImmutableMap.of("numWhales","2","weights","2222,1111","gender","Male,Female","species","Orca","location","Victoria, BC Canada"))
+                .uri("/observations");
+        Result result = route(app,request);
+        assertEquals(SEE_OTHER, result.status());
+    }
+
+
+//POST    /observations/filter             controllers.ParentController.filterObservations(request: Request)
+//GET     /observations/filter             controllers.ParentController.listFilteredObservations(request: Request)
+//POST    /observations/filter/removeFilter       controllers.ParentController.removeObservationFilter()
+
+//GET     /Stats                      controllers.ParentController.stats
+@Test
+    public void statsTest(){
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Stats");
+        Result result = route(app,request);
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
+    }
+}
