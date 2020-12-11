@@ -71,6 +71,28 @@ public class ParentControllerTest extends WithApplication {
 //    POST    /Whales/filter             controllers.ParentController.filterWhales(request: Request)
 //    GET     /Whales/filter             controllers.ParentController.listFilterWhales(request: Request)
 //    POST    /Whales/filter/removeFilter       controllers.ParentController.removeWhaleFilter()
+    @Test
+    public void whaleFilterTest() {
+        Http.RequestBuilder request1 = Helpers.fakeRequest()
+                .method("POST")
+                .bodyForm(ImmutableMap.of("species","Orca"))
+                .uri("/Whales/filter");
+        Result result = route(app,request1);
+        assertEquals(SEE_OTHER, result.status());
+        //Add check for species types in Whales here??
+
+        Http.RequestBuilder request2 = new Http.RequestBuilder().method("GET").uri("/Whales/filter");
+        result = route(app,request2);
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
+
+        Http.RequestBuilder request3 = Helpers.fakeRequest()
+                .method("POST")
+                .uri("/Whales/filter");
+        result = route(app,request3);
+        assertEquals(SEE_OTHER, result.status());
+    }
 
 
 
@@ -100,6 +122,28 @@ public class ParentControllerTest extends WithApplication {
 //POST    /observations/filter             controllers.ParentController.filterObservations(request: Request)
 //GET     /observations/filter             controllers.ParentController.listFilteredObservations(request: Request)
 //POST    /observations/filter/removeFilter       controllers.ParentController.removeObservationFilter()
+    @Test
+    public void observationFilterTest() {
+        Http.RequestBuilder request1 = Helpers.fakeRequest()
+                .method("POST")
+                .bodyForm(ImmutableMap.of("date","2020-12-01"))        //change
+                .uri("/observations/filter");
+        Result result = route(app,request1);
+        assertEquals(SEE_OTHER, result.status());
+        //Add check for species types in Observations here??
+
+        Http.RequestBuilder request2 = new Http.RequestBuilder().method("GET").uri("/observations/filter");
+        result = route(app,request2);
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
+
+        Http.RequestBuilder request3 = Helpers.fakeRequest()
+                .method("POST")
+                .uri("/observations/filter");
+        result = route(app,request3);
+        assertEquals(SEE_OTHER, result.status());
+    }
 
 //GET     /Stats                      controllers.ParentController.stats
 @Test
