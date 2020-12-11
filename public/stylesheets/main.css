@@ -264,6 +264,7 @@ div.row {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
     border-bottom: 2px solid var(--divider);
     border-top: 2px solid var(--divider);

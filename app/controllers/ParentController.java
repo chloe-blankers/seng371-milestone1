@@ -51,8 +51,7 @@ public class ParentController extends Controller {
     private List<Observation> FilteredObservations;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
-    private static final boolean dropDBTables = false;
-
+    private static final boolean dropDBTables = false; // Change line to true to reset DB.
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
         this.touristWhaleObs = new ArrayList<>();
@@ -75,9 +74,9 @@ public class ParentController extends Controller {
            so the application opens with data in it.
      */
     public void insertDummyData() throws SQLException {
-        Whale w1 = new Whale(0,"Beluga", 204, "Male");
-        Whale w2 = new Whale(1, "Orca", 111, "Female");
-        Whale w3 = new Whale(2, "Blue", 301, "Male");
+        Whale w1 = new Whale(0,"Beluga", 20400, "Male");
+        Whale w2 = new Whale(1, "Orca", 11100, "Female");
+        Whale w3 = new Whale(2, "Blue", 30100, "Male");
         if(this.Whales.size()<1) { //add dummy whales
             this.Whales = new ArrayList<>();
             Whales.add(w1);
