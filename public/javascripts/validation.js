@@ -2,6 +2,15 @@
 let maxWhaleID;
 let minWhaleID;
 
+
+console.log( "===========");
+
+
+
+
+console.log( "===========");
+
+
 function loadValidations(){
 
     let toValidate = document.getElementsByClassName("fv");
@@ -19,7 +28,12 @@ function loadValidations(){
             toValidate[i].pattern = "(\\d+)(,\\s*\\d+)*";
             toValidate[i].setAttribute("onchange", "checkIDValues(this);");
             loadWhaleIDRangeRequirements( toValidate[i] );
-            toValidate[i]
+        }
+        else if ( toValidate[i].id == "location" ){
+            toValidate[i].required = true;
+            toValidate[i].type = "text";
+            toValidate[i].pattern = "\\d+\\.\\d+([,\\s]|(,\\s))\\d+\\.\\d+";
+            toValidate[i].setAttribute("minlength", "6");
         }
     }
 }

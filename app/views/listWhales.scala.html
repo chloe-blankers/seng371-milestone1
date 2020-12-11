@@ -82,7 +82,10 @@
         <div class="hidden-helper">Enter information in each field and click 'Create'.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
         @b4.vertical.formCSRF(routes.ParentController.createWhale) { implicit vfc =>
             <label>Weight (kg)</label>
-            @b4.text( whaleForm("weight" ), 'class -> "fv", 'id -> "weight")
+            @b4.text( whaleForm("weight" ),
+                'class -> "fv", 'id -> "weight",
+                'placeholder -> "Enter the weight in kgs."
+            )
             <label>Gender</label>
             @b4.select( whaleForm("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
             <label>Species</label>

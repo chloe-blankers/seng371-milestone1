@@ -89,12 +89,14 @@
                 <label>Whale IDs</label>
                 @b4.text(sightingForm("whaleIDList"),
                     'class -> "fv",
-                    'id -> "whale-id"
+                    'id -> "whale-id",
+                    'placeholder -> "Enter the whale IDs, separated by commas."
                 )
-                <label>Location</label>
+                <label>Location&nbsp;<span style="font-size: 0.8em;">- in Decimal Degrees format</span></label>
                 @b4.text( sightingForm("location"),
                     'class -> "fv",
-                    'id -> "location"
+                    'id -> "location",
+                    'placeholder -> "Enter latitude and longitude (eg. 17.001, 15.334)."
                 )
                 <label>Date</label>
                 @b4.date(sightingForm("date"))
