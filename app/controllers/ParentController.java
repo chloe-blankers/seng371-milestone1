@@ -51,7 +51,7 @@ public class ParentController extends Controller {
     private ArrayList<Whale> Whales;
     ArrayList<Whale> touristWhaleObs;
     private final List<Observation> observations;
-    //private DataStore ds;
+    private DataStore ds;
 
     private List<Observation> FilteredObservations;
 
