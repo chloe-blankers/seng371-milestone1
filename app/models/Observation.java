@@ -1,12 +1,5 @@
 package models;
 
-import controllers.ObservationData;
-import controllers.WhaleData;
-import play.data.DynamicForm;
-import play.data.Form;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -67,15 +60,4 @@ public class Observation {
         this.location = location;
         this.id = atomicLong.getAndAdd(1);
     }
-
-    //copy constructor
-    public Observation(Observation other){
-        if(other != null){
-            this.whales = new ArrayList<Whale>(other.whales);
-            this.date = other.date;
-            this.time = other.time;
-            this.location = other.location;
-        }
-    }
-
 }
