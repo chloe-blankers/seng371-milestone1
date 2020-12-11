@@ -22,10 +22,6 @@ POST    /observations/filter             controllers.ParentController.filterObse
 GET     /observations/filter             controllers.ParentController.listFilteredObservations(request: Request)
 POST    /observations/filter/removeFilter       controllers.ParentController.removeObservationFilter()
 
-#Sighings
-POST    /sightings                    controllers.ParentController.createSighting(request: Request)
-
-
 # Stats
 GET     /Stats                      controllers.ParentController.stats
 
