@@ -11,9 +11,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/*
+        DataStore
+        The DataStore class handles all the connections to the H2 In-Memory Database.
+        The assignment was not focused on Database Design, so the database does not use
+        foreign keys, constraints, or triggers.
+        The Database consists of the Following Tables
+        WHALES: Stores Whales data
+        OBSERVATIONS: Stores Observation data
+        SIGHTINGS: Stores the relationships between WHALES and OBSERVATIONS.
+                    It is a Many-To-Many Relationship
+        Connection Strings to the H2 In-Memory database.
+        H2 Stores a In-Memory database cache in the folder
+        ~/whale for the connection String jdbc:h2:~/whale
+*/
 
 public class DataStore {
+
     private static final String DB_DRIVER = "org.h2.Driver";
     private static final String URL = "jdbc:h2:mem";
     private static final String DB_CONNECTION = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
