@@ -51,7 +51,7 @@ public class ParentController extends Controller {
     private List<Observation> FilteredObservations;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
-    private static final boolean dropDBTables = false;
+    private static final boolean dropDBTables = true;
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
@@ -203,16 +203,11 @@ public class ParentController extends Controller {
         return ok(views.html.stats.render(Whales, observations));
     }
 
-
-    public Result listWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
-    }
-
     public Result listFilterWhales(Http.Request request) {
         return ok(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, request, messagesApi.preferred(request)));
     }
 
-    public Result getWhales(Http.Request request) {
+    public Result listWhales(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
             return ok(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));

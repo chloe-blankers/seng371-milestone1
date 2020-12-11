@@ -8,7 +8,6 @@ GET     /                           controllers.ParentController.index
 # Whales
 POST    /Whales                    controllers.ParentController.createWhale(request: Request)
 GET     /Whales                    controllers.ParentController.listWhales(request: Request)
-GET     /Whales/getWhales          controllers.ParentController.getWhales(request: Request)
 POST    /Whales/filter             controllers.ParentController.filterWhales(request: Request)
 GET     /Whales/filter             controllers.ParentController.listFilterWhales(request: Request)
 POST    /Whales/filter/removeFilter       controllers.ParentController.removeWhaleFilter()
