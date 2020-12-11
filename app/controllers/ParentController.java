@@ -185,12 +185,6 @@ public class ParentController extends Controller {
         }
     }
 
-    /**
-     *    REST request method that redirects to the index.scala.html view.
-     *
-     *    @param request    The Http.Request
-     *    @return  - Result redirects to the stats.scala.html view
-     */
     public Result getWhaleIDRange(Http.Request request) {
         //Content negotiation
         ObjectNode result = Json.newObject();
@@ -220,6 +214,12 @@ public class ParentController extends Controller {
         }
     }
 
+    /**
+     *    REST request method that redirects to the index.scala.html view.
+     *
+     *    @param request    The Http.Request
+     *    @return  - Result redirects to the stats.scala.html view
+     */
     public Result index() {
         return ok(views.html.index.render());
     }
