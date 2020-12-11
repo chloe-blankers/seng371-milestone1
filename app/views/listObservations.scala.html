@@ -1,8 +1,7 @@
 @import play.mvc.Http.Request
 @import views.html.helper.options
 @import scala.Console.in
-@(touristWhaleObs: Seq[Whale], Whales: Seq[Whale], observations: Seq[Observation], observationForm: Form[ObservationData], whaleForm: Form[WhaleData],
-        whaleForm2: Form[FilterData])(implicit request: Request, messages: play.i18n.Messages)
+@(observations: Seq[Observation], observationForm: Form[ObservationData])(implicit request: Request, messages: play.i18n.Messages)
 @main("observations") {
     <html lang="en">
         <head>
