@@ -1,7 +1,6 @@
 @import play.mvc.Http.Request
 @import views.html.helper.options
-@(Whales: Seq[Whale], observations: Seq[Observation], observationForm: Form[ObservationData], whaleForm: Form[WhaleData],
-        whaleForm2: Form[FilterData])(implicit request: Request, messages: play.i18n.Messages)
+@(Whales: Seq[Whale], whaleForm: Form[WhaleData])(implicit request: Request, messages: play.i18n.Messages)
 @main("Whales") {
     <html lang="en">
     <head>
@@ -37,7 +36,7 @@
         @b4.inline.formCSRF(routes.ParentController.filterWhales) { implicit vfc =>
             <div class="form-box">
                 <label>Filter Species</label>
-                @b4.select( whaleForm2("filterspecies"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
+                @b4.select( whaleForm("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga",
                     "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei",
                     "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"),
                     'class -> "width8"
@@ -45,7 +44,6 @@
                 </div>
             <div class="form-button-hbox">
                 @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Filter }
-
             </div>
         }
 

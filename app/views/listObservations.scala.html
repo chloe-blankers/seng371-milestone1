@@ -1,9 +1,7 @@
 @import play.mvc.Http.Request
 @import views.html.helper.options
 @import scala.Console.in
-@(touristWhaleObs: Seq[Whale], Whales: Seq[Whale], observations: Seq[Observation], sightingForm: Form[SightingData],
-        observationForm: Form[ObservationData], whaleForm: Form[WhaleData],
-        whaleForm2: Form[FilterData])(implicit request: Request, messages: play.i18n.Messages)
+@(observations: Seq[Observation], sightingForm: Form[SightingData], observationForm: Form[ObservationData])(implicit request: Request, messages: play.i18n.Messages)
 @main("observations") {
     <html lang="en">
         <head>
@@ -41,9 +39,8 @@
                     <label>Date</label>
                     @b4.date(observationForm("date"))
                 </div>
-                @b4.buttonType("submit", 'class -> "form-box btn btn-secondary"){ <b>Filter</b> }<br/>
+                @b4.buttonType("submit", 'class -> "form-box btn btn-secondary"){ <b>Search</b> }<br/>
                 }
-
                 <div class="form-box">
                 @b4.inline.formCSRF(routes.ParentController.removeObservationFilter) { implicit vfc =>
                     @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
@@ -84,7 +81,7 @@
             </div>
             <div class="form-holder">
             <div class="hidden-helper">Enter whale IDs separated by commas if needed.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
-            @b4.vertical.formCSRF(routes.ParentController.createSighting) { implicit vfc =>
+            @b4.vertical.formCSRF(routes.ParentController.createObservation) { implicit vfc =>
                 <label>Whale IDs</label>
                 @b4.text(sightingForm("whaleIDList"))
                 <label>Location</label>

@@ -1,7 +1,5 @@
 package controllers;
 
-
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import db.DataStore;
 import db.ResultData;
@@ -9,7 +7,6 @@ import models.Observation;
 import models.Whale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import play.data.Form;
 import play.data.Form;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
@@ -28,8 +25,6 @@ import java.util.stream.Collectors;
 import static play.libs.Scala.asScala;
 
 import play.libs.Json;
-import views.html.listWhales;
-
 
 /**
  * Code based off
@@ -44,9 +39,7 @@ public class ParentController extends Controller {
 
     private MessagesApi messagesApi;
     private Form<ObservationData> observationForm;
-    private Form<ObservationData> observationForm2;
     private final Form<WhaleData> whaleForm;
-    private final Form<FilterData> whaleForm2;
     private final  Form<SightingData> sightingForm;
     private List<Whale> FilteredWhales;
     private ArrayList<Whale> Whales;
@@ -66,7 +59,6 @@ public class ParentController extends Controller {
         FilteredWhales = new ArrayList<>();
 
         this.whaleForm = formFactory.form(WhaleData.class);
-        this.whaleForm2 = formFactory.form(FilterData.class);
         this.sightingForm = formFactory.form(SightingData.class);
         this.observationForm = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
@@ -75,7 +67,7 @@ public class ParentController extends Controller {
         ResultData rs = this.ds.setup(dropDBTables);
         this.observations = rs.getObservationList();
         this.Whales= (ArrayList<Whale>) rs.getWhaleList();
-
+      
         this.insertDummyData();
     }
     /*
@@ -110,11 +102,11 @@ public class ParentController extends Controller {
     }
 
     public Result listObservations(Http.Request request) {
-        return ok(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations),
-                sightingForm, observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        return ok(views.html.listObservations.render(asScala(observations),
+                sightingForm, observationForm, request, messagesApi.preferred(request)));
     }
 
-    public Result createSighting(Http.Request request) throws SQLException {
+    public Result createObservation(Http.Request request) throws SQLException {
         final Form<SightingData> boundForm = sightingForm.bindFromRequest(request);
         if (boundForm.hasErrors()) {
             logger.error("errors = {}", boundForm.errors());
@@ -123,8 +115,8 @@ public class ParentController extends Controller {
                 logger.error(err.toString());
             }
             logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations),
-                    sightingForm, observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listObservations.render(asScala(observations),
+                    sightingForm, observationForm, request, messagesApi.preferred(request)));
         } else {
             SightingData data = boundForm.get();
             ArrayList<Whale> whales = new ArrayList<>();
@@ -133,7 +125,6 @@ public class ParentController extends Controller {
             for(String s : whaleIDList) {
                 int id = Integer.valueOf(s);
                 Whale w = Whales.stream().filter(z -> z.id == id).collect(Collectors.toList()).get(0);
-                //Whale w = Whales.find.get(id);
                 touristWhaleObs.add(w);
                 whales.add(w);
             }
@@ -146,47 +137,11 @@ public class ParentController extends Controller {
         }
     }
 
-    public Result createObservation(Http.Request request) throws SQLException {
-        final Form<ObservationData> boundForm = observationForm.bindFromRequest(request);
-
-        if (boundForm.hasErrors()) {
-            logger.error("errors = {}", boundForm.errors());
-            logger.error("boundForm.errors().size():"+boundForm.errors().size());
-            for(play.data.validation.ValidationError err: boundForm.errors()){
-                logger.error(err.toString());
-            }
-            logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations),
-                    sightingForm, observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
-        } else {
-            ObservationData data = boundForm.get();
-            ArrayList<Whale> whales = new ArrayList<>();
-            int numWhales = data.getNumWhales();
-            String weights = data.getWeights();
-            String[] weigthsList = weights.split(",");
-            for(int i = 0; i < numWhales; i++) {
-                try {
-                    Whale w = new Whale(Whales.size(), data.getSpecies(), Integer.parseInt(weigthsList[i]), data.getGender());
-                    whales.add(w);
-                    touristWhaleObs.add(w);
-                } catch (Exception e) {
-                    Whale w = new Whale(Whales.size(), data.getSpecies(), 0, data.getGender());
-                    whales.add(w);
-                    touristWhaleObs.add(w);
-                }
-            }
-            Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation());
-            observations.add(newOb);
-            ds.addObservation(newOb);
-            return redirect(routes.ParentController.listObservations()).flashing("info", "Observation added!");
-        }
-    }
-
     public Result getObservations(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
-            return ok(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations),
-                    sightingForm, observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+            return ok(views.html.listObservations.render(asScala(observations),
+                    sightingForm, observationForm, request, messagesApi.preferred(request)));
         }
         else {
             ObjectNode result = Json.newObject();
@@ -220,17 +175,17 @@ public class ParentController extends Controller {
 
 
     public Result listWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        return ok(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
     }
 
     public Result listFilterWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(FilteredWhales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        return ok(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, request, messagesApi.preferred(request)));
     }
 
     public Result getWhales(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
-            return ok(views.html.listWhales.render(asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+            return ok(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
         }
         else {
             ObjectNode result = Json.newObject();
@@ -256,7 +211,6 @@ public class ParentController extends Controller {
         }
     }
 
-
     public Result createWhale(Http.Request request) throws IOException, SQLException {
         final Form<WhaleData> boundForm = whaleForm.bindFromRequest(request);
         if (boundForm.hasErrors()) {
@@ -266,7 +220,7 @@ public class ParentController extends Controller {
                 logger.error(err.toString());
             }
             logger.error("boundForm.toString():"+boundForm.toString());
-            return badRequest(views.html.listWhales.render(asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
         } else {
             WhaleData data = boundForm.get();
             System.out.println("data.getId():"+data.getId());
@@ -281,23 +235,22 @@ public class ParentController extends Controller {
     }
 
     public Result filterWhales(Http.Request request) {
-        System.out.println("hellloooo");
-        final Form<FilterData> boundForm2 = whaleForm2.bindFromRequest(request);
-        if (boundForm2.hasErrors()) {
-            logger.error("errors = {}", boundForm2.errors());
-            return badRequest(views.html.listWhales.render(asScala(FilteredWhales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        final Form<WhaleData> boundForm = whaleForm.bindFromRequest(request);
+        if (boundForm.hasErrors()) {
+            logger.error("errors = {}", boundForm.errors());
+            return badRequest(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, request, messagesApi.preferred(request)));
         } else {
-            FilterData data = boundForm2.get();
+            WhaleData data = boundForm.get();
             this.FilterWhales(data);
-            return redirect(routes.ParentController.listFilterWhales()).flashing("info", "Whales Filtered");
+            return redirect(routes.ParentController.listFilterWhales()).flashing("info", "Whales Searched");
         }
     }
 
-    public void FilterWhales(FilterData data) {
-        if(data.getFilterspecies() != null) {
+    public void FilterWhales(WhaleData data) {
+        if(data.getSpecies() != null) {
             FilteredWhales = Whales
                     .stream()
-                    .filter(w -> w.species.equals(data.getFilterspecies()))
+                    .filter(w -> w.species.equals(data.getSpecies()))
                     .collect(Collectors.toList());
         }
     }
@@ -323,12 +276,12 @@ public class ParentController extends Controller {
 
         if (boundForm.hasErrors()) {
             logger.error("errors = {}", boundForm.errors());
-            return badRequest(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations),
-                    sightingForm, observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+            return badRequest(views.html.listObservations.render(asScala(observations),
+                    sightingForm, observationForm, request, messagesApi.preferred(request)));
         } else {
             ObservationData data = boundForm.get();
             this.FilterObservationsList(data);
-            return redirect(routes.ParentController.listFilteredObservations()).flashing("info", "Observations Filtered");
+            return redirect(routes.ParentController.listFilteredObservations()).flashing("info", "Observations Searched");
         }
     }
 
@@ -338,8 +291,8 @@ public class ParentController extends Controller {
     }
 
     public Result listFilteredObservations(Http.Request request) {
-        return ok(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(FilteredObservations),
-                sightingForm, observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        return ok(views.html.listObservations.render(asScala(FilteredObservations),
+                sightingForm, observationForm, request, messagesApi.preferred(request)));
     }
 
 }
