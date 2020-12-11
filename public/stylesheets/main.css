@@ -253,8 +253,48 @@ div.invalid-feedback{
 
 
 
-
 /* TABLE */
+div.table {
+    width: var(--space-ratio);
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    border-bottom: 2px solid var(--divider);
+    border-top: 2px solid var(--divider);
+    background-color: var(--surface);
+    color: var(--on-surface);
+}
+div.header {
+    background-color: var(--background);
+    color: var(--on-background);
+    border: 0px;
+}
+div.row > div.cell {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    text-align: center;
+    width: 8rem;
+}
+div.subtable {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10%;
+}
+div.subtable > div.row {
+    background-color: var(--background);
+    border: 0px;
+}
+
+
+
+/* TABLE 1 */
 table {
   border-collapse: collapse;
   border-spacing: 0;
