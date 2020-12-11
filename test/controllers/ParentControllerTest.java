@@ -106,18 +106,18 @@ public class ParentControllerTest extends WithApplication {
         assertEquals("utf-8", result.charset().get());
     }
 
-    //POST    /observations                    controllers.ParentController.createObservation(request: Request)
+/*    //POST    /observations                    controllers.ParentController.createObservation(request: Request)
     @Test
     public void createObservationTest(){
         Whale w = new Whale("Orca",2222,"F");
         Http.RequestBuilder request = Helpers.fakeRequest()
                 .method("POST")
-                .bodyForm(ImmutableMap.of("numWhales","2","weights","2222,1111","gender","Male,Female","species","Orca","location","Victoria, BC Canada"))
+                .bodyForm(ImmutableMap.of("numWhales","0","weights","2222","gender","Male","species","Orca","location","Victoria, BC Canada"))
                 .uri("/observations");
         Result result = route(app,request);
         assertEquals(SEE_OTHER, result.status());
     }
-
+*/
 
 //POST    /observations/filter             controllers.ParentController.filterObservations(request: Request)
 //GET     /observations/filter             controllers.ParentController.listFilteredObservations(request: Request)
@@ -126,7 +126,7 @@ public class ParentControllerTest extends WithApplication {
     public void observationFilterTest() {
         Http.RequestBuilder request1 = Helpers.fakeRequest()
                 .method("POST")
-                .bodyForm(ImmutableMap.of("date","2020-12-01"))        //change
+                .bodyForm(ImmutableMap.of("date","2020-12-01"))
                 .uri("/observations/filter");
         Result result = route(app,request1);
         assertEquals(SEE_OTHER, result.status());
@@ -154,4 +154,6 @@ public class ParentControllerTest extends WithApplication {
         assertEquals("text/html", result.contentType().get());
         assertEquals("utf-8", result.charset().get());
     }
+
+
 }
