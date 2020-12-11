@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import play.data.Form;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -22,9 +23,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import static play.libs.Scala.asScala;
 
-import play.libs.Json;
+import static play.libs.Scala.asScala;
 
 /**
  * Code based off
@@ -38,10 +38,10 @@ import play.libs.Json;
 public class ParentController extends Controller {
 
     private MessagesApi messagesApi;
-    private Form<ObservationData> observationForm;
+    private Form<ObservationData> observationForm; //Input Form for observation searching on observation page
     private final Form<WhaleData> whaleForm; //The input Form on the Whales page
     private final  Form<SightingData> sightingForm; //The input Form on the observation page
-    private List<Whale> FilteredWhales; //Used when the User searches for a Whale.
+    private List<Whale> FilteredWhales; //Used when the User searches for a Whale
     private ArrayList<Whale> Whales; //Stores the Whales which shows up on the Whales page
     ArrayList<Whale> touristWhaleObs; //Stores the Whales from the Observation page which is different than the Whales Page
     private List<Observation> observations; //The Observations
@@ -71,7 +71,6 @@ public class ParentController extends Controller {
         this.insertDummyData(); //Insert dummy data into tables for aesthetics if there was no data in the DB
     }
 
-
     /**
      *       Inserts dummy data into the application for testing and aesthetics,
      *       so the application opens with data in it.
@@ -92,7 +91,6 @@ public class ParentController extends Controller {
             this.ds.addWhales(Whales);
         }
         if(this.observations.size()<1){ //add a dummy observation
-            System.out.println("dummy");
             ArrayList<Whale> whales = new ArrayList<>();
             whales.add(w1);
             whales.add(w2);
@@ -103,9 +101,15 @@ public class ParentController extends Controller {
             );
             this.ds.addObservation(ob);
         }
-
     }
 
+    /**
+     *
+     *      Renders the observation list on the Observations page
+     *
+     * @param request
+     * @return - Observation page rendering
+     */
     public Result listObservations(Http.Request request) {
         return ok(views.html.listObservations.render(asScala(observations),
                 sightingForm, observationForm, request, messagesApi.preferred(request)));
@@ -113,9 +117,9 @@ public class ParentController extends Controller {
 
     /**
      *    REST request method that is called from the views to create a new Observation.
-     *    Called with a input form that is binded from the request.
+     *    Called with a input form that is bound from the request.
      *
-     *    @param request    The Http.Request that the Form is binded from
+     *    @param request    The Http.Request that the Form is bound from
      *    @return  - Result redirects to a method which will redirect to a view after the controller
      *              processes the new Observation to the Database
      */
@@ -133,20 +137,20 @@ public class ParentController extends Controller {
         } else {
             SightingData data = boundForm.get();
             ArrayList<Whale> whales = new ArrayList<>();
-            String whaleIDString = data.getWhaleIDList();
+            String whaleIDString = data.getWhaleIDList();           //get list of whale ID's
             String[] whaleIDList = whaleIDString.split(",");
+
+            //iterate over list of whale ID's and add corresponding whales to the touristWhaleObs and whales lists
             for(String s : whaleIDList) {
                 int id = Integer.valueOf(s);
                 Whale w = Whales.stream().filter(z -> z.id == id).collect(Collectors.toList()).get(0);
                 touristWhaleObs.add(w);
                 whales.add(w);
             }
-            Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation());
-            observations.add(newOb);
-            ds.addObservation(newOb);
+            Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation()); //create new observation
+            observations.add(newOb);    //add to observations list
+            ds.addObservation(newOb);   //add to database
             return redirect(routes.ParentController.listObservations()).flashing("info", "Observation added!");
-
-
         }
     }
 
@@ -191,7 +195,6 @@ public class ParentController extends Controller {
         return ok(views.html.index.render());
     }
 
-
     /**
      *    REST request method that redirects to the stats.scala.html view.
      *    The default redirect for the Stats page.
@@ -202,7 +205,6 @@ public class ParentController extends Controller {
     public Result stats() {
         return ok(views.html.stats.render(Whales, observations));
     }
-
 
     /**
      *    REST request method that redirects to the listWhales.scala.html view.
@@ -312,6 +314,12 @@ public class ParentController extends Controller {
         }
     }
 
+    /**
+     *
+     *      Filters whale list based on species specified in the search species box
+     *
+     * @param data - supplies the form data indicating species for searching
+     */
     public void FilterWhales(WhaleData data) {
         if(data.getSpecies() != null) {
             FilteredWhales = Whales
@@ -322,7 +330,7 @@ public class ParentController extends Controller {
     }
 
     /**
-     *    Removes the filter from the users Search when the User hits the Clear button in the UI.
+     *    Removes the filter from the users Search when the User hits the Show All button in the UI.
      *    The Whale list will be returned to its full size with all the Whales in the UI
      *    on the Whales page.
      *
@@ -336,9 +344,9 @@ public class ParentController extends Controller {
 
     /**
      *    Called from the REST method filterObservations and uses Java streams to filter the
-     *    Observation List by the date that was extracted from the form that was binded.
+     *    Observation List by the date that was extracted from the form that was bound.
      *
-     *    @param data    The ObservationData that was extracted from the binded Form
+     *    @param data    The ObservationData that was extracted from the bound Form
      *    @return  - None
      */
     public void FilterObservationsList(ObservationData data){
@@ -376,7 +384,7 @@ public class ParentController extends Controller {
     }
 
     /**
-     *    Removes the filter from the users Search when the User hits the Clear button in the UI.
+     *    Removes the filter from the users Search when the User hits the Show All button in the UI.
      *    The Observation list will be returned to its full size with all the Observations in the UI
      *    on the Observations page.
      *
