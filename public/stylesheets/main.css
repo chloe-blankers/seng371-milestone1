@@ -323,6 +323,7 @@ div.navigation {
     height: var(--navbar-height);
     width: 100%;
     position: fixed;
+    z-index: 3;
 }
 a.navigation {
     color: var(--on-primary);

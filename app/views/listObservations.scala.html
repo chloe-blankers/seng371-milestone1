@@ -9,6 +9,7 @@
             <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
             <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon-32x32.png")">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script rel="text/javascript" src="@routes.Assets.versioned("javascripts/validation.js")"></script>
         </head>
         <body>
             <div class="navigation">
@@ -83,9 +84,17 @@
             <div class="hidden-helper">Enter whale IDs separated by commas if needed.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
             @b4.vertical.formCSRF(routes.ParentController.createObservation) { implicit vfc =>
                 <label>Whale IDs</label>
-                @b4.text(sightingForm("whaleIDList"))
-                <label>Location</label>
-                @b4.text( sightingForm("location"))
+                @b4.text(sightingForm("whaleIDList"),
+                    'class -> "fv",
+                    'id -> "whale-id",
+                    'placeholder -> "Enter whale IDs commas separated(eg. 1, 2)."
+                )
+                <label>Location&nbsp;<span style="font-size: 0.8em;">- in Decimal Degrees format</span></label>
+                @b4.text( sightingForm("location"),
+                    'class -> "fv",
+                    'id -> "location",
+                    'placeholder -> "Enter latitude and longitude (eg. 17.001, 15.334)."
+                )
                 <label>Date</label>
                 @b4.date(sightingForm("date"))
                 <label>Time</label>
@@ -101,6 +110,9 @@
             </div>
             <img class="logo" src="@routes.Assets.versioned("images/logo.png")" >
         </body>
+        <script>
+            loadValidations();
+        </script>
     </html>
 
 }
