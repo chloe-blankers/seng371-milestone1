@@ -5,6 +5,11 @@ import models.Whale;
 
 import java.util.List;
 
+/*
+        ResultData
+        The ResultData class is a wrapper to return data from
+        the DataStore class.
+*/
 public class ResultData {
     private List<Whale> whaleList;
     private List<Observation> observationList;

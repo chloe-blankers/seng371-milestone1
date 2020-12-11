@@ -1,12 +1,5 @@
 package models;
 
-import controllers.ObservationData;
-import controllers.WhaleData;
-import play.data.DynamicForm;
-import play.data.Form;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -27,6 +20,17 @@ public class Observation {
 
     private static final AtomicLong atomicLong = new AtomicLong(0L);
 
+    /**
+     *    This constructor takes in the ID of the Observation being created as a parameter.
+     *    So the constructor should be called like 'new Observation(observationList.size(), ....)'
+     *
+     *    @param id    The ID of the Observation being created
+     *    @param whales    The whales spotted in the observation
+     *    @param date    The date the observation happened
+     *    @param time    The time the observation happened
+     *    @param location    The location the observation happened
+     *    @return  - None
+     */
     public Observation(long id, ArrayList<Whale> whales, String date, String time, String location) {
         this.whales = whales;
         this.date = date;
@@ -35,6 +39,20 @@ public class Observation {
         this.id = id;
     }
 
+    /**
+     *    This constructor does not take in ID of the Observation being created as a parameter.
+     *    The constructor uses AtomicLong atomicLong getAndAdd to increment a counter.
+     *    AtomicLong getAndAdd is similar to Auto-Increment in SQL, except getAndAdd increments the
+     *    counter with every instance Observation that is created, so only use this Constructor if the
+     *    the code strictly creates Observation for one purpose, and doesn't create extra Observations
+     *    that are not for a different purpose.
+     *
+     *    @param whales    The whales spotted in the observation
+     *    @param date    The date the observation happened
+     *    @param time    The time the observation happened
+     *    @param location    The location the observation happened
+     *    @return  - None
+     */
     public Observation(ArrayList<Whale> whales, String date, String time, String location) {
         this.whales = whales;
         this.date = date;
@@ -42,15 +60,4 @@ public class Observation {
         this.location = location;
         this.id = atomicLong.getAndAdd(1);
     }
-
-    //copy constructor
-    public Observation(Observation other){
-        if(other != null){
-            this.whales = new ArrayList<Whale>(other.whales);
-            this.date = other.date;
-            this.time = other.time;
-            this.location = other.location;
-        }
-    }
-
 }
