@@ -277,36 +277,10 @@ public class ParentController extends Controller {
     }
 
     public void FilterWhales(FilterData data) {
-        System.out.println("data.getFilterspecies():" + data.getFilterspecies());
-        System.out.println("data.getFilterspecies().compareTo(\"None\"):" + data.getFilterspecies().compareTo("None"));
-        if (data.getFilterspecies().compareTo("None") != 0) {
+        if(data.getFilterspecies() != null) {
             FilteredWhales = Whales
                     .stream()
-                    .filter(w -> w.species.trim().toLowerCase().startsWith(data.getFilterspecies().trim().toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-        System.out.println("data.getFiltergender():" + data.getFiltergender());
-        System.out.println("data.getFiltergender().compareTo(\"None\"):" + data.getFiltergender().compareTo("None"));
-        if (data.getFiltergender().compareTo("None") != 0) {
-            FilteredWhales = FilteredWhales
-                    .stream()
-                    .filter(w -> w.gender.trim().toLowerCase().startsWith(data.getFiltergender().trim().toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-        System.out.println("data.getMaxweight():" + data.getMaxweight());
-        if (data.getMaxweight() > 0) {
-            System.out.println("if(data.getMaxweight()>0)");
-            FilteredWhales = FilteredWhales
-                    .stream()
-                    .filter(w -> w.weight < (data.getMaxweight()))
-                    .collect(Collectors.toList());
-        }
-        System.out.println("data.getMinweight():" + data.getMinweight());
-        if (data.getMinweight() > 0) {
-            System.out.println("if(data.getMinweight()>0)");
-            FilteredWhales = FilteredWhales
-                    .stream()
-                    .filter(w -> w.weight > (data.getMinweight()))
+                    .filter(w -> w.species.equals(data.getFilterspecies()))
                     .collect(Collectors.toList());
         }
     }
