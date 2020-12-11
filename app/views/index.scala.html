@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 </head>
-<body style="background-image: url(@routes.Assets.versioned("images/whales.jpg")); background-size: cover; background-position:center;">
+<body style="background: url(@routes.Assets.versioned("images/whales.jpg")) no-repeat center center fixed; background-size: cover;">
   <div class="navigation">
     <div class="nav-element" >
       <a class="navigation" href="@routes.ParentController.index()"><i class="fa fa-home"></i> Home</a>
@@ -26,37 +26,8 @@
 <div class="nav-holder"></div>
 
 
-<div class="homebox">
-
-    <h3>Welcome!</h3>
-
-    <div>This application was created for SENG 330 by:</div>
-
-    <h5 class="owner-name">Eric Power</h5>
-    <h5 class="owner-name">Chloe Blankers</h5>
-    <h5 class="owner-name">Liam Loucks</h5>
-    <h5 class="owner-name">Adam Page</h5>
-    <h5 class="owner-name">Lucas Antonsen</h5>
-
-</div>
-
+<img class="logo" src="@routes.Assets.versioned("images/logo.png")">
 
 </body>
-<script>
-
-    let nameDivs = document.getElementsByClassName("owner-name");
-    let names = [];
-    for ( i in nameDivs ){
-        names.push( nameDivs[i].innerHTML );
-    }
-    names = names.filter( val => val !== undefined );
-    if ( names.length == nameDivs.length ){
-        for ( i in nameDivs ){
-            let randNum = Math.floor( Math.random() * names.length );
-            nameDivs[i].innerHTML = names[ randNum ];
-            names.splice( randNum, 1 );
-        }
-    }
-</script>
 </html>
 }

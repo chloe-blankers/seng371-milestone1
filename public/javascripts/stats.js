@@ -56,7 +56,11 @@ function loadObsGraph( graphID, obsJSON ){
     else if (cusStepSize > 50000 ) cusStepSize = 10000;
     else if (cusStepSize > 10000 ) cusStepSize = 2500;
     else if (cusStepSize > 1000 ) cusStepSize = 250;
-    else cusStepSize = 10;
+    else if (cusStepSize > 500 ) cusStepSize = 100;
+    else if (cusStepSize > 250 ) cusStepSize = 50;
+    else if (cusStepSize > 100 ) cusStepSize = 10;
+    else if (cusStepSize > 20 ) cusStepSize = 5;
+    else cusStepSize = 1;
 
 
 
