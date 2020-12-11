@@ -79,9 +79,9 @@ public class ParentController extends Controller {
            so the application opens with data in it.
      */
     public void insertDummyData() throws SQLException {
-        Whale w1 = new Whale("Beluga", 204, "Male");
-        Whale w2 = new Whale("Orca", 111, "Female");
-        Whale w3 = new Whale("Blue", 301, "Male");
+        Whale w1 = new Whale("Beluga", 204, "M");
+        Whale w2 = new Whale("Orca", 111, "F");
+        Whale w3 = new Whale("Blue", 301, "M");
         if(this.Whales.size()<1) { //add dummy whales
             this.Whales = new ArrayList<>();
             Whales.add(w1);

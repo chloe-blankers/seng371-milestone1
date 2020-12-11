@@ -77,8 +77,11 @@
                             @if(w.gender == "?") {
                                 <td>Unknown</td>
                             }
-                            @if(w.gender != "?") {
-                                <td>@w.gender</td>
+                            @if(w.gender == "M") {
+                                <td>Male</td>
+                            }
+                            @if(w.gender == "F") {
+                                <td>Female</td>
                             }
                         <td>@w.id</td></tr>
                     }
