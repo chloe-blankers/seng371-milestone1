@@ -51,19 +51,23 @@ public class ParentController extends Controller {
     private List<Observation> FilteredObservations;
 
     private final Logger logger = LoggerFactory.getLogger(getClass()) ;
+    private static final boolean dropDBTables = false;
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
-        this.ds=new DataStore();
-        ResultData rs = this.ds.setup(false);
+        this.touristWhaleObs = new ArrayList<>();
+        FilteredWhales = new ArrayList<>();
+
         this.whaleForm = formFactory.form(WhaleData.class);
         this.sightingForm = formFactory.form(SightingData.class);
         this.observationForm = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
+
+        this.ds=new DataStore();
+        ResultData rs = this.ds.setup(dropDBTables);
+        this.observations = rs.getObservationList();
         this.Whales= (ArrayList<Whale>) rs.getWhaleList();
-        this.touristWhaleObs = new ArrayList<>();
-        FilteredWhales = new ArrayList<>();
-        this.observations = new ArrayList<>();
+      
         this.insertDummyData();
     }
     /*
