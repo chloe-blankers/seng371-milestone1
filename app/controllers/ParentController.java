@@ -50,7 +50,7 @@ public class ParentController extends Controller {
     private List<Whale> FilteredWhales;
     private ArrayList<Whale> Whales;
     ArrayList<Whale> touristWhaleObs;
-    private final List<Observation> observations;
+    private List<Observation> observations;
     private DataStore ds;
 
     private List<Observation> FilteredObservations;
@@ -67,27 +67,41 @@ public class ParentController extends Controller {
         this.whaleForm2 = formFactory.form(FilterData.class);
         this.observationForm = formFactory.form(ObservationData.class);
         this.messagesApi = messagesApi;
-        //this.Whales=this.ds.getWhales();
-        //No whales in the database, so put some default whales in for the sake of displaying the app
-        Whale w1 = new Whale( "Beluga", 204, "Male");
-        Whale w2 = new Whale( "Orca", 111, "Female");
-        Whale w3 = new Whale( "Blue", 301, "Male");
-        this.Whales = new ArrayList<>();
-        Whales.add(w1);
-        Whales.add(w2);
-        Whales.add(w3);
-        this.touristWhaleObs = new ArrayList<>();
-        ArrayList<Whale> whales = new ArrayList<>();
-        whales.add(w1);
-        whales.add(w2);
-        whales.add(w3);
-        FilteredWhales = new ArrayList<>();
-        this.observations = com.google.common.collect.Lists.newArrayList(
-                new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria")
-        );
-        //this.Whales= (ArrayList<Whale>) rs.getWhaleList();
+        this.Whales= (ArrayList<Whale>) rs.getWhaleList();
         this.touristWhaleObs = this.Whales;
+        FilteredWhales = new ArrayList<>();
         //this.observations = rs.getObservationList();
+        this.observations = new ArrayList<>();
+        this.insertDummyData();
+    }
+    /*
+           Inserts dummy data into the application for testing and aesthetics,
+           so the application opens with data in it.
+     */
+    public void insertDummyData() throws SQLException {
+        Whale w1 = new Whale("Beluga", 204, "Male");
+        Whale w2 = new Whale("Orca", 111, "Female");
+        Whale w3 = new Whale("Blue", 301, "Male");
+        if(this.Whales.size()<1) { //add dummy whales
+            this.Whales = new ArrayList<>();
+            Whales.add(w1);
+            Whales.add(w2);
+            Whales.add(w3);
+            this.touristWhaleObs = this.Whales;
+            this.ds.addWhales(Whales);
+        }
+        if(this.observations.size()<1){ //add a dummy observation
+            System.out.println("dummy");
+            ArrayList<Whale> whales = new ArrayList<>();
+            whales.add(w1);
+            whales.add(w2);
+            whales.add(w3);
+            Observation ob = new Observation(whales, LocalDate.now().toString(), "1pm", "Canada, BC, Victoria");
+            this.observations = com.google.common.collect.Lists.newArrayList(
+                    ob
+            );
+            this.ds.addObservation(ob);
+        }
 
     }
 
@@ -131,6 +145,7 @@ public class ParentController extends Controller {
         }
     }
 
+<<<<<<< HEAD
     public String[] fillArrays(String[] array, int length, boolean isWeights) {
         String[] newArray = new String[length];
         int i = 0;
@@ -150,6 +165,33 @@ public class ParentController extends Controller {
             }
         }
         return newArray;
+=======
+    public Result getObservations(Http.Request request) {
+        //Content negotiation
+        if (request.accepts("text/html")) {
+            return ok(views.html.listObservations.render(asScala(touristWhaleObs), asScala(Whales), asScala(observations), observationForm, whaleForm, whaleForm2, request, messagesApi.preferred(request)));
+        }
+        else {
+            ObjectNode result = Json.newObject();
+            if (request.accepts("application/txt+json")) {
+                if (observations.size() > 0) {
+                    //convert observations arraylist to json data
+                    result.put("isSuccessful", true);
+                    result.putPOJO("body", observations);
+                    //return json data
+                } else {
+                    result.put("isSuccessful", true);
+                    result.put("body", "No Observations in system");
+                }
+                return ok(result);
+            }
+            else{
+                result.put("isSuccessful",false);
+                result.put("body","MIME type not supported.");
+                return badRequest(result);
+            }
+        }
+>>>>>>> a46d4fdde6324e8fa3087f35d2d1e3fa43cc2d17
     }
 
     public Result index() {

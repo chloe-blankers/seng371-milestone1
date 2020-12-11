@@ -16,6 +16,7 @@ POST    /Whales/filter/removeFilter       controllers.ParentController.removeWha
 # Observations
 GET     /observations                    controllers.ParentController.listObservations(request: Request)
 POST    /observations                    controllers.ParentController.createObservation(request: Request)
+GET     /observations/getObservations    controllers.ParentController.getObservations(request: Request)
 POST    /observations/filter             controllers.ParentController.filterObservations(request: Request)
 GET     /observations/filter             controllers.ParentController.listFilteredObservations(request: Request)
 POST    /observations/filter/removeFilter       controllers.ParentController.removeObservationFilter()
