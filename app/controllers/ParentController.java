@@ -203,16 +203,11 @@ public class ParentController extends Controller {
         return ok(views.html.stats.render(Whales, observations));
     }
 
-
-    public Result listWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
-    }
-
     public Result listFilterWhales(Http.Request request) {
         return ok(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, request, messagesApi.preferred(request)));
     }
 
-    public Result getWhales(Http.Request request) {
+    public Result listWhales(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
             return ok(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
