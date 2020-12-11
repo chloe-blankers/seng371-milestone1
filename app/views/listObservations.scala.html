@@ -81,7 +81,7 @@
             </div>
             <div class="form-holder">
             <div class="hidden-helper">Enter whale IDs separated by commas if needed.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
-            @b4.vertical.formCSRF(routes.ParentController.createSighting) { implicit vfc =>
+            @b4.vertical.formCSRF(routes.ParentController.createObservation) { implicit vfc =>
                 <label>Whale IDs</label>
                 @b4.text(sightingForm("whaleIDList"))
                 <label>Location</label>
