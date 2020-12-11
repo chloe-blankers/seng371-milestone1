@@ -15,3 +15,4 @@
 | Bonus: JS validation | Yes | sha1: ab35w2c | @neilernst, @alvi2496 |
 | Bonus: Hosting | No | sha1: ab35w2c | @neilernst, @alvi2496 |
 | Bonus: Data store | Yes | sha1: ab35w2c | @neilernst, @alvi2496 |
+|-------|-------|-------|-------|
