@@ -32,7 +32,7 @@ function loadValidations(){
         else if ( toValidate[i].id == "location" ){
             toValidate[i].required = true;
             toValidate[i].type = "text";
-            toValidate[i].pattern = "\\d+\\.\\d+([,\\s]|(,\\s))\\d+\\.\\d+";
+            toValidate[i].pattern = "-?\\d+\\.\\d+([,\\s]|(,\\s))-?\\d+\\.\\d+";
             toValidate[i].setAttribute("minlength", "6");
         }
     }
