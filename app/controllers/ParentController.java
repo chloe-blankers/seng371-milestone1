@@ -131,7 +131,8 @@ public class ParentController extends Controller {
             String[] whaleIDList = whaleIDString.split(",");
             for(String s : whaleIDList) {
                 int id = Integer.valueOf(s);
-                Whale w = Whales.get(id);
+                Whale w = Whales.stream().filter(z -> z.id == id).collect(Collectors.toList()).get(0);
+                //Whale w = Whales.find.get(id);
                 touristWhaleObs.add(w);
                 whales.add(w);
             }
