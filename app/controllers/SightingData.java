@@ -1,22 +1,21 @@
 package controllers;
 
-import java.util.List;
-
+/**
+ * Provides fields for form selection in sightingForm on the Observation page. Form associated enables Observation creation
+ */
 public class SightingData {
     private String whaleIDList;
 
-    //@Constraints.Required
     private String location;
 
-    //@Constraints.Required
     private String date;
 
-    //@Constraints.Required
     private String time;
 
     public String getWhaleIDList() {
         return whaleIDList;
     }
+
     public void setWhaleIDList(String whaleIDList) {
         this.whaleIDList = whaleIDList;
     }
@@ -44,5 +43,4 @@ public class SightingData {
     public void setTime(String time) {
         this.time = time;
     }
-
 }
