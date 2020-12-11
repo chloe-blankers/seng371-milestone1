@@ -34,6 +34,8 @@
             </div>
 
             <div class="form-holder-hrz">
+                <div class="hidden-helper">Select a date to filter the results.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
+
                 @b4.inline.formCSRF(routes.ParentController.filterObservations) { implicit vfc =>
                 <div class="form-box">
                     <label>Date</label>
@@ -81,6 +83,7 @@
                 <h3>Add New Observation</h3>
             </div>
             <div class="form-holder">
+            <div class="hidden-helper">Enter whale IDs separated by commas if needed.&nbsp;<i class="fa fa-question" style="color: var(--on-background);"></i></div>
             @b4.vertical.formCSRF(routes.ParentController.createSighting) { implicit vfc =>
                 <label>Whale IDs</label>
                 @b4.text(sightingForm("whaleIDList"))
