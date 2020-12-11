@@ -49,7 +49,7 @@ public class ParentControllerTest extends WithApplication {
     public void createWhaleTest() {
         Http.RequestBuilder request = Helpers.fakeRequest()                                 //Build request for createWhale() route
                 .method("POST")
-                .bodyForm(ImmutableMap.of("species","Orca","weight","2200","gender","F"))   //Add fields for form
+                .bodyForm(ImmutableMap.of("species","Orca","weight","2200","gender","Female"))   //Add fields for form
                 .uri("/Whales");
         Result result = route(app,request);                                                 //Send to app
         assertEquals(SEE_OTHER, result.status());                                           //Assert HTTP return is correct
@@ -63,16 +63,6 @@ public class ParentControllerTest extends WithApplication {
         assertEquals(OK, result.status());                                                      //Assert HTTP response matches
         assertEquals("text/html", result.contentType().get());                          //Assert mime type matches
         assertEquals("utf-8", result.charset().get());                                  //Assert charset matches
-    }
-
-    //    GET     /Whales/getWhales          controllers.ParentController.getWhales(request: Request)
-    @Test
-    public void getWhalesTest() {                                                                       //Test get Whales method
-        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales/getWhales"); //Build request for createWhale() route
-        Result result = route(app,request);                                                             //Send to app
-        assertEquals(OK, result.status());                                                              //Assert HTTP response matches
-        assertEquals("text/html", result.contentType().get());                                  //Assert mime type matches
-        assertEquals("utf-8", result.charset().get());                                          //Assert charset matches
     }
 
 
@@ -116,7 +106,7 @@ public class ParentControllerTest extends WithApplication {
     @Test
     public void createObservationTest(){                                                            //Test for creating an Observation
         //API call to get the id of a whale in whales table
-        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales/getWhales").header("Accept","application/txt+json");
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales").header("Accept","application/txt+json");
         Result result = route(app,request);
         String id = contentAsJson(result).get("body").get(0).get("id").toString();  //convert json api response to the first whale's id
 
@@ -128,6 +118,28 @@ public class ParentControllerTest extends WithApplication {
         assertEquals(SEE_OTHER, result.status());                                                     //Assert correct Http response
     }
 
+    //GET     /observations/getObservations    controllers.ParentController.getObservations(request: Request)
+    @Test
+    public void getObservationsTest(){                                                                  //Test for getObservations route
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/getObservations");     //Build request
+        Result result = route(app,request);
+        assertEquals(OK, result.status());                                                              //Assert Http response, mime type, and charset match
+        if (result.contentType().isPresent() && result.charset().isPresent()) {
+            assertEquals("text/html", result.contentType().get());
+            assertEquals("utf-8", result.charset().get());
+        }
+        else {
+            fail("Content type and/or charset not present in result");
+        }
+        assertNotEquals(BAD_REQUEST,result.status());
+    }
+    //GET     /observations/getWhaleIdRange    controllers.ParentController.getWhaleIDRange(request: Request)
+    @Test
+    public void getWhaleIDRangeTest(){                                                                                                      //Test for getWhaleIdRange route. Ensures that html is not returned
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/getWhaleIdRange").header("Accept","text/html");     //Build request
+        Result result = route(app,request);
+        assertEquals(BAD_REQUEST, result.status());                                                                                         //Assert Http response, mime type, and charset match
+    }
 
 //POST    /observations/filter             controllers.ParentController.filterObservations(request: Request)
 //GET     /observations/filter             controllers.ParentController.listFilteredObservations(request: Request)
@@ -144,8 +156,13 @@ public class ParentControllerTest extends WithApplication {
         Http.RequestBuilder request2 = new Http.RequestBuilder().method("GET").uri("/observations/filter");         //Create request to get filtered list
         result = route(app,request2);
         assertEquals(OK, result.status());                                                                          //Assert Http success
-        assertEquals("text/html", result.contentType().get());
-        assertEquals("utf-8", result.charset().get());
+        if (result.contentType().isPresent() && result.charset().isPresent()) {
+            assertEquals("text/html", result.contentType().get());
+            assertEquals("utf-8", result.charset().get());
+        }
+        else {
+            fail("Content type and/or charset not present in result");
+        }
 
         Http.RequestBuilder request3 = Helpers.fakeRequest()                                                        //Create requets to remove filter
                 .method("POST")
@@ -160,8 +177,13 @@ public class ParentControllerTest extends WithApplication {
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Stats");            //Create request
         Result result = route(app,request);
         assertEquals(OK, result.status());                                                              //Assert correct Http response, mime type, charset
+    if (result.contentType().isPresent() && result.charset().isPresent()) {
         assertEquals("text/html", result.contentType().get());
         assertEquals("utf-8", result.charset().get());
+    }
+    else {
+        fail("Content type and/or charset not present in result");
+    }
     }
 }
 
