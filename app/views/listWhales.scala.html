@@ -32,7 +32,7 @@
         <h3>Whales</h3>
     </div>
 
-    <div class="form-holder">
+    <div class="form-holder-hrz">
         @b4.inline.formCSRF(routes.ParentController.filterWhales) { implicit vfc =>
             <div class="form-box">
                 <label>Filter Species</label>
@@ -44,18 +44,21 @@
                 </div>
             <div class="form-button-hbox">
                 @b4.buttonType("submit", 'class -> "btn btn-secondary"){ Filter }
-                @request.flash.asScala().data.map { case (name, value) =>
-                    <div class="@name">@value</div>
-                }
+
             </div>
         }
-        <div class="spacer"></div>
 
+        <div class="form-box">
         @b4.inline.formCSRF(routes.ParentController.removeWhaleFilter) { implicit vfc =>
+
             @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Show All</b> }<br/>
+
+        }
+        </div>
+        @request.flash.asScala().data.map { case (name, value) =>
+        <div class="@name">@value</div>
         }
     </div>
-        <div class="spacer"></div>
 
 
         <table>
@@ -75,12 +78,13 @@
     </div>
     <div class="form-holder">
     @b4.vertical.formCSRF(routes.ParentController.createWhale) { implicit vfc =>
-        <label>weight</label>
+        <label>Weight (kg)</label>
         @b4.text( whaleForm("weight"))
-        <label>gender</label>
+        <label>Gender</label>
         @b4.select( whaleForm("gender"), options = Seq("Male" -> "Male", "Female" -> "Female", "Unknown" -> "Unknown"))
-        <label>species</label>
+        <label>Species</label>
         @b4.select( whaleForm("species"), options = Seq("Orca" -> "Orca", "Blue" -> "Blue", "Beluga" -> "Beluga", "Minke" -> "Minke", "Fin" -> "Fin", "Humpback" -> "Humpback", "Killer" -> "Killer", "Sei" -> "Sei", "Sperm" -> "Sperm", "Bowhead" -> "Bowhead"))
+        <div class="spacer"></div>
         @b4.buttonType("submit", 'class -> "btn btn-secondary"){ <b>Create</b> }<br/>
         @b4.reset('class -> "btn btn-default"){ Clear }
         @request.flash.asScala().data.map { case (name, value) =>
@@ -88,6 +92,15 @@
         }
     }
     </div>
+
+    <div class="footer" >
+        <div class="footer-col">
+            <h4 class="footer-cell">A SENG330 Project</h4>
+        </div>
+    </div>
+
+    <img class="logo" src="@routes.Assets.versioned("images/logo.png")" >
+
     </body>
 
     </html>
