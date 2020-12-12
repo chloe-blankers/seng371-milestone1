@@ -27,7 +27,7 @@ WHALES(id int primary key, species varchar(255), weight integer, gender varchar(
 OBSERVATIONS(id int primary key, location varchar(255), numWhales integer, date varchar(255), time varchar(255))    <br />
 SIGHTINGS( whale_id int, observation_id int, PRIMARY KEY(whale_id, observation_id) )    <br />
 
-The relationship between WHALES and OBSERVATIONS would be many to many. 
+The relationship between WHALES and OBSERVATIONS would be a many to many relationship. 
 The database code uses PreparedStatements to avoid SQL Injection.
 We decided to use no triggers, constraints, or foreign keys because this course is not about databases or database design.
 
