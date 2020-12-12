@@ -38,16 +38,10 @@ function loadObsGraph( graphID, obsJSON ){
     for ( i in observations ){
 
         let curMonth = Number( observations[i]['date'].slice(5,7) ) - 1;
-        console.log( curMonth );
-        console.log( curMonth >= 0 );
-        console.log( curMonth <= 11);
         if ( curMonth >= 0 && curMonth <= 11 ){
-            console.log( obsPerMonth[curMonth] );
             obsPerMonth[ curMonth ] += 1;
-            console.log( obsPerMonth[curMonth] );
         }
     }
-    console.log( obsPerMonth );
 
 
     // Get data in format that ChartJS likes
@@ -187,14 +181,22 @@ function loadWhaleWeightGraph( graphID, whalesJSON ){
     let whaleDict = {};
     for ( var i in whales ){
         whale = whales[i];
+        console.log( "======");
+        console.log( whale );
         if ( whaleDict[whale['species']] ) {
             whaleDict[whale['species']] = [ (whaleDict[whale['species']][0] * whaleDict[whale['species']][1] +
                                whale['weight']) / (whaleDict[whale['species']][1] + 1), whaleDict[whale['species']][1] + 1 ];
+            console.log(">> " + whaleDict[whale['species']]);
         }
         else {
             whaleDict[whale['species']] = [ whale['weight'], 1 ];
+            console.log(">> " + whaleDict[whale['species']]);
         }
     }
+    console.log( "======");
+    console.log( "======");
+    console.log( "======");
+    console.log( whaleDict );
 
     // Get data in format that ChartJS likes
     let keys = [];
@@ -211,6 +213,7 @@ function loadWhaleWeightGraph( graphID, whalesJSON ){
     else if (cusStepSize > 1000 ) cusStepSize = 250;
     else cusStepSize = 10;
 
+    console.log( vals );
     // Create Chart
     let canvasElement = document.createElement('canvas');
     var myChart = new Chart(canvasElement, {

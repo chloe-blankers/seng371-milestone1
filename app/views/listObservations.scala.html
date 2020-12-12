@@ -49,32 +49,41 @@
                 </div>
             </div>
 
-            </div>
 
-            <div class="spacer"></div>
-
-            <div id="table-holder">
-            <table>
-                <thead>
-                    <tr><th>Location</th><th>Date</th><th>Time</th><th></th></tr>
-                </thead>
-                <tbody>
+            <div class="table">
+                <div class="row header">
+                    <div class="cell">Location</div>
+                    <div class="cell">Date</div>
+                    <div class="cell">Time</div>
+                </div>
                 @for(o <- observations) {
-                    <tr><td>@o.location</td><td>@o.date</td><td>@o.time</td><td></td></tr>
+                    <div class="row">
+                        <div class="cell">@o.location</div>
+                        <div class="cell">@o.date</div>
+                        <div class="cell">@o.time</div>
+                    </div>
+                    <div class="subtable">
+                        <div class="row header">
+                            <div class="cell">Species</div>
+                            <div class="cell">Weight</div>
+                            <div class="cell">Gender</div>
+                            <div class="cell">Whale ID</div>
+                        </div>
                     @for(w <- o.whales) {
-                        <tr><td>@w.species</td>
+                        <div class="row">
+                            <div class="cell">@w.species</div>
                             @if(w.weight == 0){
-                                <td>Unknown</td>
+                                <div class="cell">Unknown</div>
                             }
                             @if(w.weight != 0){
-                                <td>@w.weight</td>
+                                <div class="cell">@w.weight</div>
                             }
-                            <td>@w.gender</td>
-                            <td>@w.id</td></tr>
+                            <div class="cell">@w.gender</div>
+                            <div class="cell">@w.id</div>
+                        </div>
                     }
+                    </div>
                 }
-                </tbody>
-            </table>
             </div>
 
             <div class="box-label">
@@ -96,9 +105,16 @@
                     'placeholder -> "Enter latitude and longitude (eg. 17.001, 15.334)."
                 )
                 <label>Date</label>
-                @b4.date(sightingForm("date"))
+                @b4.date(sightingForm("date"),
+                    'class -> "fv",
+                    'id -> "date"
+                )
                 <label>Time</label>
-                @b4.select( sightingForm("time"), options = Seq("12pm" -> "12pm", "1pm" -> "1pm", "2pm" -> "2pm", "3pm" -> "3pm", "4pm" -> "4pm", "5pm" -> "5pm", "6pm" -> "6pm", "7pm" -> "7pm",  "8pm" -> "8pm", "9pm" -> "9pm", "10pm" -> "10pm", "11pm" -> "11pm", "12am" -> "12am", "1am" -> "1am", "2am" -> "2am", "3am" -> "3am", "4am" -> "4am", "5am" -> "5am", "6am" -> "6am", "7am" -> "7am", "8am" -> "8am", "9am" -> "9am", "10am" -> "10am", "11am" -> "11am"))
+                @b4.select( sightingForm("time"),
+                    options = Seq("12pm" -> "12pm", "1pm" -> "1pm", "2pm" -> "2pm", "3pm" -> "3pm", "4pm" -> "4pm", "5pm" -> "5pm", "6pm" -> "6pm", "7pm" -> "7pm",  "8pm" -> "8pm", "9pm" -> "9pm", "10pm" -> "10pm", "11pm" -> "11pm", "12am" -> "12am", "1am" -> "1am", "2am" -> "2am", "3am" -> "3am", "4am" -> "4am", "5am" -> "5am", "6am" -> "6am", "7am" -> "7am", "8am" -> "8am", "9am" -> "9am", "10am" -> "10am", "11am" -> "11am"),
+                    'class -> "fv",
+                    'id -> "time"
+                )
                 <div class="spacer"></div>
                 <button type="submit">Create Observation</button>
             }
