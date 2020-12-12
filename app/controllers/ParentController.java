@@ -43,7 +43,6 @@ public class ParentController extends Controller {
     private final  Form<SightingData> sightingForm; //The input Form on the observation page
     private List<Whale> FilteredWhales; //Used when the User searches for a Whale
     private ArrayList<Whale> Whales; //Stores the Whales which shows up on the Whales page
-    ArrayList<Whale> touristWhaleObs; //Stores the Whales from the Observation page which is different than the Whales Page
     private List<Observation> observations; //The Observations
     private List<Observation> FilteredObservations; //Used when the user searches for an Observation
 
@@ -53,7 +52,6 @@ public class ParentController extends Controller {
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
-        this.touristWhaleObs = new ArrayList<>();
         FilteredWhales = new ArrayList<>();
 
         //Initialize the forms with the FormFactory
@@ -86,7 +84,6 @@ public class ParentController extends Controller {
             Whales.add(w1);
             Whales.add(w2);
             Whales.add(w3);
-            this.touristWhaleObs = this.Whales;
             this.ds.addWhales(Whales);
         }
         if(this.observations.size()<1){ //add a dummy observation
@@ -139,11 +136,10 @@ public class ParentController extends Controller {
             String whaleIDString = data.getWhaleIDList();           //get list of whale ID's
             String[] whaleIDList = whaleIDString.split(",");
 
-            //iterate over list of whale ID's and add corresponding whales to the touristWhaleObs and whales lists
+            //iterate over list of whale ID's and add corresponding whales to the whales list
             for(String s : whaleIDList) {
                 int id = Integer.valueOf(s);
                 Whale w = Whales.stream().filter(z -> z.id == id).collect(Collectors.toList()).get(0);
-                touristWhaleObs.add(w);
                 whales.add(w);
             }
             Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation()); //create new observation
@@ -332,7 +328,7 @@ public class ParentController extends Controller {
             return badRequest(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, request, messagesApi.preferred(request)));
         } else {
             WhaleData data = boundForm.get();
-            this.FilterWhales(data);
+            this.FilterWhalesList(data);
             return redirect(routes.ParentController.listFilterWhales()).flashing("info", "Whales Searched");
         }
     }
@@ -343,7 +339,7 @@ public class ParentController extends Controller {
      *
      * @param data - supplies the form data indicating species for searching
      */
-    public void FilterWhales(WhaleData data) {
+    public void FilterWhalesList(WhaleData data) {
         if(data.getSpecies() != null) {
             FilteredWhales = Whales
                     .stream()
