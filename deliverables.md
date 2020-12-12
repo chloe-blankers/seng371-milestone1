@@ -14,5 +14,5 @@
 | #8.i Front-End Design ADR | Yes | sha1: 31abba8  | @EricPower |
 | #9 OO Principles and MVC design | Yes | sha1: cecf0a8 | @LucasAntonsen |
 | Bonus: JS validation | Yes | sha1: 9dd9412, 5df308d | @EricPower |
-| Bonus: Hosting | Yes | sha1: xxx | @EricPower |
+| Bonus: Hosting | Yes | whales.ericpower.ca | @EricPower |
 | Bonus: Data store | Yes | sha1: b99c7e8 | @lloucks |
