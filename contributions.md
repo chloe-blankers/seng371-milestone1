@@ -1,2 +1,2 @@
 # Student 1 name and Github id
-- list your feature implemented here and any other things you did, such as coordinate meetings, write docs, etc.
+- Eric Power, ericmpower, Most front end things: custom CSS, JS client side data validation, hosting, most of the html, designed the UI, a couple rest api calls, the stats page with charts from ChartJS.
