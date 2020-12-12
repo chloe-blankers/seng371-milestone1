@@ -4,7 +4,6 @@ async function loadGraphs( gidWhaleNum, gidWhaleWeight, gidObsID ){
 
     // Use REST API to get JSON representing all the whales.
     const whaleResponse = await fetch( '/Whales', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
-        .then( (debug) => {console.log(debug); return debug;})
         .then( (data) => data.json() )
         .then( (data) => {
                 loadWhaleNumberGraph( gidWhaleNum, data['body'] )
@@ -181,22 +180,14 @@ function loadWhaleWeightGraph( graphID, whalesJSON ){
     let whaleDict = {};
     for ( var i in whales ){
         whale = whales[i];
-        console.log( "======");
-        console.log( whale );
         if ( whaleDict[whale['species']] ) {
             whaleDict[whale['species']] = [ (whaleDict[whale['species']][0] * whaleDict[whale['species']][1] +
                                whale['weight']) / (whaleDict[whale['species']][1] + 1), whaleDict[whale['species']][1] + 1 ];
-            console.log(">> " + whaleDict[whale['species']]);
         }
         else {
             whaleDict[whale['species']] = [ whale['weight'], 1 ];
-            console.log(">> " + whaleDict[whale['species']]);
         }
     }
-    console.log( "======");
-    console.log( "======");
-    console.log( "======");
-    console.log( whaleDict );
 
     // Get data in format that ChartJS likes
     let keys = [];
@@ -213,7 +204,6 @@ function loadWhaleWeightGraph( graphID, whalesJSON ){
     else if (cusStepSize > 1000 ) cusStepSize = 250;
     else cusStepSize = 10;
 
-    console.log( vals );
     // Create Chart
     let canvasElement = document.createElement('canvas');
     var myChart = new Chart(canvasElement, {
