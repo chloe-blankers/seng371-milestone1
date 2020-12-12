@@ -45,10 +45,9 @@ async function loadWhaleIDRangeRequirements( element ){
 }
 
 function checkIDValues( element ){
+
     element.pattern = "(\\d+)(,\\s*\\d+)*";
     element.value = element.value.replace( /\s/g, "" );
-
-
     if ( typeof element.value == undefined ) return; // Pattern validation will catch this case.
     if ( typeof minWhaleID == undefined || typeof maxWhaleID == undefined ){
         console.log("ERROR: min and max whale ids are not known. REST API call likely failed to receive correct data.")
