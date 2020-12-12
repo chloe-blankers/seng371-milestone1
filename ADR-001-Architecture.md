@@ -28,7 +28,9 @@ OBSERVATIONS(id int primary key, location varchar(255), numWhales integer, date 
 SIGHTINGS( whale_id int, observation_id int, PRIMARY KEY(whale_id, observation_id) )
 
 The relationship between WHALES and OBSERVATIONS would be many to many. 
+The database code uses PreparedStatements to avoid SQL Injection.
 We decided to use no triggers, constraints, or foreign keys because this course is not about databases or database design.
+
 
 
 ## Consequences
