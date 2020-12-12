@@ -3,3 +3,5 @@
 
 - Lucas Antonsen, LucasAntonsen: Implemented searching, worked on whale and observation page design and whale and
 observation record creation, refactored, cleaned and commented code, resolved errors, organized meetings
+
+-Chloe Blankers, chloe-blankers: fixed whale page to reflect requirements, created the inital observation page (front and back end), helped with validation, reviewed pull requests, cleaned code
