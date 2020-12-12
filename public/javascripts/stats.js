@@ -3,7 +3,7 @@
 async function loadGraphs( gidWhaleNum, gidWhaleWeight, gidObsID ){
 
     // Use REST API to get JSON representing all the whales.
-    const whaleResponse = await fetch( '/Whales/getWhales', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
+    const whaleResponse = await fetch( '/Whales', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
         .then( (debug) => {console.log(debug); return debug;})
         .then( (data) => data.json() )
         .then( (data) => {
