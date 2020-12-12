@@ -43,17 +43,15 @@ public class ParentController extends Controller {
     private final  Form<SightingData> sightingForm; //The input Form on the observation page
     private List<Whale> FilteredWhales; //Used when the User searches for a Whale
     private ArrayList<Whale> Whales; //Stores the Whales which shows up on the Whales page
-    //ArrayList<Whale> touristWhaleObs; //Stores the Whales from the Observation page which is different than the Whales Page
     private List<Observation> observations; //The Observations
     private List<Observation> FilteredObservations; //Used when the user searches for an Observation
 
     private DataStore ds; //The DataStore class handles all access to the Database
     private final Logger logger = LoggerFactory.getLogger(getClass()); //Logger used to debug code
-    private static final boolean dropDBTables = true; //Set this to true to Drop and Re-Create the database tables
+    private static final boolean dropDBTables = false; //Set this to true to Drop and Re-Create the database tables
 
     @Inject
     public ParentController(FormFactory formFactory, MessagesApi messagesApi) throws IOException, SQLException {
-        //this.touristWhaleObs = new ArrayList<>();
         FilteredWhales = new ArrayList<>();
 
         //Initialize the forms with the FormFactory
@@ -86,7 +84,6 @@ public class ParentController extends Controller {
             Whales.add(w1);
             Whales.add(w2);
             Whales.add(w3);
-            //this.touristWhaleObs = this.Whales;
             this.ds.addWhales(Whales);
         }
         if(this.observations.size()<1){ //add a dummy observation
@@ -143,7 +140,6 @@ public class ParentController extends Controller {
             for(String s : whaleIDList) {
                 int id = Integer.valueOf(s);
                 Whale w = Whales.stream().filter(z -> z.id == id).collect(Collectors.toList()).get(0);
-               // touristWhaleObs.add(w);
                 whales.add(w);
             }
             Observation newOb = new Observation(whales, data.getDate(), data.getTime(), data.getLocation()); //create new observation
