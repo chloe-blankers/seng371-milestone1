@@ -235,16 +235,7 @@ public class ParentController extends Controller {
         return ok(views.html.stats.render(Whales, observations));
     }
 
-    /**
-     *    REST request method that redirects to the listWhales.scala.html view.
-     *    The default redirect for the Whales page.
-     *
-     *    @param request    The Http.Request
-     *    @return  - Result redirects to the listWhales.scala.html view
-     */
-    public Result listWhales(Http.Request request) {
-        return ok(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
-    }
+
 
     /**
      *    REST request method that redirects to the listWhales.scala.html view
@@ -258,10 +249,14 @@ public class ParentController extends Controller {
         return ok(views.html.listWhales.render(asScala(FilteredWhales), whaleForm, request, messagesApi.preferred(request)));
     }
 
-    /*
-            Adam - Please Comment
+    /**
+     *    REST request method that redirects to the listWhales.scala.html view.
+     *    The default redirect for the Whales page.
+     *
+     *    @param request    The Http.Request
+     *    @return  - Result redirects to the listWhales.scala.html view
      */
-    public Result getWhales(Http.Request request) {
+    public Result listWhales(Http.Request request) {
         //Content negotiation
         if (request.accepts("text/html")) {
             return ok(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
