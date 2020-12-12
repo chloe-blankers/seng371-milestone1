@@ -2,6 +2,7 @@ package db;
 
 import models.Observation;
 import models.Whale;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -34,6 +35,8 @@ public class DataStore {
     private static final String DB_USER = "sa";
     private static final String DB_PASSWORD = "";
 
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass()); //Logger used to debug code
+
 
     /**
      *    Creates the database tables if the tables do not exist already, or the
@@ -56,7 +59,8 @@ public class DataStore {
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            String err = (e.getMessage());
+            logger.error(err);
         }
         boolean pass = true;
         try {
@@ -115,24 +119,21 @@ public class DataStore {
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         boolean pass = true;
         try {
             String sql = "INSERT INTO WHALES(id, species, weight, gender) VALUES(?,?,?,?)";
-            System.out.println("sql:"+sql);
             pStmt = dbConnection.prepareStatement(sql);
             pStmt.setInt(1,(int)w.id);
             pStmt.setString(2,w.species);
             pStmt.setInt(3,(int)w.weight);
             pStmt.setString(4,w.gender);
-            System.out.println("+pStmt.toString():"+pStmt.toString());
             int res = pStmt.executeUpdate();
-            System.out.println("res:"+res);
         } catch (SQLException e) {
             pass = false;
             String err = "Exception Message " + e.getLocalizedMessage();
-            System.out.println(err);
+            logger.error(err);
         } catch (Exception e) {
             pass = false;
             e.printStackTrace();
@@ -160,28 +161,25 @@ public class DataStore {
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         boolean pass = true;
         try {
             for(Whale w : newWhales){
                 String sql = "INSERT INTO WHALES(id, species, weight, gender) VALUES(?,?,?,?)";
-                System.out.println("sql:"+sql);
                 pStmt = dbConnection.prepareStatement(sql);
                 pStmt.setInt(1,(int)w.id);
                 pStmt.setString(2,w.species);
                 pStmt.setInt(3,(int)w.weight);
                 pStmt.setString(4,w.gender);
-                System.out.println("+pStmt.toString():"+pStmt.toString());
                 int res = pStmt.executeUpdate();
-                System.out.println("res:"+res);
             }
             pStmt.close();
             dbConnection.close();
         } catch (SQLException e) {
             pass = false;
             String err = "Exception Message " + e.getLocalizedMessage();
-            System.out.println(err);
+            logger.error(err);
         } catch (Exception e) {
             pass = false;
             e.printStackTrace();
@@ -199,14 +197,13 @@ public class DataStore {
      *    Gets all the Whales from the WHALES table and returns the
      *    Whales in a List of Whale objects
      *
-     *    @param None
+     *    @param
      *    @return whaleList    A list of Whale retrieved from the WHALES table
      */
     public List<Whale> getWhales() throws IOException, SQLException {
         Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
         List<Whale> whaleList = new ArrayList<>();
         String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
-        System.out.println(getClass().getClassLoader().getResource("logging.properties"));
         //Connection connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
         boolean pass = true;
         try (var con = dbConnection;
@@ -245,34 +242,29 @@ public class DataStore {
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         boolean pass = true;
         try {
             String sql = "INSERT INTO OBSERVATIONS(id, location, numWhales, date, time) VALUES(?,?,?,?,?)";
-            System.out.println("sql:"+sql);
             pStmt = dbConnection.prepareStatement(sql);
             pStmt.setInt(1,(int)o.id);
             pStmt.setString(2,o.location);
             pStmt.setInt(3,(int)o.whales.size());
             pStmt.setString(4,o.date);
             pStmt.setString(5,o.time);
-            System.out.println("+pStmt.toString():"+pStmt.toString());
             int res = pStmt.executeUpdate();
-            System.out.println("res:"+res);
             for(Whale w:o.whales){
                 String sql2 = "INSERT INTO SIGHTINGS(whale_id, observation_id) VALUES(?,?)";
                 pStmt2 = dbConnection.prepareStatement(sql2);
                 pStmt2.setInt(1,(int)w.id);
                 pStmt2.setInt(2,(int)o.id);
-                System.out.println("+pStmt2.toString():"+pStmt2.toString());
                 res = pStmt2.executeUpdate();
-                System.out.println("res:"+res);
             }
         } catch (SQLException e) {
             pass = false;
             String err = "Exception Message " + e.getLocalizedMessage();
-            System.out.println(err);
+            logger.error(err);
         } catch (Exception e) {
             pass = false;
             e.printStackTrace();
@@ -292,7 +284,7 @@ public class DataStore {
      *    of Whales is not stored in the OBSERVATIONS table, so the OBSERVATIONS table,
      *    WHALES table, and SIGHTINGS table need to be joined.
      *
-     *    @param  None
+     *    @param
      *    @return  observationList  A List of Observation objects where each
      *              Observation object contains a List of Whales
      *
@@ -302,7 +294,6 @@ public class DataStore {
         List<Observation> observationList = new ArrayList<>();
         HashMap<Integer, Observation> obMap = new HashMap<Integer, Observation>();
         String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
-        System.out.println(getClass().getClassLoader().getResource("logging.properties"));
         //Connection connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
         boolean pass = true;
         try (var con = dbConnection;
@@ -343,8 +334,6 @@ public class DataStore {
         assert (pass);
         dbConnection.close();
         observationList = new ArrayList(obMap.values());
-        System.out.println("obMap.size():"+obMap.size());
-        System.out.println("observationList.size():"+observationList.size());
         return observationList;
     }
 
