@@ -10,7 +10,7 @@
 | #5 Search whales and observations | Yes | sha1: 433b8b1, cecf0a8 | @LucasAntonsen, @lloucks |
 | #6 REST API | Yes | sha1: b917d4f, eddb6ce | @adampage13, @EricPower |
 | #7 Unit tests | Yes | sha1: 1bb994a | @adampage13 |
-| #8.i Architecture ADR | Yes | sha1: b917d4f | @adampage13 |
+| #8.i Architecture ADR | Yes | sha1: b917d4f | @adampage13, @lloucks |
 | #8.i Front-End Design ADR | Yes | sha1: 31abba8  | @EricPower |
 | #9 OO Principles and MVC design | Yes | sha1: cecf0a8 | @LucasAntonsen |
 | Bonus: JS validation | Yes | sha1: 9dd9412, 5df308d | @EricPower |
