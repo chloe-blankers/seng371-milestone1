@@ -2,7 +2,7 @@
 
 | Req # | Implemented? | Code location | Implemented by |
 |-------|-------|-------|-------|
-| #1 Runs locally | Yes | sha1: 302cd1d | @, @, @, @chloe-blankers, @LucasAntonsen |
+| #1 Runs locally | Yes | sha1: 302cd1d | @adampage13, @EricPower, @lloucks, @chloe-blankers, @LucasAntonsen |
 | #2.i Display whales | Yes | sha1: xxx |  @lloucks, @chloe-blankers, @LucasAntonsen |
 | #2.ii Display observations | Yes | sha1: xxx | @lloucks, @chloe-blankers, @LucasAntonsen |
 | #3 Creates new whale records | Yes | sha1: xxx | @lloucks, @LucasAntonsen |
