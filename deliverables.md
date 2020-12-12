@@ -4,7 +4,7 @@
 |-------|-------|-------|-------|
 | #1 Runs locally | Yes | sha1: 302cd1d | @adampage13, @EricPower, @lloucks, @chloe-blankers, @LucasAntonsen |
 | #2.i Display whales | Yes | sha1: xxx |  @lloucks, @chloe-blankers, @LucasAntonsen |
-| #2.ii Display observations | Yes | sha1: xxx | @lloucks, @chloe-blankers, @LucasAntonsen |
+| #2.ii Display observations | Yes | sha1: 0c47e24 | @lloucks, @chloe-blankers, @LucasAntonsen |
 | #3 Creates new whale records | Yes | sha1: xxx | @lloucks, @LucasAntonsen |
 | #4 Creates new observation records | Yes | sha1: 42395aa | @lloucks, @chloe-blankers, @LucasAntonsen |
 | #5 Search whales and observations | Yes | sha1: 433b8b1 | @LucasAntonsen, @lloucks |
