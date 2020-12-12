@@ -2,15 +2,6 @@
 let maxWhaleID;
 let minWhaleID;
 
-
-console.log( "===========");
-
-
-
-
-console.log( "===========");
-
-
 function loadValidations(){
 
     let toValidate = document.getElementsByClassName("fv");
@@ -32,8 +23,13 @@ function loadValidations(){
         else if ( toValidate[i].id == "location" ){
             toValidate[i].required = true;
             toValidate[i].type = "text";
-            toValidate[i].pattern = "-?\\d+\\.\\d+([,\\s]|(,\\s))-?\\d+\\.\\d+";
-            toValidate[i].setAttribute("minlength", "6");
+            toValidate[i].pattern = "-?\\d+(\\.\\d+)?([,\\s]|(,\\s))-?\\d+(\\.\\d+)?";
+        }
+        else if ( toValidate[i].id == "date" ){
+            toValidate[i].required = true;
+        }
+        else if ( toValidate[i].id == "time" ){
+            toValidate[i].required = true;
         }
     }
 }
@@ -52,13 +48,13 @@ function checkIDValues( element ){
     element.pattern = "(\\d+)(,\\s*\\d+)*";
     if ( typeof element.value == undefined ) return; // Pattern validation will catch this case.
     if ( typeof minWhaleID == undefined || typeof maxWhaleID == undefined ){
-        console.log("ERROR: min and max whale ids are not known. REST API call likely failed to recieve correct data.")
+        console.log("ERROR: min and max whale ids are not known. REST API call likely failed to receive correct data.")
     }
     let vals = element.value.split( /[,\s]/ );
     for ( i in vals ){
         let val = Number( vals[i] )
         if ( val < maxWhaleID || val > minWhaleID ){
-            element.type = "file";
+            element.type = "file"; // This used to clear the input cell to show placeholder text.
             element.placeholder = "Error: IDs must be between " + maxWhaleID + " and " + minWhaleID;
             element.type = "text";
         }

@@ -4,7 +4,6 @@ async function loadGraphs( gidWhaleNum, gidWhaleWeight, gidObsID ){
 
     // Use REST API to get JSON representing all the whales.
     const whaleResponse = await fetch( '/Whales', { method: 'GET', headers: { 'Accept': 'application/txt+json'} } )
-        .then( (debug) => {console.log(debug); return debug;})
         .then( (data) => data.json() )
         .then( (data) => {
                 loadWhaleNumberGraph( gidWhaleNum, data['body'] )
@@ -38,16 +37,10 @@ function loadObsGraph( graphID, obsJSON ){
     for ( i in observations ){
 
         let curMonth = Number( observations[i]['date'].slice(5,7) ) - 1;
-        console.log( curMonth );
-        console.log( curMonth >= 0 );
-        console.log( curMonth <= 11);
         if ( curMonth >= 0 && curMonth <= 11 ){
-            console.log( obsPerMonth[curMonth] );
             obsPerMonth[ curMonth ] += 1;
-            console.log( obsPerMonth[curMonth] );
         }
     }
-    console.log( obsPerMonth );
 
 
     // Get data in format that ChartJS likes

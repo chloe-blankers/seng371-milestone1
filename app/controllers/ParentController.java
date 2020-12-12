@@ -48,7 +48,6 @@ public class ParentController extends Controller {
     private List<Observation> FilteredObservations; //Used when the user searches for an Observation
 
     private DataStore ds; //The DataStore class handles all access to the Database
-
     private final Logger logger = LoggerFactory.getLogger(getClass()); //Logger used to debug code
     private static final boolean dropDBTables = false; //Set this to true to Drop and Re-Create the database tables
 
@@ -79,9 +78,9 @@ public class ParentController extends Controller {
      *    @return  - None
      */
     public void insertDummyData() throws SQLException {
-        Whale w1 = new Whale(0,"Beluga", 204, "Male");
-        Whale w2 = new Whale(1, "Orca", 111, "Female");
-        Whale w3 = new Whale(2, "Blue", 301, "Male");
+        Whale w1 = new Whale(0,"Beluga", 20400, "Male");
+        Whale w2 = new Whale(1, "Orca", 11100, "Female");
+        Whale w3 = new Whale(2, "Blue", 30100, "Male");
         if(this.Whales.size()<1) { //add dummy whales
             this.Whales = new ArrayList<>();
             Whales.add(w1);
