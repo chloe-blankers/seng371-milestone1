@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 import play.Application;
@@ -46,13 +47,32 @@ public class ParentControllerTest extends WithApplication {
 
     //    POST    /Whales                    controllers.ParentController.createWhale(request: Request)
     @Test
-    public void createWhaleTest() {
-        Http.RequestBuilder request = Helpers.fakeRequest()                                 //Build request for createWhale() route
+    public void createWhaleTest() {                           //Test the whale creation process. Send the request the the app and check that it is in the system
+        //Get number of whales currently in system
+        Http.RequestBuilder apiRequest = new Http.RequestBuilder().method("GET").uri("/Whales").header("Accept","application/txt+json");
+        Result result = route(app,apiRequest);
+        JsonNode whales = contentAsJson(result).get("body");  //convert json api response to the first whale's id
+        int prev_size = whales.size();
+
+        //Add whale to system
+        Http.RequestBuilder request = Helpers.fakeRequest()   //Build request for createWhale() route
                 .method("POST")
                 .bodyForm(ImmutableMap.of("species","Orca","weight","2200","gender","Female"))   //Add fields for form
                 .uri("/Whales");
-        Result result = route(app,request);                                                 //Send to app
-        assertEquals(SEE_OTHER, result.status());                                           //Assert HTTP return is correct
+        result = route(app,request);                          //Send to app
+        assertEquals(SEE_OTHER, result.status());             //Assert HTTP return is correct
+
+        //Get list of whales in system again
+        result = route(app,apiRequest);
+        whales = contentAsJson(result).get("body");           //convert json api response to the first whale's id
+        int new_size = whales.size();
+        JsonNode newWhale = whales.get(whales.size()-1);
+
+        //Assert number of whales in system has increased by 1, and that the most recent addition is the one we added
+        assertEquals(new_size-prev_size,1);
+        assertEquals(newWhale.get("species").toString(),"\"Orca\"");
+        assertEquals(newWhale.get("weight").toString(),"2200");
+        assertEquals(newWhale.get("gender").toString(),"\"Female\"");
     }
 
     //    GET     /Whales                    controllers.ParentController.listWhales(request: Request)
