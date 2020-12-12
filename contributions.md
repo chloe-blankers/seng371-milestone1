@@ -9,4 +9,3 @@ and merged PR's
 
 - Liam Loucks, lloucks: Built whale MVC. Helped implement searching on whale species. Moved whale MVC and observation MVC to a single parent controller to allow the different pages to interact with each other. Built and created the database and all the classes in the db folder. Changed the design of the observation page to work with the whale table on the whales page. Reviewed and merged PRs, commented and cleaned code.
 
-
