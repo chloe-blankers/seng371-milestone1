@@ -112,7 +112,7 @@ public class ParentControllerTest extends WithApplication {
 
         request = Helpers.fakeRequest()                                                             //build request for new observation
                 .method("POST")
-                .bodyForm(ImmutableMap.of("whaleIDList",id,"location","Victoria BC Canada","date","2020-12-10","time","1pm"))
+                .bodyForm(ImmutableMap.of("whaleIDList",id,"location","11.212,15.555","date","2020-12-10","time","1pm"))
                 .uri("/observations");
         result = route(app,request);
         assertEquals(SEE_OTHER, result.status());                                                     //Assert correct Http response
