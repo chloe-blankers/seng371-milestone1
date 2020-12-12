@@ -22,7 +22,7 @@ The first MVC of the input form on the Observation page used the Observation and
 
 The MVC with Observation and ObservationData had the user entering new whale info on the observation page, so the observation page and whale page did not interact with each other. By using Sighting and SightingData as the MVC to input Observations both whale and observation pages were utilized. The new SightingForm MVC makes the user use the Whale table to look up Whale IDs to input into the Observation form, so both pages work together with the new MVC.
 
-We have three tables in our database WHALES, OBSERVATIONS, and SIGHTINGS.   
+We have three tables in our database WHALES, OBSERVATIONS, and SIGHTINGS.       <br />
 WHALES(id int primary key, species varchar(255), weight integer, gender varchar(255))    <br />
 OBSERVATIONS(id int primary key, location varchar(255), numWhales integer, date varchar(255), time varchar(255))    <br />
 SIGHTINGS( whale_id int, observation_id int, PRIMARY KEY(whale_id, observation_id) )    <br />
