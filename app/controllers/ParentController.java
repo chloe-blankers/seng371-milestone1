@@ -72,7 +72,7 @@ public class ParentController extends Controller {
      *       Inserts dummy data into the application for testing and aesthetics,
      *       so the application opens with data in it.
      *
-     *    @param None
+     *    @param
      *    @return  - None
      */
     public void insertDummyData() throws SQLException {
@@ -212,7 +212,7 @@ public class ParentController extends Controller {
     /**
      *    REST request method that redirects to the index.scala.html view.
      *
-     *    @param request    The Http.Request
+     *    @param
      *    @return  - Result redirects to the stats.scala.html view
      */
     public Result index() {
@@ -223,7 +223,7 @@ public class ParentController extends Controller {
      *    REST request method that redirects to the stats.scala.html view.
      *    The default redirect for the Stats page.
      *
-     *    @param request    The Http.Request
+     *    @param
      *    @return  - Result redirects to the stats.scala.html view
      */
     public Result stats() {
@@ -300,14 +300,11 @@ public class ParentController extends Controller {
             return badRequest(views.html.listWhales.render(asScala(Whales), whaleForm, request, messagesApi.preferred(request)));
         } else { //If the Form has no errors get the Data from the form and process the data
             WhaleData data = boundForm.get();
-            System.out.println("data.getId():"+data.getId());
             //create new Whale with the Data from the Form
             Whale newWhale = new Whale(Whales.size(), data.getSpecies(), data.getWeight(), data.getGender());
             Whales.add(newWhale); //adds the new whale to the whale list
-            System.out.println("newWhale.id:"+newWhale.id);
             this.ds.addWhale(newWhale); //adds the new whale to the database
             List<Whale> allWhales = this.ds.getWhales();
-            System.out.println("allWhales.size():"+allWhales.size());
             //Redirect back to the listWhales method which will redirect back to the listWhales view.
             return redirect(routes.ParentController.listWhales()).flashing("info", "Whale added!");
         }
@@ -353,11 +350,10 @@ public class ParentController extends Controller {
      *    The Whale list will be returned to its full size with all the Whales in the UI
      *    on the Whales page.
      *
-     *    @param None
+     *    @param
      *    @return  - Result redirects to a method which will redirect to a view after filter is removed
      */
     public Result removeWhaleFilter(){
-        System.out.println("hello whales");
         return redirect(routes.ParentController.listWhales()).flashing("info", "Whales Restored");
     }
 
@@ -369,7 +365,6 @@ public class ParentController extends Controller {
      *    @return  - None
      */
     public void FilterObservationsList(ObservationData data){
-        System.out.println("FilterObservationsList");
         if(data.getDate() != null) {
             FilteredObservations = observations
                     .stream()
@@ -388,7 +383,6 @@ public class ParentController extends Controller {
      *    @return  - Result redirects to a method which will redirect to a view after filter happens
      */
     public Result filterObservations(Http.Request request){
-        System.out.println("filterObservations");
         final Form<ObservationData> boundForm = observationForm.bindFromRequest(request);
 
         if (boundForm.hasErrors()) {
@@ -407,11 +401,10 @@ public class ParentController extends Controller {
      *    The Observation list will be returned to its full size with all the Observations in the UI
      *    on the Observations page.
      *
-     *    @param None
+     *    @param
      *    @return  - Result redirects to a method which will redirect to a view after filter is removed
      */
     public Result removeObservationFilter(){
-        System.out.println("hello");
         return redirect(routes.ParentController.listObservations()).flashing("info", "Observations Restored");
     }
 
