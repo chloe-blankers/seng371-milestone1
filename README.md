@@ -1,4 +1,4 @@
-Please read thru the [overall exercises overview](https://github.com/SENG330/course/blob/master/exercises/Exercises.md).
+Please read through the [overall exercises overview](https://github.com/SENG330/course/blob/master/exercises/Exercises.md).
 
 # Exercise 10
 Your goal is to extend the starter Play application to allow users to create, read, delete (CR/U/D) observations of whales. There is no need to support update or delete in this app.
