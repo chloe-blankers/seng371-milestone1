@@ -5,8 +5,8 @@ This repo includes the backend and frontend of a whale observation application u
 
 ## Features/Functionality
 1. The app **displays** Observations and Whales.
-    I. Whales have species, estimated weight, gender, and id fields.
-    II. Observations have a collection of whales observed, location, date/time (to the nearest hour).
+   - I. Whales have species, estimated weight, gender, and id fields.
+   - II. Observations have a collection of whales observed, location, date/time (to the nearest hour).
 2. The app enables a user to **create** a new Whale record. 
 3. The app enables a user to **create** a new Observation record. 
 4. The app supports the ability to **search** on Whale species (e.g., "show all Orcas") and Observation date (e.g.,"show all Whales seen on 2012-01-01")
