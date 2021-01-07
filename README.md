@@ -11,7 +11,9 @@ This repo includes the backend and frontend of a whale observation application u
 3. The app enables a user to **create** a new Observation record. 
 4. The app supports the ability to **search** on Whale species (e.g., "show all Orcas") and Observation date (e.g.,"show all Whales seen on 2012-01-01")
 5. Has a REST API with the endpoint: `GET http://localhost:9000/whales`.
-6. Stats page that visualizes the data in the database.
-7. Unit tests that test every operation on the model.
-8. The app's internal architecture follows code quality and OO principles. 
-9. This includes following best practices in MVC using Play. 
+6. The data persists to a data store in memory, ensuring the app's data is maintained after the app is exited.
+7. Client-side javascript does form validation or generates charts.
+8. Stats page that visualizes the data in the database.
+9. Unit tests that test every operation on the model.
+10. The app's internal architecture follows code quality and OO principles. 
+11. This includes following best practices in MVC using Play. 
