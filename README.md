@@ -3,7 +3,7 @@
 This repo includes the backend and frontend of a whale observation application using Java Play framework. The application includes a page that create whales, a page that creates observations of one or more whales and a stats page that visualizes the data in the database.
 
 ## Requirements
-1. The app shall run locally only. Hosting is not required (but see bonus in the marks.md file).
+1. The app shall run locally only.
 2. The app shall **display** Observations and Whales.
     1. Whales have species, estimated weight, gender, and id fields.
     2. Observations have a collection of whales observed, location, date/time (to the nearest hour).
