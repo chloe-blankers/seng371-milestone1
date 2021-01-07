@@ -13,5 +13,5 @@ This repo includes the backend and frontend of a whale observation application u
 5. Has a REST API with the endpoint: `GET http://localhost:9000/whales`.
 6. Stats page that visualizes the data in the database.
 7. Unit tests that test every operation on the model.
-8. The app's internal architecture follows principles with respect to code quality and OO principles. 
+8. The app's internal architecture follows code quality and OO principles. 
 9. This includes following best practices in MVC using Play. 
