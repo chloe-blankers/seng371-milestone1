@@ -1,6 +1,7 @@
 
 # Whale Observation Application
-This repo includes the backend and frontend of a whale observation application using Java Play framework. The application includes a page that create whales, a page that creates observations of one or more whales and a stats page that visualizes the data in the database.
+This repo includes the backend and frontend of a whale observation application using Java Play framework. The application includes a page that create whales, a page that creates observations of one or more whales and a stats page that visualizes the data in the database.</br>
+[Visit web application](https://gentle-savannah-14222.herokuapp.com/Whales)
 
 ## Requirements
 1. The app shall run locally only.
