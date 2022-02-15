@@ -1,0 +1,7 @@
+name: "Build Action"
+description: "This action runs the Dockerfile containing the build script."
+author: "tricard@uvic.ca"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
