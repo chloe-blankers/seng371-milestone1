@@ -17,7 +17,7 @@ jobs:
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}     
-        SLACK_MESSAGE: 'Compile and Test worklow succeeded'
+        SLACK_MESSAGE: 'Compile and Test worklow succeeded.'
         SLACK_TITLE: Success!!!
   on-failure:
     name: Fail!!!
@@ -29,5 +29,5 @@ jobs:
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: 'Compile and Test worklow failed'
+        SLACK_MESSAGE: 'Compile and Test worklow failed.'
         SLACK_TITLE: Failed!!!
