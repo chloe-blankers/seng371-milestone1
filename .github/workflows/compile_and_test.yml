@@ -22,7 +22,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Compile Program
-      run: sbt --info compile
+      run: sbt compile
 
   test:
     needs: compile
