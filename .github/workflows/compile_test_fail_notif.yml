@@ -18,7 +18,7 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}     
         SLACK_MESSAGE: 'Compile and Test worklow succeeded.'
-        SLACK_TITLE: Success!!!
+        SLACK_TITLE: Succeeded!!!
   on-failure:
     name: Fail!!!
     runs-on: ubuntu-latest
