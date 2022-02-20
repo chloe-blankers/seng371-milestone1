@@ -18,7 +18,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Compile Program
-      run: sbt --info compile
+      run: sbt --error compile
 
   test:
     needs: compile
@@ -32,4 +32,4 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Run tests
-      run: sbt --info test
+      run: sbt --error test
