@@ -22,9 +22,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Compile Program
-      run: |
-        set logLevel in compile := Level.Error
-        sbt compile
+      run: sbt --error compile
 
   test:
     needs: compile
