@@ -18,7 +18,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Compile Program
-      run: sbt --error --success compile
+      run: sbt --error compile
 
   test:
     needs: compile
