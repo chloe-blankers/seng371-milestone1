@@ -25,6 +25,6 @@ jobs:
     - name: Adding label after 10 mins 
       uses: isethi/issue-timer@main
       with:
-        PROJECT_ID: 1
+        PROJECT_ID: chloe-blankers/seng371-milestone1
         TIME_IN_MINUTES: 10
         LABEL_NAME: review_time
