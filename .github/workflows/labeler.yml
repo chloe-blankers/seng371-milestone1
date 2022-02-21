@@ -1,0 +1,2 @@
+'Require Team Review':
+- any: ['*.sbt']
