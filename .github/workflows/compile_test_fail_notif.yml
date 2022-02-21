@@ -21,6 +21,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}     
         SLACK_MESSAGE: 'Compile and Test workflow succeeded'
         SLACK_TITLE: Succeeded!!!
+        
   on-failure:
     name: Fail
     runs-on: ubuntu-latest
