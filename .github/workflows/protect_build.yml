@@ -1,0 +1,27 @@
+# The following sources were used:
+# [1] https://github.com/tj-actions/changed-files
+name: Protect build.sbt file
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check_for_delete:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get changed files from pull request
+      id: changed-files
+      uses: tj-actions/changed-files@v16
+
+    - name: prevent submission when build.sbt was deleted
+      if: contains(steps.changed-files.outputs.deleted_files, 'build.sbt')
+      run: |
+        echo "[FAILURE]: The necessary file `build.sbt` was deleted.";
+        exit 0
+
