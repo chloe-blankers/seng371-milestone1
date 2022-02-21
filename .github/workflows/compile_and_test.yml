@@ -14,12 +14,6 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     
-    #Trying to see something
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-2016]
-
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
