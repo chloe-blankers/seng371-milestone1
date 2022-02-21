@@ -36,6 +36,12 @@ jobs:
         echo "[FAILURE]: The necessary file `build.sbt` was deleted.";
         exit 0
 
+    - name: Add Warning Label when sbt files were changed
+      if: steps.required-files-changed.outputs.any_modified == 'true'
+      uses: actions/labeler@v3
+        with: 
+          repo-token: "${{ secrets.GITHUB_TOKEN }}" 
+
   compile:
     needs: check_for_delete
     runs-on: ubuntu-latest
