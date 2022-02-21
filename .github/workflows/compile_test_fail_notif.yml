@@ -34,8 +34,10 @@
 #         SLACK_MESSAGE: 'Compile and Test workflow failed'
 #         SLACK_TITLE: Failed!!!
 
-
-on: push
+on:
+  workflow_run:
+     workflows: [Compile and Test CI]
+     types: [completed]
 name: Slack Notification 
 jobs:
   slackNotification:
