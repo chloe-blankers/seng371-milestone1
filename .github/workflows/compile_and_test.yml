@@ -1,3 +1,7 @@
+# The basic structure was taken from a Scala Github workflow:
+# [1] Github Actions Contributors. (2021) Scala.yml. [Code] 
+# https://github.com/chloe-blankers/seng371-milestone1/new/main?filename=.github%2Fworkflows%2Fscala.yml&workflow_template=scala
+
 name: Compile and Test CI
 
 on:
@@ -9,7 +13,12 @@ on:
 jobs:
   compile:
     runs-on: ubuntu-latest
-
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        jdk: [8, 11, 14]
+    
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
