@@ -1,6 +1,10 @@
 # The basic structure was taken from a Scala Github workflow:
 # [1] Github Actions Contributors. (2021) Scala.yml. [Code] 
 # https://github.com/chloe-blankers/seng371-milestone1/new/main?filename=.github%2Fworkflows%2Fscala.yml&workflow_template=scala
+#
+# The syntax for deleting a file is provided through the followingL
+# [2] tj-actions. (2022). README.md. [Code] 
+# https://github.com/tj-actions/changed-files
 
 name: Compile and Test CI
 
@@ -11,7 +15,29 @@ on:
     branches: [ main ]
 
 jobs:
+
+  check_for_delete:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Determine if required files were changed.
+      id: required-files-changed
+      uses: tj-actions/changed-files@v16
+      with:
+        files: |
+          build.sbt
+          project/plugins.sbt
+
+    - name: Prevent submission when sbt files were deleted
+      if: steps.required-files-changed.outputs.any_deleted == 'true'
+      run: |
+        echo "[FAILURE]: The necessary file `build.sbt` was deleted.";
+        exit 0
+
   compile:
+    needs: check_for_delete
     runs-on: ubuntu-latest
     
     strategy:
