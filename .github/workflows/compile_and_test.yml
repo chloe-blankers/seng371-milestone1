@@ -30,14 +30,14 @@ jobs:
           build.sbt
           project/plugins.sbt
 
-    - name: Prevent submission when sbt files were deleted
-      if: steps.required-files-changed.outputs.any_deleted == 'true'
+    - if: steps.required-files-changed.outputs.any_deleted == 'true'
+      name: Prevent submission when sbt files were deleted
       run: |
         echo "[FAILURE]: The necessary file `build.sbt` was deleted.";
         exit 0
 
-    - name: Add Warning Label when sbt files were changed
-      if: steps.required-files-changed.outputs.any_modified == 'true'
+    - if: steps.required-files-changed.outputs.any_modified == 'true'
+      name: Add Warning Label when sbt files were changed
       uses: actions/labeler@v3
         with: 
           repo-token: "${{ secrets.GITHUB_TOKEN }}" 
