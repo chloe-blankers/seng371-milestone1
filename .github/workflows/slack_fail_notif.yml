@@ -22,3 +22,4 @@ jobs:
         SLACK_MESSAGE: 'Compile and Test workflow failed'
         SLACK_TITLE: Failed!!!
         SLACK_COLOR: ED1D24
+        SLACK_ICON: repository
