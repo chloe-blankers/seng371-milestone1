@@ -36,16 +36,17 @@
 
 on:
   workflow_run:
-     workflows: [Compile and Test CI]
-     types: [completed]
-name: Slack Notification 
+    workflows: [Compile and Test CI]
+    types: [completed]
+
 jobs:
-  slackNotification:
-    name: Slack Notification
+  on-success:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      - run: echo 'The triggering workflow passed'
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'
