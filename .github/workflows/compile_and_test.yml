@@ -39,8 +39,8 @@ jobs:
     - if: steps.required-files-changed.outputs.any_modified == 'true'
       name: Add Warning Label when sbt files were changed
       uses: actions/labeler@v3
-        with: 
-          repo-token: "${{ secrets.GITHUB_TOKEN }}" 
+      with: 
+        repo-token: "${{ secrets.GITHUB_TOKEN }}" 
 
   compile:
     needs: check_for_delete
