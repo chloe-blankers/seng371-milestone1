@@ -1,0 +1,35 @@
+
+# https://github.com/marketplace/actions/slack-notify (need to fix citation)
+
+name: Compile/Test Fail Notification
+
+on:
+  workflow_run:
+    workflows: [Compile and Test CI]
+    types: [completed]
+
+jobs:
+  on-success:
+    name: Success
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification Success
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}     
+        SLACK_MESSAGE: 'Compile and Test workflow succeeded'
+        SLACK_TITLE: Succeeded!!!
+  on-failure:
+    name: Fail
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification Fail
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_MESSAGE: 'Compile and Test workflow failed'
+        SLACK_TITLE: Failed!!!
