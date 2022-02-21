@@ -21,3 +21,4 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_MESSAGE: 'Compile and Test workflow failed'
         SLACK_TITLE: Failed!!!
+        SLACK_COLOR: ED1D24
