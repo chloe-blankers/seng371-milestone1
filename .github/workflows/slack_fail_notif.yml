@@ -1,4 +1,4 @@
-# The basic structure of the steps was taken from:
+# The basic structure of the steps were taken from:
 # https://github.com/marketplace/actions/slack-notify 
 
 name: Compile/Test Fail Notification
