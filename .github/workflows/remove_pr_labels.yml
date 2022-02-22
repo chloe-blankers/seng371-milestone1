@@ -7,6 +7,8 @@ name: Removing Closed Pull Request Labels
 on:
   pull_request:
     types: [closed, merged]
+  issues:
+    types: [closed]
 
 jobs:
   remove_labels:
