@@ -1,1 +1,2 @@
-*.sbt @chloe-blankers @isabellarojasg @TyRicard
+build.sbt @chloe-blankers @isabellarojasg @TyRicard
+project/plugins.sbt @chloe-blankers @isabellarojasg @TyRicard
