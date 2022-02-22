@@ -2,7 +2,7 @@
 # https://github.com/marketplace/actions/label-remover
 
 
-name: Removing Closed Pull Request Labels
+name: Removing Closed Pull Request and Issues Labels
 
 on:
   pull_request:
