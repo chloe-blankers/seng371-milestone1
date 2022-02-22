@@ -1,2 +1,3 @@
-'Require Team Review':
-- any: ['*.sbt']
+Require_Team_Review:
+- build.sbt
+- project/plugins.sbt
