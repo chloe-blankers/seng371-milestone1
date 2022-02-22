@@ -6,7 +6,7 @@ on:
 
   workflow_dispatch:
   project_card:
-    types: [created, moved, coverted, edited]
+    types: [created, moved]
   push:
     branches: [main]
 
