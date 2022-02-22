@@ -5,6 +5,15 @@
 # The syntax for deleting a file is provided through the following:
 # [2] tj-actions. (2022). README.md. [Code] 
 # https://github.com/tj-actions/changed-files
+#
+# The syntax for the labeler is provided through the following:
+# [3] Github Actions Contributors. (2022) README.md. [Code].
+# https://github.com/actions/labeler
+#
+# Some Information on Code Owners is provided through the following:
+# [4] Github Doc Contributors. "About Code Owners." docs.github.com.
+# Available: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners 
+#
 
 name: Compile and Test CI
 
