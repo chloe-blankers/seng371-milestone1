@@ -1,0 +1,46 @@
+# The following sources were used:
+# [1] tj-actions. (2022). README.md. [Code] 
+# https://github.com/tj-actions/changed-files
+#
+# [2] Andrew. (2020). Unix & Linux Script. [Code]
+# https://unix.stackexchange.com/questions/47584/in-a-bash-script-using-the-conditional-or-in-an-if-statement
+#
+# [3] Setup-Python Contributors. (2022). README.md. [Code]
+# https://github.com/actions/setup-python
+#
+name: CODEOWNER File Deletion Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  check_for_file_delete:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          fetch-depth: 0
+    
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Get Files that cannot be deleted
+      id: required-files
+      uses: tj-actions/changed-files@v16
+      with:
+        files: |
+          build.sbt
+          project/plugins.sbt
+    
+    - name: Run step if any files not required have been deleted
+      if: steps.required-files.outputs.other_deleted_files == 'true'
+      run: |
+        action_test=$(python3 ../read_CODEOWNER.py)
+        echo "$action_test was completed"
+        
