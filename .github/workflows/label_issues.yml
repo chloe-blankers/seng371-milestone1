@@ -12,6 +12,7 @@ on:
 
 jobs:
   issues_r:
+    name: Finding issues in project board
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
