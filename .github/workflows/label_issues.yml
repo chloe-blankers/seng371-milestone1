@@ -1,5 +1,6 @@
 #The following sources were used:
 # https://github.com/marketplace/actions/issue-timer
+#https://docs.github.com/en/actions/managing-issues-and-pull-requests/removing-a-label-when-a-card-is-added-to-a-project-board-column
 
 name: Label Issues after it has not worked on for 30 mins 
 on: 
