@@ -1,15 +1,18 @@
 #The following sources were used:
 # https://github.com/marketplace/actions/issue-timer
-name: Label Issues 
+
+name: Label Issues after it has not worked on for 30 mins 
 on: 
+
   workflow_dispatch:
   project_card:
-    types: [created, moved]
+    types: [created, moved, coverted, edited]
   push:
     branches: [main]
 
 jobs:
-  test:
+  issues_r:
+    name: Finding issues in project board
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -22,9 +25,55 @@ jobs:
     - uses: actions/setup-go@v2
       with:
         go-version: '1.15.8'
-    - name: Adding label after 10 mins 
+    - name: Adding label after 30 mins 
       uses: isethi/issue-timer@main
       with:
         PROJECT_ID: 1
-        TIME_IN_MINUTES: 5
-        LABEL_NAME: review_time
+        TIME_IN_MINUTES: 30
+        LABEL_NAME: 'time to review'
+  
+  add_progress_labels:
+    name: Adding labels to In Progress Column 
+    if: github.event.project_card.column_id == '17686387'
+    runs-on: ubuntu-latest
+    permissions:  
+      issues: write
+      pull-requests: write
+    steps:
+      - name : Adding labe to In Progress column 
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+            add-labels: "In Progress"
+            repo-token: ${{ secrets.GITHUB_TOKEN }}
+            
+  add_done_labels:
+    name: Adding labels to Done Column 
+    if: github.event.project_card.column_id == '17686389'
+    runs-on: ubuntu-latest
+    permissions:  
+      issues: write
+      pull-requests: write
+    steps:
+      - name : Adding labe to In Progress column 
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+            add-labels: "In Progress"
+            repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  remove_labels:
+    name: Removing In Progress label for  
+    if: github.event.project_card.column_id == '17686389'
+    runs-on: ubuntu-latest
+    permissions:  
+      issues: write
+      pull-requests: write
+    steps:
+      - name : Adding labe to In Progress column 
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+            remove-labels: "In Progress"
+            repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+
+  
+    
