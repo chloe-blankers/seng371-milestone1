@@ -32,6 +32,21 @@ jobs:
         TIME_IN_MINUTES: 30
         LABEL_NAME: 'time to review'
   
+  add_labels:
+    name: Adding labels to In Progress Column 
+    if: github.event.project_card.column_id == '17686387'
+    runs-on: ubuntu-latest
+    permissions:  
+      issues: write
+      pull-requests: write
+    steps:
+      - name : Adding labe to In Progress column 
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+            add-labels: "In Progress"
+            repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+
 
   
     
