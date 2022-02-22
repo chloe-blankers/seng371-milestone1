@@ -1,7 +1,7 @@
 #The following sources were used:
 # https://github.com/marketplace/actions/issue-timer
 
-name: Label Issues 
+name: Label Issues after it has not worked on for 30 mins 
 on: 
 
   workflow_dispatch:
@@ -29,7 +29,8 @@ jobs:
       with:
         PROJECT_ID: 1
         TIME_IN_MINUTES: 30
-        LABEL_NAME: time to review 
-        
-  #pr:
+        LABEL_NAME: 'time to review'
+  
+
+  
     
