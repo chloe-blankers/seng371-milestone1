@@ -1,0 +1,30 @@
+#The following sources were used:
+# https://github.com/marketplace/actions/issue-timer
+name: Label Issues 
+on: 
+  workflow_dispatch:
+  project_card:
+    types: [created, moved]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '1.15.8'
+    - name: Adding label after 10 mins 
+      uses: isethi/issue-timer@main
+      with:
+        PROJECT_ID: 1
+        TIME_IN_MINUTES: 5
+        LABEL_NAME: review_time
