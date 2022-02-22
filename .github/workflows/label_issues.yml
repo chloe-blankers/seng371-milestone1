@@ -1,12 +1,13 @@
 #The following sources were used:
 # https://github.com/marketplace/actions/issue-timer
+#https://docs.github.com/en/actions/managing-issues-and-pull-requests/removing-a-label-when-a-card-is-added-to-a-project-board-column
 
-name: Label Issues after it has not worked on for 30 mins 
+name: Label Issues and PR  
 on: 
 
   workflow_dispatch:
   project_card:
-    types: [created, moved, coverted, edited]
+    types: [created, moved]
   push:
     branches: [main]
 
@@ -57,18 +58,18 @@ jobs:
       - name : Adding labe to In Progress column 
         uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
         with:
-            add-labels: "In Progress"
+            add-labels: "Done"
             repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   remove_labels:
-    name: Removing In Progress label for  
+    name: Removing In Progress label for Done column
     if: github.event.project_card.column_id == '17686389'
     runs-on: ubuntu-latest
     permissions:  
       issues: write
       pull-requests: write
     steps:
-      - name : Adding labe to In Progress column 
+      - name : Removing In Progress in Done column 
         uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
         with:
             remove-labels: "In Progress"
