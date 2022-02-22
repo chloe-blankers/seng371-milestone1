@@ -11,7 +11,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  issues_r:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -30,3 +30,6 @@ jobs:
         PROJECT_ID: 1
         TIME_IN_MINUTES: 30
         LABEL_NAME: time to review 
+        
+  #pr:
+    
