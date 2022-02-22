@@ -2,7 +2,7 @@
 # [1] Github Actions Contributors. (2021) Scala.yml. [Code] 
 # https://github.com/chloe-blankers/seng371-milestone1/new/main?filename=.github%2Fworkflows%2Fscala.yml&workflow_template=scala
 #
-# The syntax for deleting a file is provided through the followingL
+# The syntax for deleting a file is provided through the following:
 # [2] tj-actions. (2022). README.md. [Code] 
 # https://github.com/tj-actions/changed-files
 
@@ -21,7 +21,9 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-
+      with:
+          fetch-depth: 0
+          
     - name: Determine if required files were changed.
       id: required-files-changed
       uses: tj-actions/changed-files@v16
