@@ -5,12 +5,6 @@ name: Label Issues
 on: 
 
   workflow_dispatch:
-  pull_request:
-    branches:
-        - master
-    types:
-        - opened
-    
   project_card:
     types: [created, moved, coverted, edited]
   push:
