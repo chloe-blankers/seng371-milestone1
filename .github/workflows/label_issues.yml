@@ -62,7 +62,7 @@ jobs:
             repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   remove_labels:
-    name: Removing In Progress label for  
+    name: Removing In Progress label for Done column
     if: github.event.project_card.column_id == '17686389'
     runs-on: ubuntu-latest
     permissions:  
