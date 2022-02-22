@@ -10,9 +10,9 @@ name: Compile and Test CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, protect_build_sbt_test ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, protect_build_sbt_test ]
 
 jobs:
 
