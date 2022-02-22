@@ -10,7 +10,7 @@
 #
 name: CODEOWNER File Deletion Workflow
 
-on:
+on:CODEOWNER_Read
   push:
     branches: [ main ]
   pull_request:
