@@ -4,9 +4,9 @@
 name: Label Issues 
 on: 
     
-  workflow_dispatch:
+ # workflow_dispatch:
   project_card:
-    types: [created, moved]
+    types: [created, moved, coverted, edited]
   push:
     branches: [main]
 
