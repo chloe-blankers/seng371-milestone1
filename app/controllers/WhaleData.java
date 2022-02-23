@@ -22,6 +22,7 @@ public class WhaleData {
 
     private long id;
 
+    
     public WhaleData() {
     }
 
