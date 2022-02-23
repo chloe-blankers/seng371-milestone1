@@ -35,6 +35,7 @@ jobs:
   add_progress_labels:
     name: Auto card labeler
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
       - uses: technote-space/auto-card-labeler@v2
 
