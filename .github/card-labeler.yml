@@ -1,0 +1,8 @@
+
+'Milestone 1: Kanban Board':
+  'To do':
+    - 'Status: To do'
+  'In progress':
+    - 'Status: In progress'
+  'Done':
+    - 'Done'
