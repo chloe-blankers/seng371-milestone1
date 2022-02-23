@@ -1,5 +1,6 @@
-#The following sources were used:
+# The following sources were used:
 # https://github.com/marketplace/actions/issue-timer
+# https://github.com/technote-space/auto-card-labeler
 
 name: Label All Cards in Project Board and Unattended Issues 
 on: 
@@ -11,6 +12,14 @@ on:
     branches: [main]
 
 jobs:
+
+  add_progress_labels:
+    name: Card Label 
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: technote-space/auto-card-labeler@v2
+      
   issues_r:
     name: Finding issues in project board
     runs-on: ubuntu-latest
@@ -29,14 +38,9 @@ jobs:
       uses: isethi/issue-timer@main
       with:
         PROJECT_ID: 1
-        TIME_IN_MINUTES: 30
+        TIME_IN_MINUTES: 45
         LABEL_NAME: 'time to review'
-  
-  add_progress_labels:
-    name: Auto card labeler
-    runs-on: ubuntu-latest
-    steps:
-      - uses: technote-space/auto-card-labeler@v2
+
 
 
 
