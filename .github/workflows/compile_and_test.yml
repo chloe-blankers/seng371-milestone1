@@ -25,7 +25,7 @@ on:
 
 jobs:
 
-  check_for_deletion_of_sbt:
+  check_for_delete:
     runs-on: ubuntu-latest
     
     steps:
@@ -54,7 +54,7 @@ jobs:
         repo-token: "${{ secrets.GITHUB_TOKEN }}" 
 
   compile:
-    needs: check_for_deletion_of_sbt
+    needs: check_for_delete
     runs-on: ubuntu-latest
     
     strategy:
