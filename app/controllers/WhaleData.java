@@ -14,7 +14,7 @@ package controllers;
 public class WhaleData {
 
     private String species
-        
+
     private int weight;
 
     private String gender;
