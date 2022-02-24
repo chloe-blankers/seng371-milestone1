@@ -1,0 +1,70 @@
+# The following sources were used:
+# [1] tj-actions. (2022). README.md. [Code] 
+# Available: https://github.com/tj-actions/changed-files
+#
+# [2] Andrew. (2020). Unix & Linux Script. [Code]
+# Available: https://unix.stackexchange.com/questions/47584/in-a-bash-script-using-the-conditional-or-in-an-if-statement
+#
+# [3] A. Rao. (2010). "How to concatenate string variables in Bash"
+# [Code]. Available: https://stackoverflow.com/questions/4181703/how-to-concatenate-string-variables-in-bash
+#
+# [4] Github Contributors. "Workflow commands for GitHub Actions." 
+# docs.github.com. Available: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+#
+# [5] J. Etco. README.md. [Code].
+# Available: https://github.com/JasonEtco/create-an-issue
+#
+# [6] Gitbub Contributors. "Webhook Payload Object" docs.github.com.
+# Available: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push
+
+
+name: Read CODEOWNERS and determine if issue is required
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  read_CODEOWNERS_File:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          fetch-depth: 0
+
+    - name: Get Files that cannot be deleted
+      id: required-files
+      uses: tj-actions/changed-files@v16
+      with:
+        files: |
+          build.sbt
+          project/plugins.sbt
+
+    - name: Create Deleted File String
+      id: string-files
+      run: |
+        a=""
+        for file_name in ${{ steps.required-files.outputs.other_deleted_files }}; do
+          a="${a}|${file_name}"
+          echo "${a}"
+        done
+        echo "::set-output name=file_list::${a}"
+
+    - name: Find if Deleted Files are in CODEOWNERS
+      id: declared-files
+      uses: ./python_actions
+      with: 
+        FILES: ${{steps.string-files.outputs.file_list}}
+
+    - name: Create Issue if Required
+      if: steps.declared-files.outputs.deletion_list != ''
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        FILE_MESSAGE: ${{steps.declared-files.outputs.deletion_list}}
+        COMMIT_URL: ${{github.event.compare}}
+      with:
+        update_existing: false
+        search_existing: open

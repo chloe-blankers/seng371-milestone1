@@ -1,0 +1,21 @@
+# The following source was used in creating this action:
+# [1] GitHub Actions Contributors. "Create Dockerfile". (2022).
+# Available: Used the Repository Contents from the second lab.
+
+name: "Read CODEOWNERS for Deleted Files"
+description: "This action reads the CODEOWNERS"
+author: "TyRicard@github.com"
+
+inputs:
+  FILES:
+    description: "List of files"
+    required: true
+    default: ""
+
+outputs:
+  deletion_list:
+    description: "These are the files that were deleted and are in CODEOWNERS."
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
