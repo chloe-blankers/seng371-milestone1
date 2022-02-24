@@ -25,7 +25,7 @@ on:
 
 jobs:
 
-  check_for_delete:
+  check_for_deletion_of_sbt:
     runs-on: ubuntu-latest
     
     steps:
