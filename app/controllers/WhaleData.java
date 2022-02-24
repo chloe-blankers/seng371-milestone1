@@ -20,6 +20,7 @@ public class WhaleData {
     private String gender;
 
     private long id;
+    
 
     public WhaleData() {
     }
