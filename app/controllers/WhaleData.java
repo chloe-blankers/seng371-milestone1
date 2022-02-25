@@ -13,7 +13,7 @@ package controllers;
  */
 public class WhaleData {
 
-    private String species;
+    private String species
 
     private int weight;
 
