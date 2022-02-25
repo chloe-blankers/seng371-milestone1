@@ -12,6 +12,8 @@ import java.util.ArrayList;
  * https://playframework.com/documentation/latest/JavaForms
  * https://adrianhurt.github.io/play-bootstrap/
  *
+ * This class is in regards to Observation Data.
+ *
  */
 public class ObservationData extends WhaleData {
 
