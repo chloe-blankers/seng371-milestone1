@@ -14,6 +14,10 @@
 # [4] Github Doc Contributors. "About Code Owners." docs.github.com.
 # Available: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners 
 #
+# Some Information on Strategy and Matrices:
+# [5] Github Contributors. "Using a build matrix for your jobs." docs.github.com.
+# Available: https://docs.github.com/en/actions/using-jobs/using-a-build-matrix-for-your-jobs
+#
 
 name: Compile and Test CI
 
@@ -55,19 +59,19 @@ jobs:
 
   compile:
     needs: check_for_delete
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        jdk: [8, 11, 14]
+        jdk: [8, 11, 16]
     
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: Set up JDK version
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: ${{ matrix.jdk }}
         distribution: 'temurin'
     - name: Compile Program
       run: sbt compile
