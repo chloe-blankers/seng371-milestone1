@@ -38,7 +38,7 @@ jobs:
       uses: isethi/issue-timer@main
       with:
         PROJECT_ID: 1
-        TIME_IN_MINUTES: 5
+        TIME_IN_MINUTES: 1
         LABEL_NAME: 'time to review'
 
 
