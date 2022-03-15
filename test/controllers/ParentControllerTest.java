@@ -189,10 +189,6 @@ public class ParentControllerTest extends WithApplication {
     @Test
     public void listFilteredObservationsTest() {
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/filter"); // Create
-                                                                                                           // request to
-                                                                                                           // get
-                                                                                                           // filtered
-                                                                                                           // list
         Result result = route(app, request);
         assertEquals(OK, result.status()); // Assert Http success
         if (result.contentType().isPresent() && result.charset().isPresent()) {
