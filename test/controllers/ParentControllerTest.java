@@ -188,8 +188,21 @@ public class ParentControllerTest extends WithApplication {
 
     @Test
     public void listFilteredObservationsTest() {
-        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/filter"); // Create
-        Result result = route(app, request);
+        /*
+         * Http.RequestBuilder request = new
+         * Http.RequestBuilder().method("GET").uri("/observations/filter");
+         * Result result = route(app, request);
+         * assertEquals(OK, result.status()); // Assert Http success
+         * if (result.contentType().isPresent() && result.charset().isPresent()) {
+         * assertEquals("text/html", result.contentType().get());
+         * assertEquals("utf-8", result.charset().get());
+         * } else {
+         * fail("Content type and/or charset not present in result");
+         * }
+         */
+
+        Http.RequestBuilder request2 = new Http.RequestBuilder().method("GET").uri("/observations/filter");
+        Result result = route(app, request2);
         assertEquals(OK, result.status()); // Assert Http success
         if (result.contentType().isPresent() && result.charset().isPresent()) {
             assertEquals("text/html", result.contentType().get());
