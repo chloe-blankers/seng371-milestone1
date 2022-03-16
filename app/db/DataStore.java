@@ -113,38 +113,9 @@ public class DataStore {
      *    @return  None
      */
     public void addWhale(Whale w) throws SQLException {
-        Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
-        //String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
-        PreparedStatement pStmt = null;
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            logger.error(e.getMessage());
-        }
-        boolean pass = true;
-        try {
-            String sql = "INSERT INTO WHALES(id, species, weight, gender) VALUES(?,?,?,?)";
-            pStmt = dbConnection.prepareStatement(sql);
-            pStmt.setInt(1,(int)w.id);
-            pStmt.setString(2,w.species);
-            pStmt.setInt(3,(int)w.weight);
-            pStmt.setString(4,w.gender);
-            int res = pStmt.executeUpdate();
-        } catch (SQLException e) {
-            pass = false;
-            String err = "Exception Message " + e.getLocalizedMessage();
-            logger.error(err);
-        } catch (Exception e) {
-            pass = false;
-            e.printStackTrace();
-        } finally {
-            try {
-                dbConnection.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        assert(pass);
+        List<Whale> dbNewWhalesList = new ArrayList<>();
+        dbNewWhalesList.add(w);
+        addWhales(dbNewWhalesList);
     }
 
     /**
