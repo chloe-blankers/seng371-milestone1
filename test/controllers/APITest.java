@@ -22,7 +22,7 @@ public class APITest extends WithApplication {
         RequestBuilder request = new RequestBuilder()
                 .method("GET")
                 .uri("/Whales")
-                .header("Accept", "application/txt+json"); // specify return type of json
+                .header("Accept", "application/txt+json");
         Result result = route(app, request);
         assertEquals(OK, result.status());
         if (result.contentType().isPresent())
@@ -45,7 +45,7 @@ public class APITest extends WithApplication {
     public void getObservationsAPICallTest() {
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method("GET")
-                .header("Accept", "application/txt+json") // Specify return type of json
+                .header("Accept", "application/txt+json")
                 .uri("/observations/getObservations");
         Result result = route(app, request);
         assertEquals(OK, result.status());

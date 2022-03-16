@@ -51,14 +51,14 @@ public class ParentControllerTest extends WithApplication {
     @Test
     public void createWhaleTest() {
 
-        // Get number of whales currently in system
+        // 1. Get number of whales currently in system
         Http.RequestBuilder apiRequest = new Http.RequestBuilder().method("GET").uri("/Whales").header("Accept",
                 "application/txt+json");
         Result result = route(app, apiRequest);
         JsonNode whales = contentAsJson(result).get("body"); // convert json api response to the first whale's id
         int prev_size = whales.size();
 
-        // Add a new whale to system
+        // 2. Add a new whale to system
         Http.RequestBuilder createWhalerequest = Helpers.fakeRequest()
                 .method("POST")
                 .bodyForm(ImmutableMap.of("species", "Orca", "weight", "2200", "gender", "Female"))
@@ -66,7 +66,7 @@ public class ParentControllerTest extends WithApplication {
         result = route(app, createWhalerequest);
         assertEquals(SEE_OTHER, result.status()); // Assert HTTP return is correct
 
-        // Get new list of whales in system
+        // 3. Get new list of whales in system
         result = route(app, apiRequest);
         whales = contentAsJson(result).get("body"); // convert json api response to the first whale's id
         int new_size = whales.size();
@@ -90,34 +90,33 @@ public class ParentControllerTest extends WithApplication {
         assertEquals("utf-8", result.charset().get());
     }
 
-    // POST /Whales/filter controllers.ParentController.filterWhales(request:
-    // Request)
-    // GET /Whales/filter controllers.ParentController.listFilterWhales(request:
-    // Request)
-    // POST /Whales/filter/removeFilter
-    // controllers.ParentController.removeWhaleFilter()
+    /*
+     * Test whale filter functions: create filter, get filtered list, remove filter
+     */
     @Test
-    public void whaleFilterTest() { // Test whale filter process. Add whale filter, get filtered list, remove filter
+    public void whaleFilterTest() {
+
+        // 1. create filter
         Http.RequestBuilder request1 = Helpers.fakeRequest()
                 .method("POST")
-                .bodyForm(ImmutableMap.of("species", "Orca")) // Create request to filter by Orca
+                .bodyForm(ImmutableMap.of("species", "Orca"))
                 .uri("/Whales/filter");
         Result result = route(app, request1);
-        assertEquals(SEE_OTHER, result.status()); // Assert filter route is successful
+        assertEquals(SEE_OTHER, result.status());
 
-        Http.RequestBuilder request2 = new Http.RequestBuilder().method("GET").uri("/Whales/filter"); // Create request
-                                                                                                      // for getting
-                                                                                                      // filtered list
+        // 2. get filtered list
+        Http.RequestBuilder request2 = new Http.RequestBuilder().method("GET").uri("/Whales/filter");
         result = route(app, request2);
-        assertEquals(OK, result.status()); // Assert correct HTTP response, mime type, and charset
+        assertEquals(OK, result.status());
         assertEquals("text/html", result.contentType().get());
         assertEquals("utf-8", result.charset().get());
 
-        Http.RequestBuilder request3 = Helpers.fakeRequest() // Create request remove filters
+        // 3. remove filter
+        Http.RequestBuilder request3 = Helpers.fakeRequest()
                 .method("POST")
                 .uri("/Whales/filter/removeFilter");
         result = route(app, request3);
-        assertEquals(SEE_OTHER, result.status()); // Assert correct HTTP response correct
+        assertEquals(SEE_OTHER, result.status());
     }
 
     // GET /observations controllers.ParentController.listObservations(request:
@@ -166,8 +165,6 @@ public class ParentControllerTest extends WithApplication {
         assertNotEquals(BAD_REQUEST, result.status());
     }
 
-    // GET /observations/getWhaleIdRange
-    // controllers.ParentController.getWhaleIDRange(request: Request)
     @Test
     public void getWhaleIDRangeTest() { // Test for getWhaleIdRange route. Ensures that html is not returned
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/getWhaleIdRange")
@@ -186,18 +183,25 @@ public class ParentControllerTest extends WithApplication {
         assertEquals(SEE_OTHER, result.status());
     }
 
+    /*
+     * Test observation filter functions: create filter, get filtered list, remove
+     * filter
+     */
     @Test
-    public void observationFilterTest() { // Test observation filter process. Create filter, get filtered list, remove
-        Http.RequestBuilder request1 = Helpers.fakeRequest() // Create request for filter
+    public void observationFilterTest() {
+
+        // 1. create filter
+        Http.RequestBuilder request1 = Helpers.fakeRequest()
                 .method("POST")
                 .bodyForm(ImmutableMap.of("date", "2020-12-01"))
                 .uri("/observations/filter");
         Result result = route(app, request1);
-        assertEquals(SEE_OTHER, result.status()); // Assert Http success
+        assertEquals(SEE_OTHER, result.status());
 
+        // 2. get filtered list
         Http.RequestBuilder request2 = new Http.RequestBuilder().method("GET").uri("/observations/filter");
         result = route(app, request2);
-        assertEquals(OK, result.status()); // Assert Http success
+        assertEquals(OK, result.status());
         if (result.contentType().isPresent() && result.charset().isPresent()) {
             assertEquals("text/html", result.contentType().get());
             assertEquals("utf-8", result.charset().get());
@@ -205,15 +209,16 @@ public class ParentControllerTest extends WithApplication {
             fail("Content type and/or charset not present in result");
         }
 
-        Http.RequestBuilder request3 = Helpers.fakeRequest() // Create requets to remove filter
+        // 3. remove filter
+        Http.RequestBuilder request3 = Helpers.fakeRequest()
                 .method("POST")
                 .uri("/observations/filter/removeFilter");
         result = route(app, request3);
-        assertEquals(SEE_OTHER, result.status()); // Assert Http success
+        assertEquals(SEE_OTHER, result.status());
     }
 
     @Test
-    public void statsTest() {
+    public void redirectToStatsViewTest() {
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Stats");
         Result result = route(app, request);
         assertEquals(OK, result.status());
