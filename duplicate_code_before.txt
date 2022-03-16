@@ -1,0 +1,265 @@
+Command: ./run.sh cpd --minimum-tokens 50 --files ../../seng371-milestone1 >> duplicate_code_before.txt
+Tool: The Tool PMD was used for getting the below results
+ 
+Found a 9 line (90 tokens) duplication in the following files: 
+Starting at line 123 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/controllers/ParentController.java
+Starting at line 292 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/controllers/ParentController.java
+
+        final Form<SightingData> boundForm = sightingForm.bindFromRequest(request);
+        if (boundForm.hasErrors()) {
+            logger.error("errors = {}", boundForm.errors());
+            logger.error("boundForm.errors().size():"+boundForm.errors().size());
+            for(play.data.validation.ValidationError err: boundForm.errors()){
+                logger.error(err.toString());
+            }
+            logger.error("boundForm.toString():"+boundForm.toString());
+            return badRequest(views.html.listObservations.render(asScala(observations),
+=====================================================================
+Found a 10 line (79 tokens) duplication in the following files: 
+Starting at line 144 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/ParentControllerTest.java
+Starting at line 197 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/ParentControllerTest.java
+
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/getObservations");     //Build request
+        Result result = route(app,request);
+        assertEquals(OK, result.status());                                                              //Assert Http response, mime type, and charset match
+        if (result.contentType().isPresent() && result.charset().isPresent()) {
+            assertEquals("text/html", result.contentType().get());
+            assertEquals("utf-8", result.charset().get());
+        }
+        else {
+            fail("Content type and/or charset not present in result");
+        }
+=====================================================================
+Found a 26 line (73 tokens) duplication in the following files: 
+Starting at line 132 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+Starting at line 178 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+
+            int res = pStmt.executeUpdate();
+        } catch (SQLException e) {
+            pass = false;
+            String err = "Exception Message " + e.getLocalizedMessage();
+            logger.error(err);
+        } catch (Exception e) {
+            pass = false;
+            e.printStackTrace();
+        } finally {
+            try {
+                dbConnection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        assert(pass);
+    }
+
+    /**
+     *    Adds a List of Whale w to the WHALES table.
+     *    Uses PreparedStatement to avoid SQL injection
+     *
+     *    @param newWhales    The List of Whale to add to the WHALES table
+     *    @return  None
+     */
+    public void addWhales(List<Whale> newWhales) throws SQLException {
+=====================================================================
+Found a 25 line (73 tokens) duplication in the following files: 
+Starting at line 179 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+Starting at line 264 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+
+        } catch (SQLException e) {
+            pass = false;
+            String err = "Exception Message " + e.getLocalizedMessage();
+            logger.error(err);
+        } catch (Exception e) {
+            pass = false;
+            e.printStackTrace();
+        } finally {
+            try {
+                dbConnection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        assert(pass);
+    }
+
+    /**
+     *    Gets all the Whales from the WHALES table and returns the
+     *    Whales in a List of Whale objects
+     *
+     *    @param
+     *    @return whaleList    A list of Whale retrieved from the WHALES table
+     */
+    public List<Whale> getWhales() throws IOException, SQLException {
+=====================================================================
+Found a 25 line (71 tokens) duplication in the following files: 
+Starting at line 133 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+Starting at line 264 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+
+        } catch (SQLException e) {
+            pass = false;
+            String err = "Exception Message " + e.getLocalizedMessage();
+            logger.error(err);
+        } catch (Exception e) {
+            pass = false;
+            e.printStackTrace();
+        } finally {
+            try {
+                dbConnection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        assert(pass);
+    }
+
+    /**
+     *    Adds a List of Whale w to the WHALES table.
+     *    Uses PreparedStatement to avoid SQL injection
+     *
+     *    @param newWhales    The List of Whale to add to the WHALES table
+     *    @return  None
+     */
+    public void addWhales(List<Whale> newWhales) throws SQLException {
+=====================================================================
+Found a 25 line (70 tokens) duplication in the following files: 
+Starting at line 41 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/controllers/ObservationData.java
+Starting at line 21 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/controllers/SightingData.java
+
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+=====================================================================
+Found a 9 line (70 tokens) duplication in the following files: 
+Starting at line 145 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/ParentControllerTest.java
+Starting at line 177 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/ParentControllerTest.java
+Starting at line 198 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/ParentControllerTest.java
+
+        Result result = route(app,request);
+        assertEquals(OK, result.status());                                                              //Assert Http response, mime type, and charset match
+        if (result.contentType().isPresent() && result.charset().isPresent()) {
+            assertEquals("text/html", result.contentType().get());
+            assertEquals("utf-8", result.charset().get());
+        }
+        else {
+            fail("Content type and/or charset not present in result");
+        }
+=====================================================================
+Found a 9 line (68 tokens) duplication in the following files: 
+Starting at line 125 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+Starting at line 168 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+
+        try {
+            String sql = "INSERT INTO WHALES(id, species, weight, gender) VALUES(?,?,?,?)";
+            pStmt = dbConnection.prepareStatement(sql);
+            pStmt.setInt(1,(int)w.id);
+            pStmt.setString(2,w.species);
+            pStmt.setInt(3,(int)w.weight);
+            pStmt.setString(4,w.gender);
+            int res = pStmt.executeUpdate();
+        } catch (SQLException e) {
+=====================================================================
+Found a 9 line (59 tokens) duplication in the following files: 
+Starting at line 26 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/APITest.java
+Starting at line 65 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/APITest.java
+
+                .uri("/Whales")
+                .header("Accept","application/txt+json");       //specify return type of json
+        Result result = route(app,request);
+        assertEquals(OK,result.status());                       //Assert correct Http response and mime type
+        if (result.contentType().isPresent())
+            assertEquals("application/json",result.contentType().get());
+        else
+            fail("No content type present in result");
+    }
+=====================================================================
+Found a 11 line (53 tokens) duplication in the following files: 
+Starting at line 115 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+Starting at line 157 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+
+    public void addWhale(Whale w) throws SQLException {
+        Connection dbConnection = DriverManager.getConnection(WHALE_CONNECTION, DB_USER, DB_PASSWORD);
+        //String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
+        PreparedStatement pStmt = null;
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (ClassNotFoundException e) {
+            logger.error(e.getMessage());
+        }
+        boolean pass = true;
+        try {
+=====================================================================
+Found a 10 line (53 tokens) duplication in the following files: 
+Starting at line 41 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/ParentControllerTest.java
+Starting at line 81 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/ParentControllerTest.java
+Starting at line 118 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/ParentControllerTest.java
+
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/");     //Build request for index() route
+        Result result = route(app,request);                                                 //Route request to app
+        assertEquals(OK, result.status());                                                  //Assert status matches
+        assertEquals("text/html", result.contentType().get());                      //Assert mime type matches
+        assertEquals("utf-8", result.charset().get());                              //Assert charset matches
+    }
+
+    //    POST    /Whales                    controllers.ParentController.createWhale(request: Request)
+    @Test
+    public void createWhaleTest() {                           //Test the whale creation process. Send the request the the app and check that it is in the system
+=====================================================================
+Found a 8 line (52 tokens) duplication in the following files: 
+Starting at line 219 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+Starting at line 328 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+
+            }
+        } catch (SQLException ex) {
+            pass = false;
+            var lgr = Logger.getLogger(DataStore.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        assert(pass);
+        dbConnection.close();
+=====================================================================
+Found a 7 line (51 tokens) duplication in the following files: 
+Starting at line 27 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/APITest.java
+Starting at line 51 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/APITest.java
+Starting at line 66 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/test/controllers/APITest.java
+
+                .header("Accept","application/txt+json");       //specify return type of json
+        Result result = route(app,request);
+        assertEquals(OK,result.status());                       //Assert correct Http response and mime type
+        if (result.contentType().isPresent())
+            assertEquals("application/json",result.contentType().get());
+        else
+            fail("No content type present in result");
+=====================================================================
+Found a 7 line (50 tokens) duplication in the following files: 
+Starting at line 205 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+Starting at line 295 of /home/ty/Documents/pmd-bin-6.43.0/bin/../../seng371-milestone1/app/db/DataStore.java
+
+        List<Whale> whaleList = new ArrayList<>();
+        String logPath = String.valueOf((getClass().getClassLoader().getResource("logging.properties")));
+        //Connection connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+        boolean pass = true;
+        try (var con = dbConnection;
+             var stm = con.createStatement();
+             var rs = stm.executeQuery("SELECT * from WHALES")) {
