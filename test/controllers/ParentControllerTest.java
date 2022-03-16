@@ -166,16 +166,6 @@ public class ParentControllerTest extends WithApplication {
         assertEquals(BAD_REQUEST, result.status());
     }
 
-    @Test
-    public void filterObservationsTest() {
-        Http.RequestBuilder request = Helpers.fakeRequest()
-                .method("POST")
-                .bodyForm(ImmutableMap.of("date", "2020-12-01"))
-                .uri("/observations/filter");
-        Result result = route(app, request);
-        assertEquals(SEE_OTHER, result.status());
-    }
-
     /*
      * Test observation filter functions: create filter, get filtered list, remove
      * filter
