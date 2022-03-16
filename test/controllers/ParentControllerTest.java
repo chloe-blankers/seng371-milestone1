@@ -34,10 +34,10 @@ public class ParentControllerTest extends WithApplication {
         return new GuiceApplicationBuilder().build();
     }
 
+    /* Test if we can successfully redirect to the index.scala.html view */
     @Test
-    public void getIndexTest() {
-        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/"); // Build request for index()
-                                                                                        // route
+    public void indexViewTest() {
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/");
         Result result = route(app, request);
         assertEquals(OK, result.status());
         assertEquals("text/html", result.contentType().get());
@@ -64,7 +64,7 @@ public class ParentControllerTest extends WithApplication {
                 .bodyForm(ImmutableMap.of("species", "Orca", "weight", "2200", "gender", "Female"))
                 .uri("/Whales");
         result = route(app, createWhalerequest);
-        assertEquals(SEE_OTHER, result.status()); // Assert HTTP return is correct
+        assertEquals(SEE_OTHER, result.status());
 
         // 3. Get new list of whales in system
         result = route(app, apiRequest);
@@ -82,8 +82,7 @@ public class ParentControllerTest extends WithApplication {
 
     @Test
     public void listWhalesTest() {
-        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales"); // Build request for
-                                                                                              // createWhale() route
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales");
         Result result = route(app, request);
         assertEquals(OK, result.status());
         assertEquals("text/html", result.contentType().get());
@@ -119,27 +118,22 @@ public class ParentControllerTest extends WithApplication {
         assertEquals(SEE_OTHER, result.status());
     }
 
-    // GET /observations controllers.ParentController.listObservations(request:
-    // Request)
     @Test
-    public void listObservationsTest() { // Test listObservations method
-        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations"); // Build request
+    public void listObservationsTest() {
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations");
         Result result = route(app, request);
-        assertEquals(OK, result.status()); // Assert Http response, mime type, and charset match
+        assertEquals(OK, result.status());
         assertEquals("text/html", result.contentType().get());
         assertEquals("utf-8", result.charset().get());
     }
 
-    // POST /observations controllers.ParentController.createObservation(request:
-    // Request)
     @Test
-    public void createObservationTest() { // Test for creating an Observation
-        // API call to get the id of a whale in whales table
+    public void createObservationTest() {
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Whales").header("Accept",
                 "application/txt+json");
         Result result = route(app, request);
-        String id = contentAsJson(result).get("body").get(0).get("id").toString(); // convert json api response to the
-                                                                                   // first whale's id
+        // convert json api response to the first whales id
+        String id = contentAsJson(result).get("body").get(0).get("id").toString();
 
         request = Helpers.fakeRequest() // build request for new observation
                 .method("POST")
@@ -147,15 +141,14 @@ public class ParentControllerTest extends WithApplication {
                         "1pm"))
                 .uri("/observations");
         result = route(app, request);
-        assertEquals(SEE_OTHER, result.status()); // Assert correct Http response
+        assertEquals(SEE_OTHER, result.status());
     }
 
     @Test
-    public void getObservationsAPICallTest() { // Test for getObservations route
-        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/getObservations"); // Build
-                                                                                                                    // request
+    public void getObservationsTest() {
+        Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/getObservations");
         Result result = route(app, request);
-        assertEquals(OK, result.status()); // Assert Http response, mime type, and charset match
+        assertEquals(OK, result.status());
         if (result.contentType().isPresent() && result.charset().isPresent()) {
             assertEquals("text/html", result.contentType().get());
             assertEquals("utf-8", result.charset().get());
@@ -166,9 +159,9 @@ public class ParentControllerTest extends WithApplication {
     }
 
     @Test
-    public void getWhaleIDRangeTest() { // Test for getWhaleIdRange route. Ensures that html is not returned
+    public void getWhaleIDRangeBadRequestTest() {
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/getWhaleIdRange")
-                .header("Accept", "text/html"); // Build request
+                .header("Accept", "text/html");
         Result result = route(app, request);
         assertEquals(BAD_REQUEST, result.status());
     }
@@ -217,8 +210,9 @@ public class ParentControllerTest extends WithApplication {
         assertEquals(SEE_OTHER, result.status());
     }
 
+    /* Test if we can successfully redirect to the stats.scala.html view */
     @Test
-    public void redirectToStatsViewTest() {
+    public void statsViewTest() {
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Stats");
         Result result = route(app, request);
         assertEquals(OK, result.status());
