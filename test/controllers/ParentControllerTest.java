@@ -170,7 +170,7 @@ public class ParentControllerTest extends WithApplication {
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/observations/getWhaleIdRange")
                 .header("Accept", "text/html"); // Build request
         Result result = route(app, request);
-        assertEquals(BAD_REQUEST, result.status()); // Assert Http response, mime type, and charset match
+        assertEquals(BAD_REQUEST, result.status());
     }
 
     @Test
