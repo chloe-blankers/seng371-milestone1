@@ -59,14 +59,19 @@ jobs:
 
   compile:
     needs: check_for_delete
-    runs-on: ubuntu-latest
-    
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        jdk: [11]
+        
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK version
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: ${{ matrix.jdk }}
         distribution: 'temurin'
     - name: Compile Program
       run: sbt compile
