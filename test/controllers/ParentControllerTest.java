@@ -187,22 +187,16 @@ public class ParentControllerTest extends WithApplication {
     }
 
     @Test
-    public void listFilteredObservationsTest() {
-        /*
-         * Http.RequestBuilder request = new
-         * Http.RequestBuilder().method("GET").uri("/observations/filter");
-         * Result result = route(app, request);
-         * assertEquals(OK, result.status()); // Assert Http success
-         * if (result.contentType().isPresent() && result.charset().isPresent()) {
-         * assertEquals("text/html", result.contentType().get());
-         * assertEquals("utf-8", result.charset().get());
-         * } else {
-         * fail("Content type and/or charset not present in result");
-         * }
-         */
+    public void observationFilterTest() { // Test observation filter process. Create filter, get filtered list, remove
+        Http.RequestBuilder request1 = Helpers.fakeRequest() // Create request for filter
+                .method("POST")
+                .bodyForm(ImmutableMap.of("date", "2020-12-01"))
+                .uri("/observations/filter");
+        Result result = route(app, request1);
+        assertEquals(SEE_OTHER, result.status()); // Assert Http success
 
         Http.RequestBuilder request2 = new Http.RequestBuilder().method("GET").uri("/observations/filter");
-        Result result = route(app, request2);
+        result = route(app, request2);
         assertEquals(OK, result.status()); // Assert Http success
         if (result.contentType().isPresent() && result.charset().isPresent()) {
             assertEquals("text/html", result.contentType().get());
@@ -210,19 +204,16 @@ public class ParentControllerTest extends WithApplication {
         } else {
             fail("Content type and/or charset not present in result");
         }
-    }
 
-    @Test
-    public void removeObservationFilterTest() {
-        Http.RequestBuilder request = Helpers.fakeRequest() // Create requets to remove filter
+        Http.RequestBuilder request3 = Helpers.fakeRequest() // Create requets to remove filter
                 .method("POST")
                 .uri("/observations/filter/removeFilter");
-        Result result = route(app, request);
-        assertEquals(SEE_OTHER, result.status());
+        result = route(app, request3);
+        assertEquals(SEE_OTHER, result.status()); // Assert Http success
     }
 
     @Test
-    public void getStatsTest() {
+    public void statsTest() {
         Http.RequestBuilder request = new Http.RequestBuilder().method("GET").uri("/Stats");
         Result result = route(app, request);
         assertEquals(OK, result.status());
